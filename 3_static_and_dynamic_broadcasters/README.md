@@ -1,5 +1,6 @@
 # Proadcaster Node: First Static Broadcaster
-
+ author: Mo3taz
+ 
 In this example, we create a static broadcaster node that publishes two frames with a static transform between them.
 
 ## Steps And Code Explination
@@ -165,5 +166,6 @@ if line not work make sure you install the package
 sudo apt-get install ros-noetic-rqt-tf-tree
 ```
 output:
+
 ![output tf tree](media/tf_static_dynamic.png)
 
