@@ -336,7 +336,8 @@ you can control the movement this robot follow this steps
 
 |            static velocity            |         Teleop_twist_keyboard          |
 | :-----------------------------------: | :------------------------------------: |
-| <img src="images/15.gif" width="900"> | <img src="images/14.gif" width="900" > |
+| <img src="images/15.gif" > | <img src="images/14.gif"  > |
+
 
 To initiate movement of the robot, simply double-click on the robot and select "Apply Force and Torque."
 
