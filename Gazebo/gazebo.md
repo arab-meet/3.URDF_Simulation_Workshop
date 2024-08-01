@@ -39,40 +39,66 @@ Gazebo runs two processes:
 <p align="center">
 <img src="images/1.png">
 
-To run gazebo server type:
+### Installing Gazebo
 
-```bash
-gzserver
+Gazebo can be installed as a standalone application or an integrated application along with ROS. In
+this chapter, we will use Gazebo along with ROS for simulation and to test our written code using the
+ROS framework.
+
+Test that you have the right version of Gazebo
+To check version of Gazebo run:
+
+```sh
+gazebo --version
 ```
 
-This will start the physics engine with an empty world.
+> The complete Gazebo_ros_pkgs can be installed in ROS Noetic using the following command:
 
-To run gazebo GUI client type in anther terminal:
-
-```bash
-gzclient
+```sh
+sudo apt-get install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control
 ```
 
-This will connect t the server and give you a graphical display of the simulation.
+- To run gazebo server type:
 
-<p align="center">
-<img src="images/2.png">
+  ```bash
+  gzserver
+  ```
+
+  > This will start the physics engine with an empty world.
+
+- To run gazebo GUI client type in anther terminal:
+
+  ```bash
+  gzclient
+  ```
+
+  This will connect t the server and give you a graphical display of the simulation.
+
+  <p align="center">
+  <img src="images/2.png">
 
 Actually you can launch server and clinet with single command:
+Make sure that you have Gazebo installed by typing the following command in
+a terminal:
 
 ```bash
 gazebo
 ```
 
-### Running Gazebo from Ros
+### Testing Gazebo with the ROS interface
 
-```sh
-roscore
-```
+To get started with testing Gazebo using the ROS interface, follow these steps:
 
-```bash
-rosrun gazebo_ros gazebo
-```
+1. Launch the ROS core:
+
+   ```sh
+   roscore
+   ```
+
+2. In another terminal, run Gazebo with the ROS plugin:
+   ```bash
+   rosrun gazebo_ros gazebo
+   ```
 
 After starting **Gazebo**, we will see the following **topics** generated. Using the rostopic command, we will find the following list of topics:
 
@@ -92,7 +118,7 @@ rostopic list
 /gazebo/set_model_state
 ```
 
-#### Gazebo User Interface
+### Gazebo User Interface
 
 - **`World` :**
   This tab displays the lights and models currently in the scene.
@@ -125,10 +151,10 @@ rostopic list
 - **`Change view` :**
 The change view tool lets you view the scene from different
 perspectives like top view, side view, front view, bottom view.
-<p align="center">
-<img src="images/3.png">
+  <p align="center">
+  <img src="images/3.png">
 
-### Building robot models in Gazebo
+## Building robot models in Gazebo
 
 click on Edit and select model editor
 
@@ -190,15 +216,134 @@ click on Edit and select model editor
   - Model: Save it as a robot in <your_pkg_ws/model>
   - Exit the Model Editor
 
-    <p align="center">
-    <img src="images/9.png">
+  <p align="center">
+  <img src="images/9.png">
+
+## Controlling Your Robot
+
+you can control the movement this robot follow this steps
+
+1. open your [robot model.sdf](/gazebo_pkg/model/robot/model.sdf)
+2. before close <model> you can add this plugin to control the robot
+   ```bash
+   <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+       <updateRate>100.0</updateRate>
+       <robotNamespace>/</robotNamespace>
+       <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+       <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+       <leftRearJoint>back_left_wheel_joint</leftRearJoint>
+       <rightRearJoint>back_right_wheel_joint</rightRearJoint>
+       <wheelSeparation>0.4</wheelSeparation>
+       <wheelDiameter>0.4</wheelDiameter>
+       <robotBaseFrame>base_link</robotBaseFrame>
+       <torque>20</torque>
+       <topicName>cmd_vel</topicName>
+       <broadcastTF>false</broadcastTF>
+       <odometryTopic>odom</odometryTopic>
+       <odometryFrame>odom</odometryFrame>
+       <covariance_x>0.001000</covariance_x>
+       <covariance_y>0.001000</covariance_y>
+       <covariance_yaw>0.100000</covariance_yaw>
+     </plugin>
+   ```
+3. save the model and open it in gazebo
+
+> you can control with two way
+
+- Open your terminal and start the ROS core:
+  ```sh
+  roscore
+  ```
+- In another terminal, run your model in Gazebo:
+
+  ```sh
+  rosrun gazebo_ros gazebo
+  ```
+
+- Choose the model from your device
+
+## 1. static velocity
+
+- if you write in another terminal
+  ```sh
+  rostopic list
+  ```
+  > The preceding command line prints the following information
+  ```sh
+  /clock
+  /cmd_vel
+  /gazebo/link_states
+  /gazebo/model_states
+  /gazebo/parameter_descriptions
+  /gazebo/parameter_updates
+  /gazebo/performance_metrics
+  /gazebo/set_link_state
+  /gazebo/set_model_state
+  /odom
+  /rosout
+  /rosout_agg
+  /tf
+  ```
+- Now, you can publish to the /cmd_vel topic:
+  ```sh
+  rostopic pub /cmd_vel geometry_msgs/Twist "linear:
+    x: 2.0
+    y: 1.0
+    z: 0.0
+  angular:
+    x: 0.0
+    y: 0.0
+    z: 2.0"
+  ```
+
+## 2. Teleop_twist_keyboard
+
+- Installing
+  ```sh
+  sudo apt-get install ros-noetic-teleop-twist-keyboard
+  ```
+- Running
+  ```sh
+  rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+  ```
+- Controls
+
+  ```sh
+  Reading from the keyboard  and Publishing to Twist!
+  ---------------------------
+  Moving around:
+    u    i    o
+    j    k    l
+    m    ,    .
+
+  For Holonomic mode (strafing), hold down the shift key:
+  ---------------------------
+    U    I    O
+    J    K    L
+    M    <    >
+
+  t : up (+z)
+  b : down (-z)
+
+  anything else : stop
+
+  q/z : increase/decrease max speeds by 10%
+  w/x : increase/decrease only linear speed by 10%
+  e/c : increase/decrease only angular speed by 10%
+
+  CTRL-C to quit
+  ```
+
+|            static velocity            |         Teleop_twist_keyboard          |
+| :-----------------------------------: | :------------------------------------: |
+| <img src="images/15.gif" width="900"> | <img src="images/14.gif" width="900" > |
 
 To initiate movement of the robot, simply double-click on the robot and select "Apply Force and Torque."
 
 <p align="center">
 <img src="images/10.gif">
 
-### Building world models in Gazebo
+## Building world models in Gazebo
 
 The Building Editor allows you to create modeBls of multi-level builings without write any code.
 
@@ -217,13 +362,27 @@ To access the Building Editor, go to the Edit menu and select Building Editor.
 ### include custom models for the world
 
 Click on the toolbar, select `Insert` and then choose `Robot` and `World` to create them as per your requirements.
-then save this world such as <`my_world.world`>
+then save this world such as [`my_world.world`](/gazebo_pkg/world/my_world.world)
 
 you can open this file using this line
 
 ```
-gazebo <your_pkg_ws/my_world.world>
+rosrun gazebo_ros gazebo path/to/your/world/my_world.world>
 ```
 
 <p align="center">
 <img src="images/13.png">
+
+---
+
+> Note: If you can't run Gazebo again after closing it, use the following command to terminate all Gazebo processes:
+
+```sh
+sudo killall -9 gazebo gzserver gzclient
+```
+
+---
+
+# [Next Topic Link](< >)
+
+### [&lt;-Back to main](../README.md)
