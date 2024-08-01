@@ -295,7 +295,9 @@ you can control the movement this robot follow this steps
     y: 0.0
     z: 2.0"
   ```
-
+  <p align="center">
+  <img src="images/15.gif">
+  
 ## 2. Teleop_twist_keyboard
 
 - Installing
@@ -333,10 +335,8 @@ you can control the movement this robot follow this steps
 
   CTRL-C to quit
   ```
-
-|            static velocity            |         Teleop_twist_keyboard          |
-| :-----------------------------------: | :------------------------------------: |
-| <img src="images/15.gif" > | <img src="images/14.gif"  > |
+  <p align="center">
+  <img src="images/14.gif"  > 
 
 
 To initiate movement of the robot, simply double-click on the robot and select "Apply Force and Torque."
