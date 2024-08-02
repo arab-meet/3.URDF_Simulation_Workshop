@@ -1,4 +1,4 @@
-# obotic simulation
+# Robotic simulation
 
 Robotic simulation involves creating a virtual model that mimics real-world processes. By using simulation, we can design a virtual representation of a robot and test its design and programming in a controlled environment.
 
