@@ -1,4 +1,4 @@
-# Robotic simulation
+# obotic simulation
 
 Robotic simulation involves creating a virtual model that mimics real-world processes. By using simulation, we can design a virtual representation of a robot and test its design and programming in a controlled environment.
 
@@ -123,12 +123,20 @@ rostopic list
 - **`Align` :**
   This tool allows you to align one model with another along with one of the three principal axes.
 - **`Change view` :**
-The change view tool lets you view the scene from different
-perspectives like top view, side view, front view, bottom view.
+  The change view tool lets you view the scene from different
+  perspectives like top view, side view, front view, bottom view.
+
 <p align="center">
 <img src="images/3.png">
 
-### Building robot models in Gazebo
+## Robot models in Gazebo
+
+Before we dive into robot models , it's essential to clarify that there are two distinct scenarios
+
+1. **Building a robot model**
+2. **Downloading a pre-built model**
+
+### 1.Building robot models in Gazebo
 
 click on Edit and select model editor
 
@@ -140,9 +148,9 @@ click on Edit and select model editor
   - Change x = 1m, y = 0.8m , z = 0.2m.
   - Click on collision and go geometry.
   - Change x = 1m, y = 0.8m , z = 0.2m.
+
   <p align="center">
   <img src="images/4.png">
-
 - Create robot wheels:
 
   - Select from simple shapes “cylinder”.
@@ -153,18 +161,18 @@ click on Edit and select model editor
   - Click on collision and go geometry.
   - Change radius = 0.2m , length = 0.1m.
   - go pose and change roll Rotate the wheel to 90 degree = 1.570700 rad.
+
   <p align="center">
   <img src="images/5.png">
-
 - Connect wheels to the chassis via joints:
 
   - Select Joint from the toolbar.
   - Chage joint type to “Revolute”.
   - Choose parent as robot chassis and child as a wheel.
   - Align links x, y, z, And choose a suitable rotate axis.
+
   <p align="center">
   <img src="images/6.png">
-
 - Adding Camera:
 
   - Select from simple shapes “Box”.
@@ -173,18 +181,18 @@ click on Edit and select model editor
   - Change x = 0.1, y = 0.1 , z = 0.1.
   - Click on collision and go geometry.
   - Change x = 0.1, y = 0.1 , z = 0.1.
+
   <p align="center">
   <img src="images/7.png">
-
 - Connect Camera to the chassis via joints:
 
   - Select Joint from the toolbar.
   - Chage joint type to “fixed”.
   - Choose parent as robot chassis and child as a Camera.
   - Align links x, y, z, And choose a suitable rotate axis.
+
   <p align="center">
   <img src="images/8.png">
-
 - Save the model file
 
   - Model: Save it as a robot in <your_pkg_ws/model>
@@ -228,6 +236,46 @@ gazebo <your_pkg_ws/my_world.world>
 <p align="center">
 <img src="images/13.png">
 
-# [Next Topic Link](< >)
+### 2.Downloading a pre-built model
+
+gazebo models saved in **~/.gazebo/models**
+
+so we need to get a model and saved it in this directory
+
+1. get the robot model you want online , you could find many in this repository :
+   * [robot models repository ](https://github.com/osrf/gazebo_models) or you could download the full repository
+2. download and locate the model directory in the gazebo model path **~/.gazebo/model** or download it in any other path
+
+```
+asphalt_plane
+├── materials
+|   └── scripts
+|   |   └── asphalt.material
+│   └── textures
+|	└── tarmac.png
+├── model-1_4.sdf
+├── model.config
+└── model.sdf
+```
+
+each directory have :
+
+* materials :Contains textures and scripts for defining material properties.
+* meshes folder: Stores 3D models in formats like COLLADA (.dae) or STL.
+* model.sdf or model.urdf:Describes the model's physical and visual properties.
+* model.config:Provides metadata about the model.
+
+3. run it locally
+   * in gazebo Click on the toolbar, select `Insert`
+   * if installed in ./gazebo/models you will find the name of the directory
+   * if downloaded in another path click on add path and select the folder name
+
+<p align= "center" >
+<img src="images/17.png">
+
+<p align= "center" >
+<img src="images/16_.png">
+
+# [Next Topic Link]()
 
 ### [&lt;-Back to main](../README.md)
