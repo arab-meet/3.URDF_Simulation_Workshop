@@ -154,7 +154,13 @@ perspectives like top view, side view, front view, bottom view.
   <p align="center">
   <img src="images/3.png">
 
-## Building robot models in Gazebo
+## Robot models in Gazebo
+
+Before we dive into robot models , it's essential to clarify that there are two distinct scenarios
+
+1. **Building a robot model**
+2. **Downloading a pre-built model**
+## 1. Building robot models in Gazebo
 
 click on Edit and select model editor
 
@@ -382,7 +388,49 @@ rosrun gazebo_ros gazebo path/to/your/world/my_world.world>
 sudo killall -9 gazebo gzserver gzclient
 ```
 
+### 2.Downloading a pre-built model
+
+gazebo models saved in **~/.gazebo/models**
+
+so we need to get a model and saved it in this directory
+
+1. get the robot model you want online , you could find many in this repository :
+   * [robot models repository ](https://github.com/osrf/gazebo_models) or you could download the full repository
+2. download and locate the model directory in the gazebo model path **~/.gazebo/model** or download it in any other path
+
+```
+asphalt_plane
+├── materials
+|   └── scripts
+|   |   └── asphalt.material
+│   └── textures
+|	└── tarmac.png
+├── model-1_4.sdf
+├── model.config
+└── model.sdf
+```
+
+each directory have :
+
+* materials :Contains textures and scripts for defining material properties.
+* meshes folder: Stores 3D models in formats like COLLADA (.dae) or STL.
+* model.sdf or model.urdf:Describes the model's physical and visual properties.
+* model.config:Provides metadata about the model.
+
+3. run it locally
+   * in gazebo Click on the toolbar, select `Insert`
+   * if installed in ./gazebo/models you will find the name of the directory
+   * if downloaded in another path click on add path and select the folder name
+
+<p align= "center" >
+<img src="images/17.png">
+
+<p align= "center" >
+<img src="images/16_.png">
+
+
 ---
+
 
 # [Next Topic Link](< >)
 
