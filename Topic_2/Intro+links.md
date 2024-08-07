@@ -82,7 +82,9 @@ we have a set of different shapes in the URDF format which are:
 * box: has three attributes the length, width, and height.
 * cylinder: has two attributes which are the raduis, and length.
 * sphere: has one attribute the raduis.
-* mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be .dae file as this format provide the best texture and color support
+* mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be .dae file as this format provide the best texture and color support.
+
+
   ![1723029961179](image/Intro+links/1723029961179.png)
 
   ```
