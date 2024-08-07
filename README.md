@@ -1,4 +1,4 @@
-# Transformation 
+# Transformation
 
 ## [A -  Transformation Basics](3.URDF-Simulation_Workshop/Transformation_Basics_and_Stactic_Transforms/Transformations_and_Frames.md)
 
@@ -29,6 +29,18 @@
 
 - Simple Rotation Example for frame in 3d
 
+
+### TF in ROS
+
+- concept
+- package nodes
+
+### TF tools in ROS
+
+1. echo
+2. View Frames
+3. publish static tf on terminal
+
 ## [B -  Static Transformation in ROS](3.URDF-Simulation_Workshop/Transformation_Basics_and_Stactic_Transforms/Static.md)
 
 ### Broadcaster  in cpp and python
@@ -36,12 +48,6 @@
 ### Listener in cpp and python
 
 ### Robot State Publisher and  Joint_State_Publisher
-
-### TF tools in ROS
-
-1. echo
-2. View Frames
-3. publish static tf on terminal
 
 ## [C - Dynamic Transformation in ROS](3.URDF-Simulation_Workshop/Dynamic_Transforms/Dynamic.md)
 
