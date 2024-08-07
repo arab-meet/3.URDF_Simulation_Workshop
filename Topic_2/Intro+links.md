@@ -65,11 +65,7 @@ all three tags are optional meaning that for example you can have a link with ju
 </link>
 ```
 
-
-
 ---
-
-
 
 #### Visual
 
@@ -87,8 +83,7 @@ we have a set of different shapes in the URDF format which are:
 * cylinder: has two attributes which are the raduis, and length.
 * sphere: has one attribute the raduis.
 * mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be .dae file as this format provide the best texture and color support
-
-  ![1722971129026](image/URDFcopy/1722971129026.png)
+  ![1723029961179](image/Intro+links/1723029961179.png)
 
   ```
   #for the box
@@ -143,8 +138,6 @@ note that all these properties of the visual tags are optional except for the ge
 </visual>
 ```
 
-
-
 ---
 
 #### Collision
@@ -163,8 +156,6 @@ as the visual tag the collision tag has `Geometry` and `Origin` but it does not 
   </geometry>
 </collision>
 ```
-
-
 
 ---
 
@@ -199,7 +190,7 @@ note that URDF assumes a negative product of inertia convention.
 
 In the end we find that the final result of a link looks something like this:
 
-![1722968398405](image/URDFcopy/1722968398405.png)
+![1723029977195](image/Intro+links/1723029977195.png)
 
 ```
 <link name="<link_name>">
