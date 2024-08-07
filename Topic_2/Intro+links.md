@@ -120,9 +120,9 @@ here we can specify two tags for the visual of our link which are:
 * texture: is specified by a file name
   note that the color disappears when we run our robot on gazebo since it should have a certain plugin installed to show the link's color in gazebo.
 
-  ```
-  <material name="white"/>
-  ```
+```
+<material name="white"/>
+```
 
 we also have an extra tag which is the `name` that gives a name to a part of the link which can be useful when you have complex links and you want to access certain bits of a link.
 
