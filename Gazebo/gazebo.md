@@ -268,7 +268,7 @@ you can control the movement this robot follow this steps
 
 - Choose the model from your device
 
-## 1. static velocity
+## 1. Constant velocity
 
 - if you write in another terminal
   ```sh
