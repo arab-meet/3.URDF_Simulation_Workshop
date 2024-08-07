@@ -3,7 +3,7 @@
 
 ROS gives you a tool called robot state publisher. In essence, it takes a file describing URDF file as input, and it automatically publishes the TF for you. Sounds pretty nice, right?
 
-![robot state publisher](<images/robot state publisher node.png>)
+![robot state publisher](<images/robot_state_publisher_node.png>)
 
 ### Purpose and Functionality:
 * The robot_state_publisher allows you to broadcast the state of a robot to the tf transform library.
