@@ -23,6 +23,8 @@
 
 ## 2. Why do needed frame transformation in AMR
 
+<img src="images/tf1.png"/>
+
 There are multiple reasons for example :
 
 - To etermine the robot's position within a global map
@@ -72,19 +74,81 @@ Similar to the map frame but may include more global context.
 
 - Rigid body transformation in 2D involves changing the position and orientation of a shape or object while preserving its size and shape. This typically includes translation (shifting position) and rotation (changing orientation).
 
-<img src="images/rigid_body.png" />
+<img src="images/tf3.png" />
 
-- Rotation and Transformation Matrix
-- Transform A point Example
+### 3.1. Translation
 
-### 3.1. Transformation in 3D
+Just shifting with the same orientation , if the robot origin was in posion A and move to position B
 
-- Simple Rotation Example for frame in 3d
+<img src="images/tf14.png" style="width:60%" />
+
+so the robot new position with respect to the world will be it's tf from position A WRT World plus the shift between old and new position
+
+<img src="images/tf15.png" />
+
+### 3.2. Rotation:
+
+if we have a point in a frame A so it's position WRT frame A will be as following
+
+<img src="images/tf4.png" />
+
+**What if frame A rotated with angle theta ?**
+Let's Calculate this step by step :
+
+1. We agreed that tf of the point in B will equal it's projection in B frame in x and y --> (1)
+
+<img src="images/tf5.png" />
+
+2. let's expand the vector(projection ) X^B and Y^B
+
+<img src="images/tf6.png" />
+
+3. so by comensation in (1) we will get the tf of the point in the frame B
+
+<img src="images/tf7.png" />
+
+### 3.3. Transformation ( Rotation and Translation ):
+
+- the frame B is both translated and oriented
+
+<img src="images/tf8.png" />
+
+Let's Calculate this step by step :
+
+1. Make the rotation calculation at first , let's say we have a frame V that represents the orientation of B to be parallel to A
+
+<img src="images/tf9.png" />
+
+2. So the tf of the point p in the frame A will be represented by the vector Ap which is the summition of Atv + Vp
+
+<img src="images/tf10.png" />
+
+3. Let's Expand and compenste
+
+<img src="images/tf11.png" />
+
+ So this is the final Transformation matrix to transform a point from a frame into another
+
+<img src="images/tf16.png" />
+
+### 3.4. Practical Example:
+
+<img src="images/tf12.png" />
+
+Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
+
+And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0. 
+
+To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
+
+<img src="images/tf13.png" />
+
+This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
+
 
 ## 4. TF in ROS
 
 - concept
-
 - package nodes
 
 ### 4.1. TF tools in ROS
@@ -93,76 +157,9 @@ Similar to the map frame but may include more global context.
 2. View Frames
 3. publish static tf on terminal
 
-# Robot State Publisher
-
-The Robot State Publisher in ROS 1 is a crucial component that plays a significant role in robot modeling and visualization.
-
-### Purpose and Functionality:
-
-* The robot_state_publisher allows you to broadcast the state of a robot to the tf transform library.
-* It internally maintains a kinematic model of the robot, which includes information about its links, joints, and transformations.
-* Given the joint positions of the robot (obtained from the joint_states topic), the robot_state_publisher computes and broadcasts the 3D pose of each link in the robot.
-
-<img src="images/robot_state_publisher_node.png" />
-
-### How It Works:
-
-* At startup, the robot_state_publisher is provided with a URDF (Unified Robot Description Format) model of the robot. This URDF describes the robot’s structure, including its links, joints, and transformations.
-* It subscribes to the joint_states topic (of type sensor_msgs/JointState) to receive information about the robot’s joint positions.
-* Using the joint positions, it calculates the forward kinematics of the robot, determining the 3D poses of each link.
-* These calculated poses are then published via the tf system, making them available to other components in the ROS system.
-
-### Key Features and Usage:
-
-* The robot_state_publisher can be used both as a library (for custom applications) and as a ROS node.
-* It’s commonly employed for visualization in tools like RViz, where it helps display the robot’s pose accurately.
-* The package is well-tested and considered stable, with no major changes planned in the near future.
-
-### Parameters and Topics:
-
-* `robot_description`: Specifies the URDF XML robot description.
-* `tf_prefix`: Sets the tf prefix for namespace-aware publishing of transforms.
-* `publish_frequency`: Controls the frequency of state publishing (default: 50Hz).
-* `ignore_timestamp`: If true, ignores the publish frequency and timestamp of joint_states, publishing a tf for each received joint_states (default: “false”).
-* `use_tf_static`: Determines whether to use tf_static (used for static transforms).
-
-*Note:All fixed transforms are future-dated by 0.5 seconds to ensure consistency.*
-
-# Joint_State_Publisher
-
-The joint_state_publisher in ROS 1 is a valuable tool for managing joint states within a robot model.
-
-### Overview:
-
-* The joint_state_publisher is a ROS package that publishes sensor_msgs/JointState messages for a robot described using the URDF (Unified Robot Description Format).
-* Its primary responsibility is to continually publish values for all movable joints in the URDF to the /joint_states topic.
-
-![joint state publisher](images/joint state publisher.png)
-
-### How It Works:
-
-* The package reads the robot_description parameter from the parameter server.
-* It identifies all non-fixed joints in the robot model.
-* For each of these joints, it constructs a JointState message containing the joint’s position, velocity, and effort (if available).
-* These messages are then published to the /joint_states topic.
-
-![joint state publisher inputs](images/joint state publisher 2.png)
-
-### Data Input Sources:
-
- The joint_state_publisher can obtain joint state values from various sources:
-
-* GUI: The GUI functionality (now in a separate package called joint_state_publisher_gui) allows manual input of joint positions via sliders.
-* Subscribed JointState Messages: It subscribes to JointState messages from other nodes.
-* Default Values: If no other sources provide a value, it falls back to default values.
-
-### Usage Scenarios:
-
-* Visualization: When combined with the robot_state_publisher, it helps visualize the robot’s pose accurately in tools like RViz.
-* Simulation and Testing: Useful for simulating robot behavior or testing controllers without actual hardware.
-* Multiple Publishers: When you have multiple publishers of JointState messages, the joint_state_publisher ensures a coherent view across all joint state topics 12.
-
 # Acnolegment
 
 1. http://wiki.ros.org/tf/Overview/Transformations
 2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
+3. https://robotacademy.net.au/masterclass/2d-geometry/
+4. https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/
