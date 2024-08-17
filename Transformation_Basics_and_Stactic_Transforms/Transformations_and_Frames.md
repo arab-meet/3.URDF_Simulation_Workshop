@@ -1,5 +1,10 @@
 # Transformation_And_Frames(TF)
 
+
+**Author: Wafaa Mohamed**
+
+**Review :**
+
 ## 1. Coordinate frame and transformation
 
 #### 1.1. coordinate frame
@@ -137,7 +142,7 @@ Let's Calculate this step by step :
 
 Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
 
-And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0. 
+And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
 
 To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
 
@@ -145,17 +150,77 @@ To Calculate for this translation and rotation a new matrix will be created that
 
 This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
 
-
 ## 4. TF in ROS
 
-- concept
-- package nodes
+### 4.1. Concept
+
+- In ROS TF is a package that provides a way to keep track of multiple coordinate frames in the robot over time. It allows the user to transform data between these frames and maintain the relationships between them.
+- **TF tree** is a conceptual representation of all the coordinate frames in a system and the transformations (transforms) between them. It's organized as a directed graph, where each node represents a coordinate frame, and each edge represents a transform between two frames.
+- **tf2** : This is the newer version of `tf` and is used in ROS 2 and the later versions of ROS 1. `tf2` provides better performance, thread safety, and new features while maintaining backward compatibility with `tf`.
+
+<img src="images/pr2_tf.png" />
+
+### 4.1. Package nodes
+
+ **Broadcasters and Listeners**:
+
+1. **Broadcasters**: Nodes that publish the transforms between frames. For example, a robot's base link to its odom frame. "on topic /tf"
+2. **Listeners**: Nodes that subscribe to transforms and use them to compute the relative position and orientation of different frames.
 
 ### 4.1. TF tools in ROS
 
-1. echo
-2. View Frames
-3. publish static tf on terminal
+### **`tf_echo`**
+
+* **Purpose** : Displays the transform between two frames in real-time.
+* **`tf2_echo`** : Similar to `tf_echo`
+* **Usage :**
+
+```
+  rosrun tf tf_echo [source_frame] [target_frame]
+  rosrun tf tf_echo /base_link /map
+```
+
+### **`rqt_tf_tree`**
+
+* **Purpose** : Provides a graphical visualization of the `tf` tree.
+* **Usage :**
+
+```
+rosrun rqt_tf_tree rqt_tf_tree
+```
+
+<img src="images/tree.png" />
+
+### **`view_frames`**
+
+* **Purpose** : Generates a graphical representation of the `tf` tree as a PDF.
+* **Usage** :
+
+```
+rosrun tf view_frames
+```
+
+### **`tf_monitor`**
+
+* **Purpose** : Monitors the status of transforms between frames and checks if they are being published regularly.
+* tf2_monitor: Monitors transforms in tf2.
+* **Usage** :
+
+```
+rosrun tf tf_monitor [frame1] [frame2]
+rosrun tf tf_monitor /base_link /odom
+```
+
+### **`static_transform_publisher`**
+
+* **Purpose** : Publishes a static transform between two frames.
+* **Usage** :
+
+```
+rosrun tf static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
+rosrun tf static_transform_publisher 1 0 0 0 0 0 /base_link /laser 100
+```
+<img src="images/static_tf.png" />
 
 # Acnolegment
 
