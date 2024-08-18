@@ -8,6 +8,8 @@ In this example, we create a static broadcaster node that publishes two frames w
    - **StaticTransformBroadcaster**: This class publishes coordinate frame transform information.
    - **TransformStamped**: This message type is used in static transforms.
 
+
+
 ```python
 #!/usr/bin/env python3
 
@@ -29,7 +31,7 @@ from geometry_msgs.msg import TransformStamped
         self.static_transform_stamped = TransformStamped()
 ```
 ### 3. Setting Information in TransformStamped Message
-![transform stamped](media/transformstamed.png)
+![transform stamped](images/transformstamed.png)
 
 To define the information in a `TransformStamped` message for the static transform between two frames, follow these steps:
 
