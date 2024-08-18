@@ -1,7 +1,7 @@
 
 # Robot State Publisher
 
-ROS gives you a tool called robot state publisher. In essence, it takes a file describing URDF file as input, and it automatically publishes the TF for you. Sounds pretty nice, right?
+ROS gives you a Node called robot state publisher. In essence, it takes a file describing URDF file as input, and it automatically publishes the TF for you. Sounds pretty nice, right?
 
 ![robot state publisher](<images/robot_state_publisher_node.png>)
 
@@ -40,7 +40,7 @@ As you can see in the tf_tree, there are some links not here `front_right_wheel`
 
 **these links connected with non fixed joint**
 
-This is because non-fixed joints, like this ***front_left_wheel_joint***, can be in any configuration, his TF  depends on the value of the joint, joints like encoder or other actuators.
+This is because non-fixed joints, like this ***front_left_wheel_joint***, can be in any configuration, The TF  depends on the value of the joint, joints like encoder or other actuators.
 
 **to solve this problem we need to publish encoder reading to change joint state for example if encoder increase by 5 ticks this map with 0.01 rad we need to change transformation by this degree**
 
