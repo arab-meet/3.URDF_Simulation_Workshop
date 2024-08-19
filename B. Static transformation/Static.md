@@ -1,16 +1,34 @@
 
 # Transformations
 
-any robot consist of frames linked together and **TF** consist of two main parts **Static** and **Dynamic** transformation Transformaiton, Here we will talk about **Static Transformation**
+any robot consist of frames linked together and **TF** consist of two main parts **Static** and **Dynamic**  transformaitons, 
 
+<span style="color: red;">See this first and then we will talk</span>
+
+
+![static dynamic](images/static_dynamic_example.gif)
+
+
+as you can see this gif explain two types of transformations 
+
+- **static transformation** like transfromation between `base_link` and `laser_link`
+
+- **dynamic transformation** like transfromation between `odom` and `base_link`
+
+Frist let's talk more about static 
 
 ## Static Transformation 
 
 static transformation it is about componants or sensors at **certain distance** relative to **base link**
 
+this distance won't change relative to time.
+
 ![output tf tree](images/tf_static_dynamic.png)
 
 #### in this case `laser link` is fixed (static) frame becouse laser link cann't move with respect to `base link`
+
+Now I hope we understand static transformation concept, We need to learn how we publish this transformation
+we use **tf broadcaster** to publish this transformation.
 
 ## Static Broadcaster:
  
@@ -102,4 +120,27 @@ To define the information in a `TransformStamped` message for the static transfo
 
 #### output:
 ![static transform output](images/static_rvis.png)
+
+After we understand broadcaster node, we need to learn how we listen this transformation
+
+## Tf Listener:
+
+listener is simpler than broadcaster 
+
+In this example, we will create listener node  to listen above broadcaster node 
+
+### New lines in the code :
+
+`listener = tf.TransformListener()`: Creates a TransformListener object, which listens to transformations being broadcasted between coordinate frames.
+
+
+`(trans, rot) = listener.lookupTransform('/base_link', '/laser', rospy.Time(0))`: his function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/base_link` and `/laser`.
+
+`rospy.Time(0)`: This argument specifies the time at which you want to know the transformation. By passing `rospy.Time(0)`, you're telling the TransformListener to give you the transformation at the latest available time. In other words, it will return the most recent transformation that it has recorded, If you were to pass a different time, like `rospy.Time(5)`, it would attempt to give you the transformation as it was at 5 seconds into the ROS system’s start time, which might be outdated if you’re looking for real-time data.
+
+### for full code :
+[Full Code](../static_dynamic_pkg/scripts/tf_static_listener.py)
+
+## Output is :
+![static transform output](images/static_listener.gif)
 
