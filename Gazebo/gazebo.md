@@ -4,6 +4,39 @@ Robotic simulation involves creating a virtual model that mimics real-world proc
 
 Robotic simulators are software applications that create models of robots and render virtual environments that replicate the real-world settings in which the robots will operate. In our scenario, the environment is a typical hotel or restaurant with tables and chairs. We need to replicate this setup in the simulator to test the robot's functionality. One commonly used robotic simulator for such tasks is **`Gazebo`**.
 
+## but why Gazebo 
+ Here are some simulators along with their features:
+| Feature/Software       | Gazebo        | Unity        | Isaac Sim   | CoppeliaSim  | CARLA        | LGSVL        | Webots       | Stage        |
+|------------------------|---------------|--------------|-------------|--------------|--------------|--------------|--------------|--------------|
+| **Community**          | Large, active  | Large, general | Growing    | Moderate     | Growing      | Growing      | Moderate     | Moderate     |
+| **ROS Integration**    | Excellent      | Limited      | Excellent    | Limited      | Limited      | Limited      | Moderate     | Limited      |
+| **Open Source**        | Yes            | No           | No          | Yes          | Yes          | Yes          | Yes          | Yes          |
+| **Physics Engine**     | Advanced       | Basic        | Advanced     | Advanced     | Moderate     | Moderate     | Advanced     | Basic        |
+| **Graphics Quality**   | Moderate       | High         | High        | Moderate     | High         | High         | Moderate     | Low          |
+| **Ease of Use**        | Moderate       | High         | Moderate    | Moderate     | High         | Moderate     | Moderate     | Basic        |
+| **Customization**      | High           | High         | High        | High         | Moderate     | Moderate     | High         | Moderate     |
+| **Real-world Scenarios** | High         | Moderate     | High        | High         | High         | High         | Moderate     | Low          |
+| **Ideal For**          | Robotics, ROS-based systems | Games, General simulation | Advanced robotics, NVIDIA GPUs | Robotics, Research | Autonomous driving | Autonomous driving | Robotics, Education | Simple robotics |
+
+### Each simulator is suited for specific use cases:
+
+- **Unity** : Ideal for general-purpose simulation and high-quality graphics.
+
+- **Isaac Sim** : Best for high-fidelity robotics simulation with NVIDIA GPUs.
+
+- **CoppeliaSim** : Versatile for both educational and research purposes.
+
+- **CARLA**: Specialized for autonomous vehicle simulations.
+
+- **LGSVL** : Focused on autonomous driving scenarios.
+
+- **Webots** : Excellent for educational robotics projects.
+
+- **Stage** : Suitable for lightweight, simpler robotic simulations.
+
+this make gazebo best choice for starting learn robotics because its large community provides extensive support.
+
+
 # Gazebo
 
 **Gazebo** is an open-source 3D robotics simulator. Gazebo simulated real-world physics in a high fidelity simulation.
