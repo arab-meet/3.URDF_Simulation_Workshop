@@ -136,7 +136,7 @@ In this example, we will create listener node  to listen above broadcaster node
 `listener = tf.TransformListener()`: Creates a TransformListener object, which listens to transformations being broadcasted between coordinate frames.
 
 
-`(trans, rot) = listener.lookupTransform('/base_link', '/laser', rospy.Time(0))`: his function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/base_link` and `/laser`.
+`(trans, rot) = listener.lookupTransform('/base_link', '/laser', rospy.Time(0))`: this function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/base_link` and `/laser`.
 
 `rospy.Time(0)`: This argument specifies the time at which you want to know the transformation. By passing `rospy.Time(0)`, you're telling the TransformListener to give you the transformation at the latest available time. In other words, it will return the most recent transformation that it has recorded, If you were to pass a different time, like `rospy.Time(5)`, it would attempt to give you the transformation as it was at 5 seconds into the ROS system’s start time, which might be outdated if you’re looking for real-time data.
 

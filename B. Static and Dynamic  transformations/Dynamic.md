@@ -123,9 +123,8 @@ output:
 ![output tf tree](images/tf_static_dynamic.png)
 
 ## Tf Listener:
-dynamic  listener is  same as static listener [1.](/3.URDF_Simulation_Workshop/B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
- the  only change is add 
-`(trans_dy, rot_dy) = listener.lookupTransform('/base_link', '/laser', rospy.Time(0))`: his function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/odom` and `/base_link`.
+Dynamic and static listener [1.](/3.URDF_Simulation_Workshop/B.%20Static%20and%20Dynamic%20%20transformations/Static.md) code share a similar structure, with the primary difference being the inclusion of the line 
+`(trans_dy, rot_dy) = listener.lookupTransform('/odom', '/base_link', rospy.Time(0))` in dynamic listener code . this function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/odom` and `/base_link`.
 
 ### for full code :
 [Full Code](../static_dynamic_pkg/scripts/tf_dynamic_listener.py)
