@@ -112,6 +112,8 @@ To define the information in a `TransformStamped` message for the static transfo
         rospy.loginfo("TF static has been published between %s and %s frames" % (self.static_transform_stamped.header.frame_id, self.static_transform_stamped.child_frame_id))
         
 ```
+- #### static transform messages are broadcast on `/tf_static`  topic 
+
 ### for full code :
 [Full Code](../static_dynamic_pkg/scripts/tf_static.py)
 

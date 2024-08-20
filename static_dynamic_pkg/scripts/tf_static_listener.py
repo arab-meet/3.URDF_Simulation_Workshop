@@ -4,7 +4,7 @@ import tf
 
 
 if __name__ == '__main__':
-    rospy.init_node('turtle_tf_listener')
+    rospy.init_node('static_tf_listener')
 
     listener = tf.TransformListener()
 

@@ -38,7 +38,7 @@ this TF structure for most autonomous robots:
 
 #  Dynamic Broadcaster
 
-In this section, we will extend the previous example by adding dynamic transformation between the `base_link` and another link called `odom`. 
+- In this section, we will extend the previous example by adding dynamic transformation between the `base_link` and another link called `odom`. 
 
 #### Description
 
@@ -102,13 +102,18 @@ self.x_increment= 0.05
 output
 ![dynamic transform](images/dynamic_transform.gif)
 
+#### dynamic transform messages are broadcast on `/tf`  topic :
+
+
+![tf topics ](images/tf_topic_echo.png)
+
 #### tf tree should be like this :
 
 ```bash
 rosrun rqt_tf_tree rqt_tf_tree 
 ```
 ##### note:
-if line not work make sure you install the package
+- If line not work make sure you install the package
 
 ```bash
 sudo apt-get install ros-noetic-rqt-tf-tree
@@ -116,4 +121,15 @@ sudo apt-get install ros-noetic-rqt-tf-tree
 output:
 
 ![output tf tree](images/tf_static_dynamic.png)
+
+## Tf Listener:
+dynamic  listener is  same as static listener [1.](/3.URDF_Simulation_Workshop/B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
+ the  only change is add 
+`(trans_dy, rot_dy) = listener.lookupTransform('/base_link', '/laser', rospy.Time(0))`: his function call is asking the TransformListener to provide the transformation (translation and rotation) between the two coordinate frames, `/odom` and `/base_link`.
+
+### for full code :
+[Full Code](../static_dynamic_pkg/scripts/tf_dynamic_listener.py)
+
+## Output is :
+![dynamic transform output](images/dynamic_listener.gif)
 

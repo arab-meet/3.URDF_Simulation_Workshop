@@ -6,7 +6,7 @@ from tf2_ros import StaticTransformBroadcaster, TransformBroadcaster
 # massage that used in tf static 
 from geometry_msgs.msg import TransformStamped
 
-class tf_static_ex(object):
+class tf_dynamic_ex(object):
     
     def __init__(self):
         
@@ -88,8 +88,9 @@ class tf_static_ex(object):
         self.dynamic_broadcaster.sendTransform(self.dynamic_transform_stamped)
         # update last x value
         self.last_x = self.dynamic_transform_stamped.transform.translation.x
-        
+        rospy.loginfo("TF static has been published between %s and %s frames" % (self.dynamic_transform_stamped.header.frame_id, self.dynamic_transform_stamped.child_frame_id))
+
 if __name__ == "__main__":
     rospy.init_node("tf_dynamic_node")
-    tf_static_ex()
+    tf_dynamic_ex()
     rospy.spin()
