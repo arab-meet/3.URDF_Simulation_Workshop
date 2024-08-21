@@ -168,7 +168,7 @@ note that all these properties of the visual tags are optional except for the ge
 ```
 
 
-
+![link](https://github.com/user-attachments/assets/54bb6764-9fe7-4eb6-9d5d-8bdec9e98103)
 After we learned how to use each tag to make a link now we will utilize these information to make our first link in our robot which is the base link.
 
 #### Collision
