@@ -135,7 +135,7 @@ defines the reference frame of the visual relative to the reference frame of the
 
 has six attributes which are `xyz` and `rpy` and the default of these values are zeros.
 
-```
+```xml
 <origin rpy="0 0 0" xyz="0 0 0"/>
 ```
 
@@ -147,7 +147,7 @@ here we can specify two tags for the visual of our link which are:
 * texture: is specified by a file name
   note that the color disappears when we run our robot on gazebo since it should have a certain plugin installed to show the link's color in gazebo.
 
-```
+```xml
 <material name="white"/>
 ```
 
@@ -155,7 +155,7 @@ we also have an extra tag which is the `name` that gives a name to a part of the
 
 note that all these properties of the visual tags are optional except for the geometry tag.
 
-```
+```xml
 <visual>  
   <origin xyz="0 0 0" rpy="0 0 0" />
   <geometry>
@@ -167,7 +167,9 @@ note that all these properties of the visual tags are optional except for the ge
 </visual>
 ```
 
----
+
+
+After we learned how to use each tag to make a link now we will utilize these information to make our first link in our robot which is the base link.
 
 #### Collision
 
@@ -219,8 +221,6 @@ note that URDF assumes a negative product of inertia convention.
 
 In the end we find that the final result of a link looks something like this:
 
-![1723029977195](image/Intro+links/1723029977195.png)
-
 ```
 <link name="<link_name>">
   <visual>  
@@ -244,4 +244,3 @@ In the end we find that the final result of a link looks something like this:
   </inertial>
 </link>
 ```
-
