@@ -37,11 +37,11 @@ there are three main extentions that we will need which are
 * ROS snippets by pijar          (this extintions has some snippets that helps us write our description more effeciently)
 * URDF by smilerobotics         (this extintion also provides some premade structures that helps us write our code faster)
 
-![Extentions](/home/yoyoasal12/ros_ws/src/urdf_tutorials/images/Extentions.gif)
+![Extentions](https://github.com/user-attachments/assets/f14191f6-c231-4d4f-bd19-4c46092eeb38)
 
 **Note** that when you install the ROS extention you will have to chage the version to prerelease version in order for the urdf preview to work and after we change it we'll have to restart vscode for in order for our changes to take place.
 
-![prerelease](/home/yoyoasal12/ros_ws/src/urdf_tutorials/images/prerelease.gif)
+![prerelease](https://github.com/user-attachments/assets/7e37cbc9-a2a5-4c9c-81bc-5414dce869ec)
 
 after we have installed everything now we are ready to start descriping our robot.
 
@@ -67,11 +67,11 @@ after this we difine the main tag that will contain links and joints tags in it 
 
 Here we can see how to initialize our urdf file with the main tag that will contaion all the robot tags
 
-![robot tag](/home/yoyoasal12/ros_ws/src/urdf_tutorials/images/robot_tag.gif)
+![robot_tag](https://github.com/user-attachments/assets/a5b2a17c-d402-4656-b567-297dab6095a9)
 
 now we can start the ros preview to see how our robot looks like in every step as we go. and we can do that by clicking  `Shift+Ctrl+p` and type `ROS: URDF Preview` that will open a new tab that show your robot
 
-![ros preview](/home/yoyoasal12/ros_ws/src/urdf_tutorials/images/ROS_preview.gif)
+![ROS_preview](https://github.com/user-attachments/assets/93e38b8f-5d30-4f98-860e-7d38a6191ed5)
 
 As we can see the preview screen is empty because we didn't add any links yet so now we will start to build our robot
 
@@ -95,7 +95,7 @@ all three tags are optional meaning that for example you can have a link with ju
 </link>
 ```
 
-![Link](/home/yoyoasal12/ros_ws/src/urdf_tutorials/images/link.png)
+![link](https://github.com/user-attachments/assets/b1764f87-0e65-427d-a39a-30c691532c56)
 
 #### Visual
 
