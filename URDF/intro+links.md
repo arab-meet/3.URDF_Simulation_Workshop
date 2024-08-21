@@ -161,8 +161,8 @@ note that all these properties of the visual tags are optional except for the ge
   <geometry>
     <box size="1 1 1" />
   </geometry>
-  <material name="Cyan">
-    <color rgba="0 1.0 1.0 1.0"/>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
 </visual>
 ```
