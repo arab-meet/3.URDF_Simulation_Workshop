@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<robot name="skid_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+ 
+
+<xacro:include filename="$(find skid_steer_robot)/urdf/lidar_2d.xacro"/>
+<xacro:include filename="$(find skid_steer_robot)/urdf/_d435.urdf.xacro"/>
+<!-- <xacro:include filename="$(find skid_steer_robot)/urdf/mono_camera.xacro"/> -->
+<xacro:include filename="$(find skid_steer_robot)/urdf/imu.xacro"/>
+<xacro:include filename="$(find skid_steer_robot)/urdf/ultrasonic.xacro"/>
+<!-- <xacro:include filename="$(find skid_steer_robot)/urdf/3d_lidar.xacro"/> -->
+
+
+<!-- Add Dummy Link  -->
+  
+<link name="base_footprint">  
+</link>
+
+<joint name="base_footprint_joint" type="fixed">
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+    <parent link ="base_footprint"/>
+    <child link ="base_link"/>   
+</joint>
+
+
+
+
+   <!-- Base Link --> 
+   <link name="base_link">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <mass value="5.0"/>
+        <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+    <visual>
+        <geometry>
+            <box size="0.4 0.3 0.09"/>
+        </geometry>
+        <origin xyz="0 0 0.05"/>
+        <material name="base_link_material">
+            <color rgba="0.0 0.0 1.0 1.0"/> 
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+            <box size="0.4 0.3 0.09"/>
+        </geometry>
+        <origin xyz="0 0 0.05"/>
+    </collision>
+</link>
+
+
+
+
+    
+    <!-- Front Right Wheel Link -->
+<link name="front_right_wheel">
+  <visual>
+      <geometry>
+          <cylinder radius="0.06" length="0.02"/>
+      </geometry>
+      <origin rpy="0 0 0"/>
+      <material name="">
+        <color rgba="0.0 0.0 0.0 1.0"/> 
+      </material>
+  </visual>
+  <collision>
+      <geometry>
+          <cylinder radius="0.06" length="0.02"/>
+      </geometry>
+      <origin rpy="0 0 0"/>
+  </collision>
+  <inertial>
+      <mass value="1.0"/>
+      <origin rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+  </inertial>
+</link>
+
+<!-- Front Right Wheel Joint -->
+<joint name="front_right_wheel_joint" type="continuous">
+  <parent link="base_link"/>
+  <child link="front_right_wheel"/>
+  <origin xyz="0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
+  <axis xyz="0 0 1"/> 
+</joint>
+
+
+
+
+
+
+  <!-- Front Left Wheel Link -->
+  <link name="front_left_wheel">
+    <visual>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+        <material name="">
+          <color rgba="0.0 0.0 0.0 1.0"/> 
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+    </collision>
+    <inertial>
+        <mass value="1.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+  </link>
+  
+  <!-- Front Left Wheel Joint -->
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
+    <axis xyz="0 0 1"/> 
+  </joint>
+
+
+
+
+   <!-- Rear Right Wheel Link -->
+   <link name="rear_right_wheel">
+    <visual>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+        <material name="">
+          <color rgba="0.0 0.0 0.0 1.0"/> 
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+    </collision>
+    <inertial>
+        <mass value="1.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+  </link>
+  
+  <!-- rear Right Wheel Joint -->
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel"/>
+    <origin xyz="-0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
+    <axis xyz="0 0 1"/> 
+  </joint>
+
+
+
+
+   <!-- Rear Left Wheel Link -->
+   <link name="rear_left_wheel">
+    <visual>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+        <material name="">
+          <color rgba="0.0 0.0 0.0 1.0"/> 
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.06" length="0.02"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+    </collision>
+    <inertial>
+        <mass value="1.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+  </link>
+  
+  <!-- rear Left Wheel Joint -->
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel"/>
+    <origin xyz="-0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
+    <axis xyz="0 0 1"/> 
+  </joint>
+
+  
+<xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="true">
+  <origin xyz="0.19 0 0.1" rpy="0 0 0"/>
+</xacro:sensor_d435>
+
+ 
+  
+
+<!-- Skid-Steer Drive Plugin -->
+<gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <robotNamespace>/</robotNamespace>
+    <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+    <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+    <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
+    <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
+    <wheelSeparation>0.34</wheelSeparation>
+    <wheelDiameter>0.12</wheelDiameter>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+    <torque>20</torque>
+    <topicName>cmd_vel</topicName>
+    <broadcastTF>false</broadcastTF>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <covariance_x>0.000100</covariance_x>
+    <covariance_y>0.000100</covariance_y>
+    <covariance_yaw>0.010000</covariance_yaw>
+  </plugin>
+</gazebo>
+
+<gazebo reference="front_left_wheel">
+  <material>Gazebo/Black</material> 
+</gazebo>
+<gazebo reference="front_right_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+<gazebo reference="rear_left_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+<gazebo reference="rear_right_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+<gazebo reference="base_link">
+  <material>Gazebo/Blue</material>  
+</gazebo>
+
+
+</robot>
