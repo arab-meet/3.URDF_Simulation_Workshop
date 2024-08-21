@@ -27,7 +27,7 @@ in a typical URDF file we will find that it contains three main tags which are:
 * links
 * joints
 
-![Robot](3.URDF_Simulation_Workshop/URDF/images/2-1.png)
+![Robot](https://github.com/user-attachments/assets/b787527b-57ae-4ca6-bac9-4a52f33be1f4)
 
 before we start writing our robot description we will need some extintions that will help us write our descrioption and visualize it along the way so we have a better idea of what we are making
 
