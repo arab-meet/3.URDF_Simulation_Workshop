@@ -1,21 +1,69 @@
 ## Joints
 
-Joints serve to connect two links in a robot and describes the kinematics and dynamics of them. The first link is designated as the `<parent>`, and the second link becomes the `<child>`. There are four types of joints:  **Fixed** ,  **Revolute** ,  **Continuous** , and  **Prismatic** . Each type defines how the `<parent>` link is related to the `<child>` link. in URDF file the joint can be writen as shown:
+Joints serve to connect two links in a robot and describes the kinematics and dynamics of them. The primary link is designated as the `<parent>`, and the second link becomes the `<child>`. There are four types of joints:  **Fixed** ,  **Revolute** ,  **Continuous** , and  **Prismatic** . Each type defines how the `<parent>` link is related to the `<child>` link.
 
-```xml
+<p align="center">
+<img src="image/joint_frame.png" width="600">
 
-<joint name="joint_name" type="joint_type">
-    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-    <parent link="parent_link"/>
-    <child link="child_link"/>
-    <axis xyz="0.0 0.0 0.0"/>
-    <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
-</joint>
-```
+To create a joint in a URDF file:
+
+* First create a frame and name the joint and select the joint type.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+
+  </joint>
+  ```
+* Then select the child and parent link of this joint.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+  </joint>
+
+  ```
+* After that, add the values of the origin point in which the origin point is the transform from the parent link to the child link and the joint origin is located at the origin of child link.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+  </joint>
+  ```
+* Then, add the axis as it spacify the axis of rotation for **revolute joints**, the axis of **translation for prismatic** joints. *Fixed joint do not use the axis field*
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+     <axis xyz="0.0 0.0 0.0"/>
+  </joint>
+  ```
+* If the joint type is prismatic or revolute then the a limit should be add tho the joint in which the limit has four parameters.
+
+  * 1- `lower` : This parameter value is for the lower limit in *meters* for **parasmitic joint** and *radian* for **revolute joint**.
+  * 2- `upper` : This parameter value is for the upper limit in *meters* for **parasmitic joint** and *radian* for **revolute joint**.
+  * 3- `effort` : This parameter value is for the maximum effort in *N* for the **prismatic joint** and *N-m* for the **revolute joint**.
+  * 4- `velocity`: This parameter value is for the maximum velocity in *m/sec* for **prismatic joint** and *rad/sec* for **revolute joint**.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+     <axis xyz="0.0 0.0 0.0"/>
+     <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+  </joint>
+  ```
+
+## Types of joints
 
 ### Fixed
 
-This is not really a joint because it cannot move. All degrees of freedom are locked.
+This is not really a joint because it cannot move. All degrees of freedom are locked.So, it is used to fix links that does not move.
 
 ```xml
 <joint name="joint_name" type="fixed">
@@ -25,6 +73,9 @@ This is not really a joint because it cannot move. All degrees of freedom are lo
     <axis xyz="0.0 0.0 0.0"/>
 </joint>
 ```
+
+<p align="center">
+<img src="image/fixed_joint2.png" width="600">
 
 **Example:**
 
@@ -89,7 +140,8 @@ If a robot base link is a parent link and a child link for a box which can repre
 
 ```
 
-<img src="image/fixed_joint.png">
+<p align="center">
+<img src="image/fixed_joint.png" width="600">
 
 ### Revolute
 
@@ -109,6 +161,9 @@ It is a hinge joint that rotates along the axis and has a limited range specifie
 **Example:**
 
 If a robot base link is the parent link and a robot arm is the child link in which the robot arm wanted to revolute around an axis with limits. So, as shown in the below figure the joint between the base link and the revoluting link is revolute joint in which the link revoluting link is needed to revolute around an axis with limits in angles and velocity.
+
+<p align="center">
+<img src="image/revolute_joint2.png">
 
 ```xml
 <?xml version="1.0"?>
@@ -162,7 +217,7 @@ If a robot base link is the parent link and a robot arm is the child link in whi
     </inertial>
   </link>
 
-  <joint name="camera_joint" type="revolute">
+  <joint name="revolute_joint" type="revolute">
     <parent link="base_link"/>
     <child link="child_link"/>
     <origin xyz="0.035 0.0 0.15" rpy="0.0 0.0 0.0"/>
@@ -173,10 +228,13 @@ If a robot base link is the parent link and a robot arm is the child link in whi
   
 </robot>
 ```
-
+<p align="center">
 <img src="image/revolute_joint.png">
 
-### Continous
+<p align="center">
+<img src="image/revolute_joint.gif" width="600">
+
+### Continuous
 
 This is a continuous hinge joint that rotates around the axis and has no upper and lower limits.
 
@@ -192,6 +250,10 @@ This is a continuous hinge joint that rotates around the axis and has no upper a
 **Example:**
 
 If a robot base link is the parent link and a wheel is the child link in which the wheel wanted to revolute around an axis continuous without any limits. So, as shown in the below figure the joint between the base link and the continuous revoluting link is continuous joint.
+
+<p align="center">
+<img src="image/continuous_joint2.png">
+
 
 ```xml
 <?xml version="1.0"?>
@@ -221,7 +283,7 @@ If a robot base link is the parent link and a wheel is the child link in which t
 
   <!-- Wheel link (cylinder) -->
 
-  <link name="wheel_link">
+  <link name="wheel_link_right">
     <visual>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <geometry>
@@ -234,8 +296,8 @@ If a robot base link is the parent link and a wheel is the child link in which t
     </visual>
     <collision>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <geometry>   
-        <box size="0.02 0.05 0.02"/>
+      <geometry>   
+        <cylinder radius="0.06" length="0.04"/>
       </geometry>
     </collision>
     <inertial>
@@ -245,16 +307,50 @@ If a robot base link is the parent link and a wheel is the child link in which t
     </inertial>
   </link>
 
-  <joint name="wheel_joint" type="continuous">
+  <link name="wheel_link_left">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <cylinder radius="0.06" length="0.04"/>
+      </geometry>
+      <material name="">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+        <texture filename=""/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>   
+        <cylinder radius="0.06" length="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.02"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="3.7333e-5" ixy="0" ixz="0" iyy="3.7333e-5" iyz="0" izz="3.6000e-5"/>
+    </inertial>
+  </link>
+
+  <joint name="wheel_joint_right" type="continuous">
     <origin xyz="0.0 0.12 0.0" rpy="-1.5708 0.0 0.0"/> 
     <parent link="base_link"/>
-    <child link="wheel_link"/>
+    <child link="wheel_link_right"/>
     <axis xyz="0.0 0.0 1"/>
   </joint>
+
+  <joint name="wheel_joint_left" type="continuous">
+    <origin xyz="0.0 -0.12 0.0" rpy="-1.5708 0.0 0.0"/> 
+    <parent link="base_link"/>
+    <child link="wheel_link_left"/>
+    <axis xyz="0.0 0.0 1"/>
+  </joint> 
 </robot>
 ```
-
+<p align="center">
 <img src="image/continuous_joint.png">
+
+<p align="center">
+<img src="image/continuous_joint.gif">
 
 ### Prismatic
 
@@ -273,6 +369,9 @@ This is a sliding joint that slides along the axis, and has a limited range spec
 **Example:**
 
 If a robot base link is the parent link and a linear actuator or sliding mechanism is the child link, a prismatic joint can be used to model their connection. This joint allows for linear movement of the child link along a specified axis relative to the parent link without any rotational constraints.
+
+<p align="center">
+<img src="image/prismatic_joint2.png">
 
 ```xml
 <?xml version="1.0"?>
@@ -336,4 +435,8 @@ If a robot base link is the parent link and a linear actuator or sliding mechani
 </robot>
 ```
 
+<p align="center">
 <img src="image/prismatic_joint.png">
+
+<p align="center">
+<img src="image/prismatic_joint.gif">
