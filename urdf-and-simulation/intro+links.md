@@ -1,5 +1,7 @@
 # URDF
 
+---
+
 **URDF** (unified robot description format) is an `XML` file format that includes the robot description in it. it provides details on the physical characteristics of the robot in addition to all the information about the shape, geometry, and colors of the robot.
 
 **Extensible Markup Language (XML)** uses markup symbols, called tags to define data. Each instance of an XML tag is called an element. In an XML file, elements
@@ -50,7 +52,7 @@ after we have installed everything now we are ready to start descriping our robo
 first thing we find in an XML file type is the declaration tag which defines the XML version that we are using. This line usually found in the first line in a URDF file
 
 ```xml
-?xml version="1.0"?
+<?xml version="1.0"?>
 ```
 
 after this we difine the main tag that will contain links and joints tags in it and this is the robot tag. we find that the robot tag has one attribute which is the name and here we can specity the name of our robot
@@ -167,19 +169,15 @@ note that all these properties of the visual tags are optional except for the ge
 </visual>
 ```
 
-
 ![link](https://github.com/user-attachments/assets/54bb6764-9fe7-4eb6-9d5d-8bdec9e98103)
-After we learned how to use each tag to make a link now we will utilize these information to make our first link in our robot which is the base link.
 
 #### Collision
 
 here we define the collision properties of the link.
 
-the collision properties in most cases will ba the same as the visual properties but in a more complex links we tend to make a simpler collision models to reduce the computational power and make the simulation smoother.
+Collision is the physical ascpect of the link which the simulation sees and react to. for example if we have a link that has a box geometry in the visual tag whereas it has a cylinder geometry in the collision tag we as a users will see the link as a box but the simulation will react to it as a cylinder. so to simplify, the collision is how the simulation handles the link.
 
-as the visual tag the collision tag has `Geometry` and `Origin` but it does not have a material tag since it is not visible in the simulation.
-
-```
+```xml
 <collision>
   <origin xyz="0 0 0" rpy="0 0 0"/>
   <geometry>
@@ -188,7 +186,41 @@ as the visual tag the collision tag has `Geometry` and `Origin` but it does not 
 </collision>
 ```
 
----
+let's say we have a link that has a visual and collision with a box geometry but with different values.
+
+```xml
+<?xml version="1.0"?>
+<robot name="my_robot">
+    <link name="link_name">
+        <visual name="">
+            <geometry>
+                <box size="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="2.0 2.0 2.0"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>
+```
+
+after we add the collision tag we won't see anychanges in urdf preview as you can't preserve the collisions because it's just for the simulator to deal with but to help you understand what this looks like see this picture.
+
+![collision](https://github.com/user-attachments/assets/348c4696-96cb-4fcc-a4ca-7c5800b2441b)
+
+we can see here the difference between the visual and collision tag they are very similar in a lot of attributes that they share such as geometry and origin but we notice that the collision tag doesn't have material in it and that's because the importance of the material tag is to make the robot aesthetically appealing and the simulator doesn't need that.
+
+Also in most cases you don't want your robot to take actions that doesn't match what you see in the simulations so you'll probably need the collision tag to be the same as the visual tag.
+
+Let's say we used a mesh to define the geometry of the visual tag because it's complicated like this robot arm. it's not recommended in most cases to use the same mesh for the collision as this affect the performance of the simulation making it more slow so if using a more simplified geometry that's not going to change the physical properties of the link is possible that will be better in most situations.
+
+![Robot arm](https://github.com/user-attachments/assets/5d6e3a22-e0d1-408e-8354-e8dc4d0afd82)
 
 #### Inertial
 
@@ -212,35 +244,80 @@ this takes a matrix that contains information about the moment of inertia for th
 
 note that URDF assumes a negative product of inertia convention.
 
-```
+the inertia matrix is a 3*3 matrix that has these values.
+
+![Inertia matrix](https://github.com/user-attachments/assets/a96324fc-2784-4786-aa5b-1e16caa15a41)
+
+But as we see in the code it only has 6 attributes and thats because it's a symetrical matrix so we don't have to define the nondiagonal elements twice.
+
+```xml
 <inertial>
   <mass value="10"/>
   <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
 </inertial>
 ```
 
-In the end we find that the final result of a link looks something like this:
+As for the values of the inertia tag we can calculate them based on the shape, dimensions and mass of the link and we can find the formulas to calculate these values in wikipedia  in this link: [https://en.wikipedia.org/wiki/List_of_moments_of_inertia]()
 
+![inertia](https://github.com/user-attachments/assets/d5e7735b-6115-408e-a8b2-0f8dfa806508)
+
+the inertial tag is a very important tag as if we ignore it this could cause proplems in gazebo during simulation causing the robot model to collapse without warning, and all links
+will appear with their origins coinciding with the world origin.
+
+Xacro
+-----
+
+After we learned everything we need now we are ready to start building the links of our robot that by the end will look something like this.
+
+![robot body](https://github.com/user-attachments/assets/76944e0d-e6e6-4063-b355-c57350fee884)
+
+the robot consisits of five links the base link which is a box shaped and four wheels which are cylindercal shaped.
+
+```xml
+<?xml version="1.0"?>
+<robot name="my_robot">
+    <link name="base_link">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size=".4 .8 .1"/>
+            </geometry>
+            <material name="green">
+                <color rgba="0.0 1.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".4 .8 .1"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="front_right_wheel">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius=".12" length=".05"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius=".12" length=".05"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>
 ```
-<link name="<link_name>">
-  <visual>  
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <geometry>
-      <box size="1 1 1" />
-    </geometry>
-    <material name="Cyan">
-      <color rgba="0 1.0 1.0 1.0"/>
-    </material>
-  </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <cylinder radius="1" length="0.5"/>
-    </geometry>
-  </collision>
-  <inertial>
-    <mass value="10"/>
-    <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-  </inertial>
-</link>
-```
+
+![my_robot](https://github.com/user-attachments/assets/3a547566-e619-4793-93bf-a297a8932bb8)
+
+After writing the descriotion of the base link and wheel link we get this output which are not we desire.
+
+the first problem is the wheel placement and that is the importance of joints and these are the elements that holds the links together and define where the links should connect and how they move relative to each other. 
+
+Also we only defined one wheel which is the front right wheel so we will have to write the wheel description three more times for the other wheels and that's not really practical since it will take more time, is harder to track errors if there's one and if we want to change any thing regarding the wheel we'll have to do this change in all the wheels manually.
+
+For all these reasons comes the xacro files to help us organize our code, make it simpler to read and modify and avoid repeation like in the wheel link for our case.
