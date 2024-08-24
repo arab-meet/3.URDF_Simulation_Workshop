@@ -53,6 +53,7 @@
 
 
 
+
     
     <!-- Front Right Wheel Link -->
 <link name="front_right_wheel">
@@ -60,7 +61,7 @@
       <geometry>
           <cylinder radius="0.06" length="0.02"/>
       </geometry>
-      <origin rpy="0 0 0"/>
+      <origin rpy="1.5708 0 0"/>
       <material name="">
         <color rgba="0.0 0.0 0.0 1.0"/> 
       </material>
@@ -69,7 +70,7 @@
       <geometry>
           <cylinder radius="0.06" length="0.02"/>
       </geometry>
-      <origin rpy="0 0 0"/>
+      <origin rpy="1.5708 0 0"/>
   </collision>
   <inertial>
       <mass value="1.0"/>
@@ -82,8 +83,8 @@
 <joint name="front_right_wheel_joint" type="continuous">
   <parent link="base_link"/>
   <child link="front_right_wheel"/>
-  <origin xyz="0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
-  <axis xyz="0 0 1"/> 
+  <origin xyz="0.16 -0.16 0.05" rpy="0 0 0"/> 
+  <axis xyz="0 1 0"/> 
 </joint>
 
 
@@ -97,7 +98,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -106,7 +107,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -118,9 +119,10 @@
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="0.16 0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
+
 
 
 
@@ -131,7 +133,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -140,7 +142,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -152,10 +154,9 @@
   <joint name="rear_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_right_wheel"/>
-    <origin xyz="-0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="-0.16 -0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
-
 
 
 
@@ -165,7 +166,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -174,7 +175,7 @@
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -186,8 +187,8 @@
   <joint name="rear_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_left_wheel"/>
-    <origin xyz="-0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="-0.16 0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
 
   

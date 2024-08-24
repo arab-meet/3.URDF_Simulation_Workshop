@@ -2,6 +2,16 @@
 
 Welcome to the comprehensive tutorial on building a skid-steering robot! In this guide, we will take you through the entire process of constructing a robot with a skid-steer drive system, a popular choice for many autonomous robots due to its simplicity and effectiveness in navigating various terrains.This tutorial is designed for those who are new to robotics as well as those who want to refine their skills in building and configuring skid-steer robots.
 
+### Publishing a Robot Description Using URDFs
+
+To publish a robot description in ROS, we start with a collection of URDF files that detail the robot's structure and properties. These files are processed by `xacro`, which combines them into a complete URDF.
+
+This URDF is then used by the `robot_state_publisher` node to publish the robot description on the `/robot_description` topic and broadcast the transforms between robot links.
+
+For robots with movable joints, `robot_state_publisher` Computes and publishes the transforms between robot links based on joint states and the robot's URDF. It uses data from /joint_states to broadcast the position of all links. The `joint_state_publisher` Publishes the current state (position, velocity) of each joint on the `/joint_states` topic.
+
+![1724529387422](image/skid_steer_robot_example/1724529387422.png)
+
 ## Step-by-Step Instructions
 
 ### **First we need to Create a New Catkin Package**
@@ -27,12 +37,13 @@ mkdir urdf
  Create a new URDF file inside the `urdf` directory
 
 ```bash
-touch urdf/skid_robot.urdf
+touch urdf/skid_robot.urdf.xacro
 ```
 
-**Visualize URDF File** : Open your `skid_robot.urdf` file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
+**Visualize URDF File** : Open your `skid_robot.urdf.xacro` file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
 
 **Install URDF Preview Extension** : Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`. Search for “URDF Preview” and install it.
+
 
 ### Robot Discreption
 
@@ -65,7 +76,7 @@ The `base_link` serves as the primary reference frame for the robot. It’s esse
 </link>
 ```
 
-![base_link](image/skid_steer_robot_example/1723912194623.png "base_link")
+![1724529069836](image/skid_steer_robot_example/1724529069836.png)
 
 #### 2. Front Right Wheel Link
 
@@ -77,7 +88,7 @@ Next, we'll create the link for the front right wheel. This link represents the 
       <geometry>
           <cylinder radius="0.06" length="0.02"/>
       </geometry>
-      <origin rpy="0 0 0"/>
+      <origin rpy="1.5708 0 0"/>
       <material name="">
         <color rgba="0.0 0.0 0.0 1.0"/> 
       </material>
@@ -86,7 +97,7 @@ Next, we'll create the link for the front right wheel. This link represents the 
       <geometry>
           <cylinder radius="0.06" length="0.02"/>
       </geometry>
-      <origin rpy="0 0 0"/>
+      <origin rpy="1.5708 0 0"/>
   </collision>
   <inertial>
       <mass value="1.0"/>
@@ -96,18 +107,18 @@ Next, we'll create the link for the front right wheel. This link represents the 
 </link>
 ```
 
-Continuous Joint for Front Right Wheel
+**Continuous Joint for Front Right Wheel rotates around the y-axis**
 
 ```xml
- <joint name="front_right_wheel_joint" type="continuous">
+<joint name="front_right_wheel_joint" type="continuous">
   <parent link="base_link"/>
   <child link="front_right_wheel"/>
-  <origin xyz="0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
-  <axis xyz="0 0 1"/> 
+  <origin xyz="0.16 -0.16 0.05" rpy="0 0 0"/> 
+  <axis xyz="0 1 0"/> 
 </joint>
 ```
 
-![Front Right Wheel](image/skid_steer_robot_example/1723931914743.png "Front Right Wheel")
+![1724528699877](image/skid_steer_robot_example/1724528699877.png)
 
 #### 3. Front Left Wheel Link
 
@@ -119,7 +130,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -128,7 +139,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -137,18 +148,18 @@ The front left wheel is another critical part of the robot. It is attached to th
   </link>
 ```
 
-**Continuous Joint for Front Left Wheel**
+**Continuous Joint for Front Left Wheel rotates around the y-axis**
 
 ```xml
-  <joint name="front_left_wheel_joint" type="continuous">
+<joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="0.16 0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
 ```
 
-![1723932668455](image/skid_steer_robot_example/1723932668455.png)
+![1724528716663](image/skid_steer_robot_example/1724528716663.png)
 
 #### 4. Rear Right Wheel Link
 
@@ -158,7 +169,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -167,7 +178,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -176,18 +187,18 @@ The front left wheel is another critical part of the robot. It is attached to th
   </link>
 ```
 
-**Continuous Joint for Rear Right Wheel**
+**Continuous Joint for Rear Right Wheel rotates around the y-axis**
 
 ```xml
 <joint name="rear_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_right_wheel"/>
-    <origin xyz="-0.16 -0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="-0.16 -0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
 ```
 
-![1723933430776](image/skid_steer_robot_example/1723933430776.png)
+![1724528732800](image/skid_steer_robot_example/1724528732800.png)
 
 #### 4. Rear Left Wheel Link
 
@@ -197,7 +208,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
         <material name="">
           <color rgba="0.0 0.0 0.0 1.0"/> 
         </material>
@@ -206,7 +217,7 @@ The front left wheel is another critical part of the robot. It is attached to th
         <geometry>
             <cylinder radius="0.06" length="0.02"/>
         </geometry>
-        <origin rpy="0 0 0"/>
+        <origin rpy="1.5708 0 0"/>
     </collision>
     <inertial>
         <mass value="1.0"/>
@@ -215,18 +226,18 @@ The front left wheel is another critical part of the robot. It is attached to th
   </link>
 ```
 
-**Continuous Joint for Rear Left Wheel**
+**Continuous Joint for Rear Left Wheel rotates around the y-axis**
 
 ```xml
 <joint name="rear_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="rear_left_wheel"/>
-    <origin xyz="-0.16 0.16 0.05" rpy="0 1.5708 1.5708"/> 
-    <axis xyz="0 0 1"/> 
+    <origin xyz="-0.16 0.16 0.05" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/> 
   </joint>
 ```
 
-![1723933645000](image/skid_steer_robot_example/1723933645000.png)
+![1724528750995](image/skid_steer_robot_example/1724528750995.png)
 
 #### 5. Adding A Dummy Link
 
@@ -326,7 +337,7 @@ touch launch/robot_description.launch
   <!-- Send robot states to tf -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
 
-  <!-- Send fake joint values-->
+  <!-- Send  joint values-->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="true"/>
   </node>

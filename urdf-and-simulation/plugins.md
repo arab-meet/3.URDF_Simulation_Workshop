@@ -4,6 +4,14 @@
 
 This guide explains how to incorporate sensors and Gazebo plugins into a URDF (Unified Robot Description Format) file for use with ROS (Robot Operating System). It details the steps for adding and configuring a range of sensors—such as LIDAR, depth cameras, ultrasonic sensors, and IMUs—ensuring they work effectively within Gazebo simulations.
 
+#### So What are Plugins?
+
+**plugins** are software components or modules that extend the functionality of a system by adding new features or capabilities without modifying the core software. Plugins are typically designed to be easily integrated and interchangeable, allowing developers to customize or enhance specific functionalities.
+
+**Gazebo plugins** are used to add custom behaviors, sensors, and controllers to robots in simulation. They allow users to simulate real-world scenarios, sensor data, and actuation within the Gazebo environment.
+
+---
+
 ### Adding a LIDAR Sensor Link
 
 we have two types of LiDAR: **2D LiDAR** and  **3D LiDAR** .
@@ -251,11 +259,7 @@ joint name="lidar_joint" type="fixed">
 
 ---
 
-### Adding Depth Camera Link
-
-Integrating Intel RealSense D435 Camera into URDF in ROS
-
-#### Clone the RealSense ROS Package
+#### he RealSense ROS Package
 
 First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`
 
