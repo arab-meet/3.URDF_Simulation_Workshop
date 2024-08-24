@@ -183,10 +183,14 @@ rostopic list
 - **`Change view` :**
   The change view tool lets you view the scene from different
   perspectives like top view, side view, front view, bottom view.
-  <p align="center">
+
+<p align="center">
   <img src="images/3.png">
 
 ## Robot models in Gazebo
+
+
+
 
 Before we dive into robot models , it's essential to clarify that there are two distinct scenarios
 
