@@ -4,38 +4,33 @@ Robotic simulation involves creating a virtual model that mimics real-world proc
 
 Robotic simulators are software applications that create models of robots and render virtual environments that replicate the real-world settings in which the robots will operate. In our scenario, the environment is a typical hotel or restaurant with tables and chairs. We need to replicate this setup in the simulator to test the robot's functionality. One commonly used robotic simulator for such tasks is **`Gazebo`**.
 
-## but why Gazebo 
+## But why Gazebo
+
  Here are some simulators along with their features:
-| Feature/Software       | Gazebo        | Unity        | Isaac Sim   | CoppeliaSim  | CARLA        | LGSVL        | Webots       | Stage        |
-|------------------------|---------------|--------------|-------------|--------------|--------------|--------------|--------------|--------------|
-| **Community**          | Large, active  | Large, general | Growing    | Moderate     | Growing      | Growing      | Moderate     | Moderate     |
-| **ROS Integration**    | Excellent      | Limited      | Excellent    | Limited      | Limited      | Limited      | Moderate     | Limited      |
-| **Open Source**        | Yes            | No           | No          | Yes          | Yes          | Yes          | Yes          | Yes          |
-| **Physics Engine**     | Advanced       | Basic        | Advanced     | Advanced     | Moderate     | Moderate     | Advanced     | Basic        |
-| **Graphics Quality**   | Moderate       | High         | High        | Moderate     | High         | High         | Moderate     | Low          |
-| **Ease of Use**        | Moderate       | High         | Moderate    | Moderate     | High         | Moderate     | Moderate     | Basic        |
-| **Customization**      | High           | High         | High        | High         | Moderate     | Moderate     | High         | Moderate     |
-| **Real-world Scenarios** | High         | Moderate     | High        | High         | High         | High         | Moderate     | Low          |
-| **Ideal For**          | Robotics, ROS-based systems | Games, General simulation | Advanced robotics, NVIDIA GPUs | Robotics, Research | Autonomous driving | Autonomous driving | Robotics, Education | Simple robotics |
+
+| Feature/Software               | Gazebo                         | Unity                                | Isaac Sim                       | CoppeliaSim                   | CARLA                        | LGSVL                     | Webots                         | Stage                        |
+| ------------------------------ | ------------------------------ | ------------------------------------ | ------------------------------- | ----------------------------- | ---------------------------- | ------------------------- | ------------------------------ | ---------------------------- |
+| **Community**            | Large, active (robotics focus) | Large (general, growing in robotics) | Growing (strong NVIDIA focus)   | Moderate (academia, research) | Growing (autonomous driving) | Growing (Apollo platform) | Moderate (education, research) | Small (ROS, simple robotics) |
+| **ROS Integration**      | Excellent                      | Improving (Unity Robotics Hub)       | Excellent                       | Limited                       | Moderate                     | Moderate                  | Moderate                       | Limited                      |
+| **Open Source**          | Yes                            | No                                   | No                              | Yes                           | Yes                          | Yes                       | Yes                            | Yes                          |
+| **Physics Engine**       | Advanced                       | Basic(can be advanced with plugins)  | Advanced                        | Advanced                      | Advanced (Unreal Engine)     | Moderate                  | Advanced                       | Basic                        |
+| **Graphics Quality**     | Moderate                       | High                                 | High                            | Moderate                      | High (Unreal Engine)         | High                      | Moderate                       | Low                          |
+| **Ease of Use**          | Moderate                       | High                                 | Moderate (steep learning curve) | Moderate                      | High                         | Moderate                  | Moderate                       | Basic                        |
+| **Customization**        | High                           | High                                 | High (NVIDIA hardware)          | High                          | Moderate                     | Moderate                  | High                           | Moderate                     |
+| **Real-world Scenarios** | High                           | Moderate (improving)                 | High                            | High                          | High                         | High                      | Moderate                       | Low                          |
+| **Ideal For**            | Robotics, ROS-based systems    | Games, growing in robotics           | Advanced robotics, NVIDIA GPUs  | Robotics, Research            | Autonomous driving           | Autonomous driving        | Robotics, Education            | Simple robotics              |
 
 ### Each simulator is suited for specific use cases:
 
 - **Unity** : Ideal for general-purpose simulation and high-quality graphics.
-
 - **Isaac Sim** : Best for high-fidelity robotics simulation with NVIDIA GPUs.
-
 - **CoppeliaSim** : Versatile for both educational and research purposes.
-
 - **CARLA**: Specialized for autonomous vehicle simulations.
-
 - **LGSVL** : Focused on autonomous driving scenarios.
-
 - **Webots** : Excellent for educational robotics projects.
-
 - **Stage** : Suitable for lightweight, simpler robotic simulations.
 
 this make gazebo best choice for starting learn robotics because its large community provides extensive support.
-
 
 # Gazebo
 
@@ -98,7 +93,7 @@ sudo apt-get install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control
   ```
 
   > This will start the physics engine with an empty world.
-
+  >
 - To run gazebo GUI client type in anther terminal:
 
   ```bash
@@ -127,8 +122,8 @@ To get started with testing Gazebo using the ROS interface, follow these steps:
    ```sh
    roscore
    ```
-
 2. In another terminal, run Gazebo with the ROS plugin:
+
    ```bash
    rosrun gazebo_ros gazebo
    ```
@@ -182,8 +177,8 @@ rostopic list
 - **`Align` :**
   This tool allows you to align one model with another along with one of the three principal axes.
 - **`Change view` :**
-The change view tool lets you view the scene from different
-perspectives like top view, side view, front view, bottom view.
+  The change view tool lets you view the scene from different
+  perspectives like top view, side view, front view, bottom view.
   <p align="center">
   <img src="images/3.png">
 
@@ -193,6 +188,7 @@ Before we dive into robot models , it's essential to clarify that there are two 
 
 1. **Building a robot model**
 2. **Downloading a pre-built model**
+
 ## 1. Building robot models in Gazebo
 
 click on Edit and select model editor
@@ -205,9 +201,9 @@ click on Edit and select model editor
   - Change x = 1m, y = 0.8m , z = 0.2m.
   - Click on collision and go geometry.
   - Change x = 1m, y = 0.8m , z = 0.2m.
+
   <p align="center">
   <img src="images/4.png">
-
 - Create robot wheels:
 
   - Select from simple shapes “cylinder”.
@@ -218,18 +214,18 @@ click on Edit and select model editor
   - Click on collision and go geometry.
   - Change radius = 0.2m , length = 0.1m.
   - go pose and change roll Rotate the wheel to 90 degree = 1.570700 rad.
+
   <p align="center">
   <img src="images/5.png">
-
 - Connect wheels to the chassis via joints:
 
   - Select Joint from the toolbar.
   - Chage joint type to “Revolute”.
   - Choose parent as robot chassis and child as a wheel.
   - Align links x, y, z, And choose a suitable rotate axis.
+
   <p align="center">
   <img src="images/6.png">
-
 - Adding Camera:
 
   - Select from simple shapes “Box”.
@@ -238,18 +234,18 @@ click on Edit and select model editor
   - Change x = 0.1, y = 0.1 , z = 0.1.
   - Click on collision and go geometry.
   - Change x = 0.1, y = 0.1 , z = 0.1.
+
   <p align="center">
   <img src="images/7.png">
-
 - Connect Camera to the chassis via joints:
 
   - Select Joint from the toolbar.
   - Chage joint type to “fixed”.
   - Choose parent as robot chassis and child as a Camera.
   - Align links x, y, z, And choose a suitable rotate axis.
+
   <p align="center">
   <img src="images/8.png">
-
 - Save the model file
 
   - Model: Save it as a robot in <your_pkg_ws/model>
@@ -263,7 +259,7 @@ click on Edit and select model editor
 you can control the movement this robot follow this steps
 
 1. open your [robot model.sdf](/gazebo_pkg/model/robot/model.sdf)
-2. before close <model> you can add this plugin to control the robot
+2. before close `<model>` you can add this plugin to control the robot
    ```bash
    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
        <updateRate>100.0</updateRate>
@@ -290,6 +286,7 @@ you can control the movement this robot follow this steps
 > you can control with two way
 
 - Open your terminal and start the ROS core:
+
   ```sh
   roscore
   ```
@@ -298,16 +295,19 @@ you can control the movement this robot follow this steps
   ```sh
   rosrun gazebo_ros gazebo
   ```
-
 - Choose the model from your device
 
 ## 1. Constant velocity
 
 - if you write in another terminal
+
   ```sh
   rostopic list
   ```
+
   > The preceding command line prints the following information
+  >
+
   ```sh
   /clock
   /cmd_vel
@@ -324,6 +324,7 @@ you can control the movement this robot follow this steps
   /tf
   ```
 - Now, you can publish to the /cmd_vel topic:
+
   ```sh
   rostopic pub /cmd_vel geometry_msgs/Twist "linear:
     x: 2.0
@@ -334,16 +335,19 @@ you can control the movement this robot follow this steps
     y: 0.0
     z: 2.0"
   ```
+
   <p align="center">
   <img src="images/15.gif">
-  
+
 ## 2. Teleop_twist_keyboard
 
 - Installing
+
   ```sh
   sudo apt-get install ros-noetic-teleop-twist-keyboard
   ```
 - Running
+
   ```sh
   rosrun teleop_twist_keyboard teleop_twist_keyboard.py
   ```
@@ -374,9 +378,9 @@ you can control the movement this robot follow this steps
 
   CTRL-C to quit
   ```
-  <p align="center">
-  <img src="images/14.gif"  > 
 
+  <p align="center">
+  <img src="images/14.gif"  >
 
 To initiate movement of the robot, simply double-click on the robot and select "Apply Force and Torque."
 
@@ -461,10 +465,8 @@ each directory have :
 <p align= "center" >
 <img src="images/16_.png">
 
-
 ---
 
-
-# [Next Topic Link](< >)
+# [Next Topic Link]( )
 
 ### [&lt;-Back to main](../README.md)
