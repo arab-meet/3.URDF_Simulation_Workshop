@@ -316,8 +316,183 @@ the robot consisits of five links the base link which is a box shaped and four w
 
 After writing the descriotion of the base link and wheel link we get this output which are not we desire.
 
-the first problem is the wheel placement and that is the importance of joints and these are the elements that holds the links together and define where the links should connect and how they move relative to each other. 
+the first problem is the wheel placement and that is the importance of joints and these are the elements that holds the links together and define where the links should connect and how they move relative to each other.
 
 Also we only defined one wheel which is the front right wheel so we will have to write the wheel description three more times for the other wheels and that's not really practical since it will take more time, is harder to track errors if there's one and if we want to change any thing regarding the wheel we'll have to do this change in all the wheels manually.
 
 For all these reasons comes the xacro files to help us organize our code, make it simpler to read and modify and avoid repeation like in the wheel link for our case.
+
+**Xacro** is an Xml macro that introduce the use of macros in an urdf file.
+
+**Macros** are used to make a sequence of computing instructions available to the programmer as a single statement. to put it in simple words we can think of macros as functions in most programming languages that  we can difine it once and call it multiple times.
+
+**Xacro** is just another way of defining a URDF, not an alternative to it.
+
+**Xacro** files help us do three things that are very helpful.
+
+* Constants
+* Simple Math
+* Macros
+
+Before getting to the details of Xacro first we need to know how to use it in our urdf files. we will have to change the robot tag and add this line to it. 
+
+```xml
+we will add this line to the robot tag: xmlns:xacro="http://www.ros.org/wiki/xacro"
+so it will look like this
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+```
+
+now we are ready to use Xacro in our file
+
+### Constants
+
+First thing Xacro files allows us to do is to use constants in our code so we can change values in the whole file from one place.
+
+Let's take a look at our wheel link.
+
+```xml
+<link name="wheel">
+    <visual name="">
+        <geometry>
+            <cylinder radius=".12" length=".05"/>
+        </geometry>
+        <material name="red">
+            <color rgba="1.0 0.0 0.0 1.0"/>
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius=".12" length=".05"/>
+        </geometry>
+    </collision>
+</link>
+```
+
+we will notice here that the raduis and length of the cylinder are specified twice once in the visual tag and another time for the collision tag and also take into account that this only for one wheel so if we have four wheels we will have to specify each value eight times and that is not convenient so we will use constants to replace those values.
+
+to define constants we usually do this at the top of the file in the robot tag before any links or joints.
+
+we will xacro property tag and this tag has two attributes the name of the constant and the value. and in code it looks like this
+
+```xml
+<xacro:property name="raduis" value=".12" />
+<xacro:property name="length" value=".05" />
+```
+
+after we defined the two constants it's time to use them in our wheel link.
+
+to use constants in your description we simply replace the value we want to specify with the dollor sign and curly brackets that has the constant name in them so it will look like this  `${constant name} .`
+
+so after we define the constants and use them our link will look like this.
+
+```xml
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+    <xacro:property name="raduis" value="0.12" />
+    <xacro:property name="length" value="0.05" />
+    <link name="wheel">
+        <visual name="">
+            <geometry>
+                <cylinder radius="${raduis}" length="${length}"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${raduis}" length="${length}"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>
+```
+
+the value of the constant specified are used to replace the ${constant}. this means that we can combine texts using constants. 
+
+```xml
+<xacro:property name=”Robot_name” value=”My_robot” />
+<link name=”${Robot_name}_wheel” />
+the output of this will be as same as this
+<link name=”My_robot_wheel” />
+
+```
+
+### Math
+
+We can use Xacro files to make math expressions in the urdf file using basic operations (+,-,*,/) and parenthesis.
+
+for example if there is a relation between the raduis and length of my wheel (raduis = 2 * length) we can only define one of these valuse and replace the other with this relation.
+
+```xml
+<xacro:property name="length" value="0.05" />
+
+<cylinder radius="${2*length}" length="${length}"/>
+```
+
+this is most used in the inertia tag since it has more complex expressions so it's not convenient to calculate each value each time you change one dimension.
+
+### Macros
+
+As we said before macros are more like functions that we can write a chunk of code in them and call this macro multiple time with different parameters or with no parameters at all.
+
+to define a macro we will use the macro tag which has two attributes the name of the macro and the parameters we want to define. and it looks like this.
+
+```xml
+<xacro:macro name="name_of_macro" params="param_1 param_2 param_3">
+    Add your content here
+</xacro:macro>
+```
+
+ok now we will utilize everything we have learned so far to make a wheel macro and call it four times to generate the four wheels of the robot.
+
+```xml
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+
+    <xacro:property name="length" value="0.05" />
+
+    <link name="base_link">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size=".4 .8 .1"/>
+            </geometry>
+            <material name="green">
+                <color rgba="0.0 1.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".4 .8 .1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <xacro:macro name="leg" params="prefix">
+        <link name="${prefix}_wheel">
+            <visual name="">
+                <geometry>
+                    <cylinder radius="${length*2}" length="${length}"/>
+                </geometry>
+                <material name="red">
+                    <color rgba="1.0 0.0 0.0 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="${length*2}" length="${length}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+    <xacro:leg prefix="front_right" />
+    <xacro:leg prefix="front_left" />
+    <xacro:leg prefix="rear_right" />
+    <xacro:leg prefix="rear_left" />
+</robot>
+```
+And the output of this code will look like this:
+
+![Final_links](https://github.com/user-attachments/assets/0d62a1c2-4088-45da-bb65-20d2f7e523d0)
+
+Now it's time to put these links in there desired place and we will use joints to achieve this.
