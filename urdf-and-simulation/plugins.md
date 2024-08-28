@@ -259,7 +259,7 @@ joint name="lidar_joint" type="fixed">
 
 ---
 
-#### he RealSense ROS Package
+#### The RealSense ROS Package
 
 First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`
 
