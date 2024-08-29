@@ -28,7 +28,7 @@ The main purpose of **XML** language is to store data in an easy way that human 
   * The kinematic and dynamic description of the robot.
   * The `visual` representation of the robot.
   * The `collision` model of the robot.
-* As **URDF** files are based on `XML` format, different `XML tags` are used to create the robot description.
+* As **URDF** files are based on `XML` format, different **XML tags** are used to create the robot description.
 * A typical URDF file contains three main tags:
   * **robot**
   * **links**
@@ -40,9 +40,9 @@ before we start writing our robot description we will need some extintions that 
 
 there are three main extentions that we will need which are
 
-* ROS extintion by microsoft  (this is the extintion that contain the urdf preview that lets us visualize our robot)
-* ROS snippets by pijar          (this extintions has some snippets that helps us write our description more effeciently)
-* URDF by smilerobotics         (this extintion also provides some premade structures that helps us write our code faster)
+* **ROS** extintion by microsoft  (this is the extintion that contain the urdf preview that lets us visualize our robot)
+* **ROS snippets** by pijar          (this extintions has some snippets that helps us write our description more effeciently)
+* **URDF** by smilerobotics         (this extintion also provides some premade structures that helps us write our code faster)
 
 ![Extentions](https://github.com/user-attachments/assets/f14191f6-c231-4d4f-bd19-4c46092eeb38)
 
@@ -72,11 +72,11 @@ after this we difine the main tag that will contain links and joints tags in it 
 </robot>
 ```
 
-Here we can see how to initialize our `urdf` file with the main tag that will contaion all the robot tags
+Here we can see how to initialize our urdf file with the main tag that will contaion all the robot tags
 
 ![robot_tag](https://github.com/user-attachments/assets/a5b2a17c-d402-4656-b567-297dab6095a9)
 
-now we can start the `ros preview` to see how our robot looks like in every step as we go. and we can do that by clicking  `Shift+Ctrl+p` and type `ROS: URDF Preview` that will open a new tab that show your robot
+now we can start the **ros preview** to see how our robot looks like in every step as we go. and we can do that by clicking  `Shift+Ctrl+p` and type `ROS: URDF Preview` that will open a new tab that show your robot
 
 ![ROS_preview](https://github.com/user-attachments/assets/93e38b8f-5d30-4f98-860e-7d38a6191ed5)
 
@@ -106,7 +106,7 @@ all three tags are optional meaning that for example you can have a link with ju
 
 ### `Visual`
 
-the `visual` tag describes the actual shape. here we can specify the size, shape, and color of the robot.
+the visual tag describes the actual shape. here we can specify the size, shape, and color of the robot.
 
 It has three main tags which are:
 
@@ -114,12 +114,12 @@ It has three main tags which are:
 
 describes the `shape` and `size` of the display range centered on the origin coordinates
 
-we have a set of different shapes in the `URDF` format which are:
+we have a set of different shapes in the **URDF format** which are:
 
-* box: has three attributes the length, width, and height.
-* cylinder: has two attributes which are the raduis, and length.
-* sphere: has one attribute the raduis.
-* mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be `.dae` file as this format provide the best texture and color support.
+* **box**: has three attributes the `length`, `width`, and `height`.
+* **cylinder**: has two attributes which are the `raduis`, and `length`.
+* **sphere**: has one attribute the `raduis`.
+* **mesh**: here we can use an existing mesh by adding the `file path`. also it's recommended that the mesh's format would be `.dae` file as this format provide the best texture and color support.
 
   ```xml
   <!-- for the box -->
@@ -152,7 +152,7 @@ has six attributes which are `xyz` and `rpy` and the default of these values are
 
 #### `Material`
 
-here we can specify two tags for the `visual` of our link which are:
+here we can specify two tags for the visual of our link which are:
 
 * **color**: The color tag is used to set the color by entering a number between `0.0` and `1.0` corresponding to `red`, `green`, and `blue` in the rgba option. The last number is the `transparency` (alpha), which has a value between `0.0` and `1.0`. If it is `1.0`, it means that the original color is displayed as is without using the transparent option.
 * **texture**: is specified by a file name
@@ -165,7 +165,7 @@ here we can specify two tags for the `visual` of our link which are:
 
 we also have an extra tag which is the `name` that gives a name to a part of the link which can be useful when you have complex links and you want to access certain bits of a link.
 
-> **Note** that all these properties of the `visual` tags are optional except for the `geometry` tag.
+> **Note** that all these properties of the `visual` tags are optional except for the **geometry** tag.
 
 ```xml
 <visual>  
@@ -200,7 +200,7 @@ we also have an extra tag which is the `name` that gives a name to a part of the
 </collision>
 ```
 
-let's say we have a link that has a `visual` and `collision` with a box geometry but with different values.
+let's say we have a link that has a **visual** and **collision** with a `box` geometry but with different values.
 
 ```xml
 <?xml version="1.0"?>
@@ -224,14 +224,14 @@ let's say we have a link that has a `visual` and `collision` with a box geometry
 </robot>
 ```
 
-after we add the collision tag we won't see any changes in urdf preview as you can't preserve the `collisions` because it's just for the simulator to deal with but to help you understand what this looks like see this picture.
+after we add the collision tag we won't see any changes in **urdf preview** as you can't preserve the `collisions` because it's just for the simulator to deal with but to help you understand what this looks like see this picture.
 
 ![collision](https://github.com/user-attachments/assets/348c4696-96cb-4fcc-a4ca-7c5800b2441b)
 
 * The **visual** and **collision** tags in `URDF` files are similar, sharing attributes like geometry and origin.
 * The **collision** tag does not include a material attribute, as the `material` is primarily for aesthetic purposes, which are not needed by the simulator.
 * To ensure the robot's actions in simulations match its appearance, the **collision** tag should generally match the **visual** tag.
-* If a complex mesh is used for the geometry of the **visual** tag (e.g., a robot arm), it is not recommended to use the same mesh for the **collision** tag.
+* If a complex mesh is used for the `geometry` of the **visual** tag (e.g., a robot arm), it is not recommended to use the same mesh for the **collision** tag.
 * Using a complex mesh for **collision** can degrade simulation performance, making it slower.
 * In most cases, it is better to use a simplified geometry for the **collision** tag, provided it does not alter the physical properties of the link.
 
@@ -261,7 +261,7 @@ defines the weight of the link(mass, unit: kg), and it has only one attribute th
 
 ![Inertia matrix](https://github.com/user-attachments/assets/a96324fc-2784-4786-aa5b-1e16caa15a41)
 
-But as we see in the code it only has 6 attributes and thats because it's a symetrical matrix so we don't have to define the nondiagonal elements twice.
+But as we see in the code it only has **6 attributes** and thats because it's a symetrical matrix so we don't have to define the nondiagonal elements twice.
 
 ```xml
 <inertial>
@@ -270,7 +270,7 @@ But as we see in the code it only has 6 attributes and thats because it's a syme
 </inertial>
 ```
 
-As for the values of the inertia tag we can calculate them based on the shape, dimensions and mass of the link and we can find the formulas to calculate these values in wikipedia  in this link: [https://en.wikipedia.org/wiki/List_of_moments_of_inertia]()
+As for the values of the inertia tag we can calculate them based on the **shape**, **dimensions** and **mass** of the link and we can find the formulas to calculate these values in wikipedia  in this link: [https://en.wikipedia.org/wiki/List_of_moments_of_inertia]()
 
 ![inertia](https://github.com/user-attachments/assets/d5e7735b-6115-408e-a8b2-0f8dfa806508)
 
@@ -281,9 +281,9 @@ the `inertial` tag is a very important tag as if we ignore it this could cause p
 `Xacro`
 ---
 
-`URDF` files can be hard to manage because they often have repetitive code, especially when describing many links and joints. This can make changes difficult. `Xacro` is a tool that helps by reducing this repetitive work.
+**URDF** files can be hard to manage because they often have repetitive code, especially when describing many links and joints. This can make changes difficult. `Xacro` is a tool that helps by reducing this repetitive work.
 
-The `xacro` file is an abbreviation for `XML` Macro.
+The **xacro** file is an abbreviation for `XML` Macro.
 
 **Benefits of Using Xacro:**
 
@@ -450,7 +450,7 @@ to define a **macro** we will use the `macro tag` which has two attributes the `
 
 ```xml
 <xacro:macro name="name_of_macro" params="param_1 param_2 param_3">
-    Add your content here
+    <!-- Add your content here -->
 </xacro:macro>
 ```
 
