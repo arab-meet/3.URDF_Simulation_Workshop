@@ -4,32 +4,35 @@
 
 # URDF
 
-**URDF** (unified robot description format) is an `XML` file format that includes the robot description in it. it provides details on the physical characteristics of the robot in addition to all the information about the shape, geometry, and colors of the robot.
+**URDF** (unified robot description format) is an `XML` file format that includes the robot description in it. 
 
-**Extensible Markup Language (XML)** uses markup symbols, called tags to define data. Each instance of an XML tag is called an element. In an XML file, elements
-are arranged in a hierarchy, which means that elements can contain other elements. The topmost element is called the “root” element and contains all other elements, which are called “child” elements.
+* it's the format that ros uses to identify any robot and its interactions with the environment.
+* provides details on the physical characteristics of the robot in addition to all the information about the shape, geometry, and colors of the robot.
+* does not only contain the characteristics of the body of the robot but it can also contain informations about the sensors and motors of the robot.
+* can contain some plugins to make it compatable with different programs like gazebo.
+* is used to build the transformation tree (**TF**) for the robot so that ROS and other systems can interact with it.
 
-The main purpose of **XML** language is to store data in an easy way that human can read and modefy and also the computers can understand. **XML** itself can't interact with the data it stores in any way so we will need another software to utilize these information such as rviz and gazebo in our case
+**Extensible Markup Language (XML)** uses markup symbols, called tags to define data. 
 
-**URDF** files are the format that ros uses to identify any robot and its interactions with the environment.
+* Each instance of an XML tag is called an element.
+* In an XML file, elements are arranged in a hierarchy, which means that elements can contain other elements.
+* The topmost element is called the “root” element and contains all other elements, which are called “child” elements.
+* **XML** itself can't interact with the data it stores in any way so we will need another software to utilize these information such as rviz and gazebo in our case
 
-**URDF** files does not only contain the characteristics of the body of the robot but it can also contain informations about the sensors and motors of the robot. also it can contain some plugins to make it compatable with different programs like gazebo.
-
-**URDF** is used to build the transformation tree (**TF**) for the robot so that ROS and other systems can interact with it.
+The main purpose of **XML** language is to store data in an easy way that human can read and modefy and also the computers can understand. 
 
 ## Describing the robot
 
-**URDF** describes the robot as a set of links that is connected with each other through some joints that defines the relative motion between these links. so when we have a robot that we want to describe in a URDF file we need to split up our robot to a set of links and joints.
-
-**URDF** can represent the kinematic and dynamic description of the robot, the `visual` representation of the robot, and the `collision` model of the robot.
-
-Since the URDF file is based on XML format so there is different `XML tags` that we need to know to help create the robot.
-
-in a typical URDF file we will find that it contains three main tags which are:
-
-* robot
-* links
-* joints
+* **URDF** describes a robot as a set of links connected by joints, which define the relative motion between the links. To describe a robot in a URDF file, it must be divided into links and joints.
+* **URDF** can represent:
+  * The kinematic and dynamic description of the robot.
+  * The `visual` representation of the robot.
+  * The `collision` model of the robot.
+* As **URDF** files are based on XML format, different `XML tags` are used to create the robot description.
+* A typical URDF file contains three main tags:
+  * **robot**
+  * **links**
+  * **joints**
 
 ![Robot](https://github.com/user-attachments/assets/b787527b-57ae-4ca6-bac9-4a52f33be1f4)
 
@@ -101,7 +104,7 @@ all three tags are optional meaning that for example you can have a link with ju
 
 ![link](https://github.com/user-attachments/assets/b1764f87-0e65-427d-a39a-30c691532c56)
 
-#### Visual
+### `Visual`
 
 the visual tag has the information of how we see the robot in the simulation here we can specify the size, shape, and color of the robot.
 
@@ -177,9 +180,13 @@ note that all these properties of the visual tags are optional except for the ge
 
 #### Collision
 
-here we define the collision properties of the link.
-
-Collision is the physical ascpect of the link which the simulation sees and react to. for example if we have a link that has a box geometry in the visual tag whereas it has a cylinder geometry in the collision tag we as a users will see the link as a box but the simulation will react to it as a cylinder. so to simplify, the collision is how the simulation handles the link.
+* **Collision** defines the physical properties of the link that the simulation uses to detect and respond to interactions.
+* The **collision** aspect is crucial for the simulation's behavior, as it dictates how the link is treated in terms of physics and interactions.
+* For example:
+  * If a link has a box geometry in the **visual** tag, but a cylinder geometry in the **collision** tag:
+    * **Users** will see the link as a box.
+    * **The simulation** will treat and react to the link as a cylinder.
+* In summary, **collision** defines how the simulation handles the link, separate from its visual representation.
 
 ```xml
 <collision>
@@ -218,11 +225,12 @@ after we add the collision tag we won't see anychanges in urdf preview as you ca
 
 ![collision](https://github.com/user-attachments/assets/348c4696-96cb-4fcc-a4ca-7c5800b2441b)
 
-we can see here the difference between the visual and collision tag they are very similar in a lot of attributes that they share such as geometry and origin but we notice that the collision tag doesn't have material in it and that's because the importance of the material tag is to make the robot aesthetically appealing and the simulator doesn't need that.
-
-Also in most cases you don't want your robot to take actions that doesn't match what you see in the simulations so you'll probably need the collision tag to be the same as the visual tag.
-
-Let's say we used a mesh to define the geometry of the visual tag because it's complicated like this robot arm. it's not recommended in most cases to use the same mesh for the collision as this affect the performance of the simulation making it more slow so if using a more simplified geometry that's not going to change the physical properties of the link is possible that will be better in most situations.
+* The **visual** and **collision** tags in URDF files are similar, sharing attributes like geometry and origin.
+* The **collision** tag does not include a material attribute, as the material is primarily for aesthetic purposes, which are not needed by the simulator.
+* To ensure the robot's actions in simulations match its appearance, the **collision** tag should generally match the **visual** tag.
+* If a complex mesh is used for the geometry of the **visual** tag (e.g., a robot arm), it is not recommended to use the same mesh for the **collision** tag.
+* Using a complex mesh for **collision** can degrade simulation performance, making it slower.
+* In most cases, it is better to use a simplified geometry for the **collision** tag, provided it does not alter the physical properties of the link.
 
 ![Robot arm](https://github.com/user-attachments/assets/5d6e3a22-e0d1-408e-8354-e8dc4d0afd82)
 
@@ -244,11 +252,10 @@ defines the mass of the link and it has only one attribute the link's mass
 
 ##### inertia
 
-this takes a matrix that contains information about the moment of inertia for the link around the xyz axes. it also contains the products of inertia about the center of mass.
+* this takes a matrix that contains information about the moment of inertia for the link around the xyz axes. it also contains the products of inertia about the center of mass.
+* note that URDF assumes a negative product of inertia convention.
 
-note that URDF assumes a negative product of inertia convention.
-
-the inertia matrix is a 3*3 matrix that has these values.
+* the inertia matrix is a 3*3 matrix that has these values.
 
 ![Inertia matrix](https://github.com/user-attachments/assets/a96324fc-2784-4786-aa5b-1e16caa15a41)
 
@@ -318,25 +325,23 @@ the robot consisits of five links the base link which is a box shaped and four w
 
 ![my_robot](https://github.com/user-attachments/assets/3a547566-e619-4793-93bf-a297a8932bb8)
 
-After writing the descriotion of the base link and wheel link we get this output which are not we desire.
-
-the first problem is the wheel placement and that is the importance of joints and these are the elements that holds the links together and define where the links should connect and how they move relative to each other.
-
-Also we only defined one wheel which is the front right wheel so we will have to write the wheel description three more times for the other wheels and that's not really practical since it will take more time, is harder to track errors if there's one and if we want to change any thing regarding the wheel we'll have to do this change in all the wheels manually.
-
-For all these reasons comes the xacro files to help us organize our code, make it simpler to read and modify and avoid repeation like in the wheel link for our case.
-
-**Xacro** is an Xml macro that introduce the use of macros in an urdf file.
-
-**Macros** are used to make a sequence of computing instructions available to the programmer as a single statement. to put it in simple words we can think of macros as functions in most programming languages that  we can difine it once and call it multiple times.
-
-**Xacro** is just another way of defining a URDF, not an alternative to it.
-
-**Xacro** files help us do three things that are very helpful.
-
-* Constants
-* Simple Math
-* Macros
+* After writing the description for the **base link** and  **wheel link** , the output is not as desired.
+* The first problem is  **wheel placement** , highlighting the importance of  **joints** . Joints connect links and define their attachment points and relative movement.
+* Only one wheel (the front right wheel) was defined. Describing the other three wheels manually is impractical because it:
+  * Takes more time.
+  * Makes it harder to track errors.
+  * Requires manual updates to all wheel descriptions if changes are needed.
+* To address these issues, **Xacro** files are introduced to:
+  * Organize the code.
+  * Simplify reading and modification.
+  * Avoid repetition, particularly for wheel links.
+* **Xacro** is an XML macro system that introduces macros into URDF files.
+* **Macros** allow a sequence of instructions to be used as a single statement, similar to functions in programming languages. They can be defined once and called multiple times.
+* **Xacro** is a method for defining URDF files more efficiently, not an alternative to URDF.
+* **Xacro** files offer three key benefits:
+  * **Constants** : Define values that can be reused.
+  * **Simple Math** : Perform calculations directly in the file.
+  * **Macros** : Reuse code efficiently to avoid repetition.
 
 Before getting to the details of Xacro first we need to know how to use it in our urdf files. we will have to change the robot tag and add this line to it.
 
@@ -373,22 +378,24 @@ Let's take a look at our wheel link.
 </link>
 ```
 
-we will notice here that the raduis and length of the cylinder are specified twice once in the visual tag and another time for the collision tag and also take into account that this only for one wheel so if we have four wheels we will have to specify each value eight times and that is not convenient so we will use constants to replace those values.
-
-to define constants we usually do this at the top of the file in the robot tag before any links or joints.
-
-we will xacro property tag and this tag has two attributes the name of the constant and the value. and in code it looks like this
+* In the current setup, the **radius** and **length** of the cylinder are specified twice: once in the **visual** tag and once in the **collision** tag.
+* This redundancy means that for one wheel, these values are repeated eight times (visual and collision tags for each wheel). This approach is not convenient.
+* To simplify, we will use **constants** to replace these repeated values.
+* **Constants** are typically defined at the top of the file within the **robot** tag, before any links or joints.
+* We will use the **Xacro property** tag to define constants. This tag has two attributes:
+  * **Name** : The name of the constant.
+  * **Value** : The value assigned to the constant.
+* In code, defining constants with the **Xacro property** tag looks like this:
 
 ```xml
 <xacro:property name="raduis" value=".12" />
 <xacro:property name="length" value=".05" />
 ```
 
-after we defined the two constants it's time to use them in our wheel link.
-
-to use constants in your description we simply replace the value we want to specify with the dollor sign and curly brackets that has the constant name in them so it will look like this  `${constant name} .`
-
-so after we define the constants and use them our link will look like this.
+* After defining the two constants, we need to use them in our **wheel link** description.
+* To use constants in the description, replace the values with `${constant_name}`, where `constant_name` is the name of the constant you defined.
+* The syntax to include a constant in your description is: `${constant_name}`.
+* With the constants defined and used, your updated **wheel link** description will look like this:
 
 ```xml
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
