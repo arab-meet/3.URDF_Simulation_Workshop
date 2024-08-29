@@ -1,6 +1,6 @@
 ###### Author: Yousef Asal
 
-###### Review: 
+###### Review: KG
 
 # URDF
 
@@ -106,20 +106,20 @@ all three tags are optional meaning that for example you can have a link with ju
 
 ### `Visual`
 
-the visual tag has the information of how we see the robot in the simulation here we can specify the size, shape, and color of the robot.
+the visual tag describes the actual shape. here we can specify the size, shape, and color of the robot.
 
 the visual tag has three main tags which are:
 
 #### `Geometry`
 
-defines the shape of the visual.
+describes the shape and size of the display range centered on the origin coordinates
 
 we have a set of different shapes in the URDF format which are:
 
 * box: has three attributes the length, width, and height.
 * cylinder: has two attributes which are the raduis, and length.
 * sphere: has one attribute the raduis.
-* mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be .dae file as this format provide the best texture and color support.
+* mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be `.dae` file as this format provide the best texture and color support.
 
   ```xml
   <!-- for the box -->
@@ -138,6 +138,8 @@ we have a set of different shapes in the URDF format which are:
   </geometry>
   ```
 
+>**Note** When it is difficult to express it in a simple shape, CAD files such as STL and DAE can also be input here.
+
 #### `Origin`
 
 defines the reference frame of the visual relative to the reference frame of the link.
@@ -152,8 +154,9 @@ has six attributes which are `xyz` and `rpy` and the default of these values are
 
 here we can specify two tags for the visual of our link which are:
 
-* color: has for attributes `rgba` each one has a range from 0 to 1
-* texture: is specified by a file name
+* **color**: The color tag is used to set the color by entering a number between `0.0` and `1.0` corresponding to `red`, `green`, and `blue` after the rgba option. The last number is the `transparency` (alpha), which has a value between `0.0` and `1.0`. If it is `1.0`, it means that the original color is displayed as is without using the transparent option.
+
+* **texture**: is specified by a file name
   note that the color disappears when we run our robot on gazebo since it should have a certain plugin installed to show the link's color in gazebo.
 
 ```xml
@@ -180,7 +183,7 @@ note that all these properties of the visual tags are optional except for the ge
 
 ### `Collision`
 
-* **Collision** defines the physical properties of the link that the simulation uses to detect and respond to interactions.
+* **Collision** describes the physical properties of the link that the simulation uses to detect and respond to interactions.
 * The **collision** aspect is crucial for the simulation's behavior, as it dictates how the link is treated in terms of physics and interactions.
 * For example:
   * If a link has a box geometry in the **visual** tag, but a cylinder geometry in the **collision** tag:
@@ -248,7 +251,7 @@ it has six attributes `xyz` for position and `rpy` for orientation.
 
 #### `mass`
 
-defines the mass of the link and it has only one attribute the link's mass
+defines the weight of the link(mass, unit: kg), and it has only one attribute the link's mass
 
 #### `inertia`
 
@@ -275,14 +278,28 @@ As for the values of the inertia tag we can calculate them based on the shape, d
 the inertial tag is a very important tag as if we ignore it this could cause proplems in gazebo during simulation causing the robot model to collapse without warning, and all links
 will appear with their origins coinciding with the world origin.
 
+> **Note** This inertial information can be obtained through design software or actual measurements and calculations, and is mainly used in simulations.
+
 `Xacro`
 ---
 
-After we learned everything we need now we are ready to start building the links of our robot that by the end will look something like this.
+`URDF` files can be hard to manage because they often have repetitive code, especially when describing many links and joints. This can make changes difficult. Xacro is a tool that helps by reducing this repetitive work.
+
+The `xacro` file is an abbreviation for `XML` Macro.
+
+**Benefits of Using Xacro:**
+
+* **Less Repetition:** Xacro lets you create macros to avoid writing the same code over and over. This makes your URDF file easier to read and manage.
+
+* **Variables:** You can use variables, like `pi`, to simplify your code and make it more flexible.
+
+* **Separate Files:** With Xacro, you can keep material information and Gazebo settings in separate files and include them in your main URDF file. This keeps everything organized and easier to update.
+
+**Example Usage:**
+
+The robot consisits of five links the base link which is a box shaped and four wheels which are cylindercal shaped.
 
 ![robot body](https://github.com/user-attachments/assets/76944e0d-e6e6-4063-b355-c57350fee884)
-
-the robot consisits of five links the base link which is a box shaped and four wheels which are cylindercal shaped.
 
 ```xml
 <?xml version="1.0"?>
@@ -327,23 +344,8 @@ the robot consisits of five links the base link which is a box shaped and four w
 
 * After writing the description for the **base link** and  **wheel link** , the output is not as desired.
 * The first problem is  **wheel placement** , highlighting the importance of  **joints** . Joints connect links and define their attachment points and relative movement.
-* Only one wheel (the front right wheel) was defined. Describing the other three wheels manually is impractical because it:
-  * Takes more time.
-  * Makes it harder to track errors.
-  * Requires manual updates to all wheel descriptions if changes are needed.
-* To address these issues, **Xacro** files are introduced to:
-  * Organize the code.
-  * Simplify reading and modification.
-  * Avoid repetition, particularly for wheel links.
-* **Xacro** is an XML macro system that introduces macros into URDF files.
-* **Macros** allow a sequence of instructions to be used as a single statement, similar to functions in programming languages. They can be defined once and called multiple times.
-* **Xacro** is a method for defining URDF files more efficiently, not an alternative to URDF.
-* **Xacro** files offer three key benefits:
-  * **Constants** : Define values that can be reused.
-  * **Simple Math** : Perform calculations directly in the file.
-  * **Macros** : Reuse code efficiently to avoid repetition.
 
-Before getting to the details of Xacro first we need to know how to use it in our urdf files. we will have to change the robot tag and add this line to it.
+Before getting to the details of `Xacro` first we need to know how to use it in our `urdf` files. we will have to change the robot tag and add this line to it.
 
 ```xml
 <!-- we will add this line to the robot tag: xmlns:xacro="http://www.ros.org/wiki/xacro" -->
