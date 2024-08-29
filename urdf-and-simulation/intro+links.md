@@ -1,6 +1,8 @@
-# URDF
+###### Author: Yousef Asal
 
----
+###### Review: 
+
+# URDF
 
 **URDF** (unified robot description format) is an `XML` file format that includes the robot description in it. it provides details on the physical characteristics of the robot in addition to all the information about the shape, geometry, and colors of the robot.
 
@@ -59,7 +61,7 @@ after this we difine the main tag that will contain links and joints tags in it 
 
 ```xml
 <robot name="robot_name">
-   all the tags of the robot goes here
+    <!-- all the tags of the robot goes here -->
     <link> ..... </link>
     <link> ...... </link>
     <joint> ....... </joint>
@@ -117,15 +119,17 @@ we have a set of different shapes in the URDF format which are:
 * mesh: here we can use an existing mesh by adding the file path. also it's recommended that the mesh's format would be .dae file as this format provide the best texture and color support.
 
   ```xml
-  #for the box
+  <!-- for the box -->
   <geometry>
       <box size="1.0 2.0 1.0"/>
   </geometry>
-  #for the cylinder
+
+  <!-- for the cylinder -->
   <geometry>
       <cylinder radius="1" length="0.5"/>
   </geometry>
-  #for the sphere
+
+  <!-- #for the sphere -->
   <geometry>
       <sphere radius="1"/>
   </geometry>
@@ -334,11 +338,12 @@ For all these reasons comes the xacro files to help us organize our code, make i
 * Simple Math
 * Macros
 
-Before getting to the details of Xacro first we need to know how to use it in our urdf files. we will have to change the robot tag and add this line to it. 
+Before getting to the details of Xacro first we need to know how to use it in our urdf files. we will have to change the robot tag and add this line to it.
 
 ```xml
-we will add this line to the robot tag: xmlns:xacro="http://www.ros.org/wiki/xacro"
-so it will look like this
+<!-- we will add this line to the robot tag: xmlns:xacro="http://www.ros.org/wiki/xacro" -->
+<!-- so it will look like this -->
+
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
 ```
 
@@ -407,14 +412,15 @@ so after we define the constants and use them our link will look like this.
 </robot>
 ```
 
-the value of the constant specified are used to replace the ${constant}. this means that we can combine texts using constants. 
+the value of the constant specified are used to replace the ${constant}. this means that we can combine texts using constants.
 
 ```xml
 <xacro:property name=”Robot_name” value=”My_robot” />
 <link name=”${Robot_name}_wheel” />
-the output of this will be as same as this
-<link name=”My_robot_wheel” />
 
+<!-- the output of the previous code will be as same as this -->
+
+<link name=”My_robot_wheel” />
 ```
 
 ### Math
@@ -491,6 +497,7 @@ ok now we will utilize everything we have learned so far to make a wheel macro a
     <xacro:leg prefix="rear_left" />
 </robot>
 ```
+
 And the output of this code will look like this:
 
 ![Final_links](https://github.com/user-attachments/assets/0d62a1c2-4088-45da-bb65-20d2f7e523d0)
