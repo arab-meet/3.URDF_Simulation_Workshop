@@ -52,7 +52,7 @@ there are three main extentions that we will need which are
 
 after we have installed everything now we are ready to start descriping our robot.
 
-### Robot tag
+### `Robot tag`
 
 first thing we find in an XML file type is the declaration tag which defines the XML version that we are using. This line usually found in the first line in a URDF file
 
@@ -82,7 +82,7 @@ now we can start the ros preview to see how our robot looks like in every step a
 
 As we can see the preview screen is empty because we didn't add any links yet so now we will start to build our robot
 
-### Link
+### `Link`
 
 The link of the robot represents the physical component of the robot.The link tag represents a single link of a robot. Using this tag, we can model a robot link and its properties. These properties include:
 
@@ -110,7 +110,7 @@ the visual tag has the information of how we see the robot in the simulation her
 
 the visual tag has three main tags which are:
 
-##### Geometry
+#### `Geometry`
 
 defines the shape of the visual.
 
@@ -138,7 +138,7 @@ we have a set of different shapes in the URDF format which are:
   </geometry>
   ```
 
-##### Origin
+#### `Origin`
 
 defines the reference frame of the visual relative to the reference frame of the link.
 
@@ -148,7 +148,7 @@ has six attributes which are `xyz` and `rpy` and the default of these values are
 <origin rpy="0 0 0" xyz="0 0 0"/>
 ```
 
-##### Material
+#### `Material`
 
 here we can specify two tags for the visual of our link which are:
 
@@ -178,7 +178,7 @@ note that all these properties of the visual tags are optional except for the ge
 
 ![link](https://github.com/user-attachments/assets/54bb6764-9fe7-4eb6-9d5d-8bdec9e98103)
 
-#### Collision
+### `Collision`
 
 * **Collision** defines the physical properties of the link that the simulation uses to detect and respond to interactions.
 * The **collision** aspect is crucial for the simulation's behavior, as it dictates how the link is treated in terms of physics and interactions.
@@ -234,23 +234,23 @@ after we add the collision tag we won't see anychanges in urdf preview as you ca
 
 ![Robot arm](https://github.com/user-attachments/assets/5d6e3a22-e0d1-408e-8354-e8dc4d0afd82)
 
-#### Inertial
+### `Inertial`
 
 here we can specify informations about the link's mass, center of mass, and inertia.
 
 has three main tags which are:
 
-##### origin
+#### `origin`
 
 this describes the center of mass relative to the link frame.
 
 it has six attributes `xyz` for position and `rpy` for orientation.
 
-##### mass
+#### `mass`
 
 defines the mass of the link and it has only one attribute the link's mass
 
-##### inertia
+#### `inertia`
 
 * this takes a matrix that contains information about the moment of inertia for the link around the xyz axes. it also contains the products of inertia about the center of mass.
 * note that URDF assumes a negative product of inertia convention.
@@ -275,8 +275,8 @@ As for the values of the inertia tag we can calculate them based on the shape, d
 the inertial tag is a very important tag as if we ignore it this could cause proplems in gazebo during simulation causing the robot model to collapse without warning, and all links
 will appear with their origins coinciding with the world origin.
 
-Xacro
------
+`Xacro`
+---
 
 After we learned everything we need now we are ready to start building the links of our robot that by the end will look something like this.
 
@@ -354,7 +354,7 @@ Before getting to the details of Xacro first we need to know how to use it in ou
 
 now we are ready to use Xacro in our file
 
-### Constants
+### `Constants`
 
 First thing Xacro files allows us to do is to use constants in our code so we can change values in the whole file from one place.
 
@@ -430,7 +430,7 @@ the value of the constant specified are used to replace the ${constant}. this me
 <link name=”My_robot_wheel” />
 ```
 
-### Math
+### `Math`
 
 We can use Xacro files to make math expressions in the urdf file using basic operations (+,-,*,/) and parenthesis.
 
@@ -444,7 +444,7 @@ for example if there is a relation between the raduis and length of my wheel (ra
 
 this is most used in the inertia tag since it has more complex expressions so it's not convenient to calculate each value each time you change one dimension.
 
-### Macros
+### `Macros`
 
 As we said before macros are more like functions that we can write a chunk of code in them and call this macro multiple time with different parameters or with no parameters at all.
 
