@@ -15,7 +15,7 @@ catkin_create_pkg differential_drive_robot
 
 **Create URDF Directory**
 
- Navigate into your package and create a directory for URDF files
+ Navigate into your package and create a directory for [URDF](../example/differential_drive_robot/urdf ) files
 
 ```bash
 cd ~/catkin_ws/src/differential_drive_robot
@@ -24,13 +24,13 @@ mkdir urdf
 
 **Add URDF File**
 
- Create a new URDF file inside the `urdf` directory
+ Create a new URDF file inside the [URDF](../example/differential_drive_robot/urdf ) directory
 
 ```bash
 touch urdf/differential_drive_robot.urdf
 ```
 
-**Visualize URDF File** : Open your `skid_robot.urdf` file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
+**Visualize URDF File** : Open your [differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf) file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
 
 **Install URDF Preview Extension** : Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`. Search for “URDF Preview” and install it.
 
@@ -313,7 +313,7 @@ In Gazebo it requires to define your links color inside the robot frame as shown
 
 **1-Create a Launch File:**
 
-Create a `.launch` file in your `launch` directory
+Create a [robot_description.launch](../example/differential_drive_robot/launch/robot_description.launch) file in your [launch_directory](../example/differential_drive_robot/launch/)
 
 ```bash
 mkdir launch
@@ -367,7 +367,7 @@ touch launch/robot_description.launch
 
 **Launch the Model:**
 
-Run the launch file to start Gazebo and spawn your robot model. Use the following command:
+Run the [launch](../example/differential_drive_robot/launch/robot_description.launch) file to start Gazebo and spawn your robot model. Use the following command:
 
 ```bash
 cd ~/catkin_ws
@@ -382,14 +382,14 @@ roslaunch differential_drive_robot robot_description.launch
 
 #### **8. Adding Lidar sensor**
 
-The lidar link and its plugin can be placed in the robot frame in the _____ file but, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands.
+The lidar link and its plugin can be placed in the robot frame in the main urdf file ([differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf)) file. But, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands.
 
 ```bash
 cd ~/catkin_ws/src/differential_drive_robot/urdf
 touch lidar_2d.xacro
 ```
 
-Then in inside the _____ file create the base link and a add the lidar link and its plugin.
+Then in inside the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file create the base link and a add the lidar link and its plugin.
 
 ```xml
 
@@ -544,13 +544,11 @@ Then in inside the _____ file create the base link and a add the lidar link and 
 
 ![gazebo_model2](image/differential_drive_robot_example/gazebo2.png)
 
-Then Link the _____ file in the main robot urdf file _____ by adding the following command inside your robot frame
+Then Link the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file in the main robot urdf file ([differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf)) by adding the following command inside your robot frame
 
 ```xml
   <xacro:include filename="$(find differential_drive_robot)/urdf/lidar_2d.xacro"/>
 ```
-
-This can Be done for all the sensors as shown in the following files(____) and be added to your robot main urdf file this makes it easy to debug and more organized.
 
 **For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../plugins.md).**
 
