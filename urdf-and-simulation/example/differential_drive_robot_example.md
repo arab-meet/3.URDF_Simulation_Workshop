@@ -15,7 +15,7 @@ catkin_create_pkg differential_drive_robot
 
 **Create URDF Directory**
 
- Navigate into your package and create a directory for [URDF](../example/differential_drive_robot/urdf ) files
+ Navigate into your package and create a directory for [URDF](../example/differential_drive_robot/urdf) files
 
 ```bash
 cd ~/catkin_ws/src/differential_drive_robot
@@ -24,7 +24,7 @@ mkdir urdf
 
 **Add URDF File**
 
- Create a new URDF file inside the [URDF](../example/differential_drive_robot/urdf ) directory
+ Create a new URDF file inside the [URDF](../example/differential_drive_robot/urdf) directory
 
 ```bash
 touch urdf/differential_drive_robot.urdf
@@ -565,3 +565,5 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 This will allow you to move the robot using your keyboard in the Gazebo simulation.
 
 ##### Check out the GIF below to see the full robot in action with the sensors integrated.
+
+<img src="image/differential_drive_robot_example/example1.gif" width="1000">
