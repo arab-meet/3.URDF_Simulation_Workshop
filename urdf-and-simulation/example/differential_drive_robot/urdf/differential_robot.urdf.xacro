@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<robot name="differential_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+
+  <xacro:include filename="$(find differential_drive_robot)/urdf/lidar_2d.xacro"/>
+  <xacro:include filename="$(find differential_drive_robot)/urdf/_d435.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find differential_drive_robot)/urdf/mono_camera.xacro"/> -->
+  <xacro:include filename="$(find differential_drive_robot)/urdf/imu.xacro"/>
+  <xacro:include filename="$(find differential_drive_robot)/urdf/ultrasonic.xacro"/>
+  <!-- <xacro:include filename="$(find differential_drive_robot)/urdf/3d_lidar.xacro"/> -->
+
+
+  <!-- Add Dummy Link  -->
+  
+  <link name="base_footprint">  
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <parent link ="base_footprint"/>
+      <child link ="base_link"/>   
+  </joint>
+
+
+  <!-- Base Link --> 
+  <link name="base_link">
+      <inertial>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <mass value="2.0"/>
+          <inertia ixx="0.010667" ixy="0.0" ixz="0.0" iyy="0.016000" iyz="0.0" izz="0.017333"/>
+      </inertial>
+      <visual>
+          <geometry>
+              <box size="0.4 0.3 0.08"/>
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <material name="base_link_material">
+              <color rgba="1.0 1.0 0.0 1.0"/>
+          </material>
+      </visual>
+      <collision>
+          <geometry>
+              <box size="0.4 0.3 0.08"/>
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      </collision>
+  </link>
+  
+  
+  
+  
+      
+      <!-- Front Right Wheel Link -->
+  <link name="right_wheel">
+      <inertial>
+        <mass value="1.0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+
+      <visual>
+        <geometry>
+            <cylinder radius="0.08" length="0.05"/>
+        </geometry>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <material name="">
+          <color rgba="1.0 0.0 0.0 1.0"/> 
+        </material>
+      </visual>
+
+      <collision>
+        <geometry>
+            <cylinder radius="0.08" length="0.05"/>
+        </geometry>
+        <origin rpy="0 0 0"/>
+        </collision>
+    
+  </link>
+  
+  <!-- Front Right Wheel Joint -->
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0.1 -0.175 0.00" rpy="0 1.5708 1.5708"/> 
+    <axis xyz="0 0 1"/> 
+  </joint>
+  
+  
+  
+  
+  
+  
+    <!-- Front Left Wheel Link -->
+  <link name="left_wheel">
+      <visual>
+          <geometry>
+                  <cylinder radius="0.08" length="0.05"/>
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <material name="">
+              <color rgba="1.0 0.0 0.0 1.0"/> 
+          </material>
+      </visual>
+      <collision>
+          <geometry>
+              <cylinder radius="0.08" length="0.05"/>
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          </collision>
+      <inertial>
+              <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+              <mass value="1.0"/>
+              <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+  </link>
+    
+  <!-- Front Left Wheel Joint -->
+  <joint name="left_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="left_wheel"/>
+      <origin xyz="0.1 0.175 0.0" rpy="0 1.5708 1.5708"/> 
+      <axis xyz="0 0 1"/> 
+  </joint>
+
+  <!-- Caster Wheel Link-->
+
+  <link name="caster_wheel">
+      <inertial>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <mass value="0.5"/>
+          <inertia ixx="0.00003333" ixy="0.0" ixz="0.0" iyy="0.00003333" iyz="0.0" izz="0.00003333"/>
+      </inertial>
+      <visual name="">
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <geometry>
+              <sphere radius="0.02"/>
+          </geometry>
+          <material name="">
+              <color rgba="1.0 0.0 0.0 1.0"/>
+              <texture filename=""/>
+          </material>
+      </visual>
+      <collision>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <geometry>
+              <sphere radius="0.02"/>
+          </geometry>
+      </collision>
+  </link>
+
+  <joint name="caster_wheel_joint" type="continuous">
+      <origin xyz="-0.1 0.0 -0.06" rpy="0.0 0.0 0.0"/>
+      <parent link="base_link"/>
+      <child link="caster_wheel"/>
+      <axis xyz="1.0 1.0 1.0"/>
+  </joint>
+
+  <!-- Camera Link -->
+
+  <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="true">
+  <origin xyz="0.19 0 0.04" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+  <gazebo>
+      <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    
+        <!-- Plugin update rate in Hz -->
+        <updateRate>100</updateRate>
+    
+        <!-- Name of left joint, defaults to `left_joint` -->
+        <leftJoint>left_wheel_joint</leftJoint>
+    
+        <!-- Name of right joint, defaults to `right_joint` -->
+        <rightJoint>right_wheel_joint</rightJoint>
+    
+        <!-- The distance from the center of one wheel to the other, in meters, defaults to 0.34 m -->
+        <wheelSeparation>0.4</wheelSeparation>
+    
+        <!-- Diameter of the wheels, in meters, defaults to 0.15 m -->
+        <wheelDiameter>0.16</wheelDiameter>
+    
+        <!-- Wheel acceleration, in rad/s^2, defaults to 0.0 rad/s^2 -->
+        <wheelAcceleration>0.5</wheelAcceleration>
+    
+        <!-- Maximum torque which the wheels can produce, in Nm, defaults to 5 Nm -->
+        <wheelTorque>5</wheelTorque>
+    
+        <!-- Topic to receive geometry_msgs/Twist message commands, defaults to `cmd_vel` -->
+        <commandTopic>cmd_vel</commandTopic>
+    
+        <!-- Topic to publish nav_msgs/Odometry messages, defaults to `odom` -->
+        <odometryTopic>odom</odometryTopic>
+    
+        <!-- Odometry frame, defaults to `odom` -->
+        <odometryFrame>odom</odometryFrame>
+    
+        <!-- Robot frame to calculate odometry from, defaults to `base_footprint` -->
+        <robotBaseFrame>base_footprint</robotBaseFrame>
+    
+        <!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+        <odometrySource>1</odometrySource>
+    
+        <!-- Set to true to publish transforms for the wheel links, defaults to false -->
+        <publishWheelTF>false</publishWheelTF>
+    
+        <!-- Set to true to publish transforms for the odometry, defaults to true -->
+        <publishOdom>true</publishOdom>
+    
+        <!-- Set to true to publish sensor_msgs/JointState on /joint_states for the wheel joints, defaults to false -->
+        <publishWheelJointState>false</publishWheelJointState>
+    
+        <!-- Set to true to swap right and left wheels, defaults to true -->
+        <legacyMode>false</legacyMode>
+      </plugin>
+    </gazebo>    
+    
+  <gazebo reference="left_wheel">
+    <material>Gazebo/Red</material> 
+  </gazebo>
+  <gazebo reference="right_wheel">
+    <material>Gazebo/Red</material>  
+  </gazebo>
+  <gazebo reference="caster_wheel">
+    <material>Gazebo/Red</material>  
+  </gazebo>
+  <gazebo reference="base_link">
+    <material>Gazebo/Yellow</material>  
+  </gazebo>
+
+
+</robot>
