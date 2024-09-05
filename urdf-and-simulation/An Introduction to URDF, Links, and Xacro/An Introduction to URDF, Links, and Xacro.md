@@ -648,9 +648,151 @@ If a robot base link is a parent link and a child link for a box which can repre
     <origin xyz="0.11 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
 
+## Joints
+
+<<<<<<< HEAD
+</robot>
+
+=======
+Joints serve to connect two links in a robot and describes the kinematics and dynamics of them. The primary link is designated as the `<parent>`, and the second link becomes the `<child>`. There are four types of joints:  **Fixed** ,  **Revolute** ,  **Continuous** , and  **Prismatic** . Each type defines how the `<parent>` link is related to the `<child>` link.
+
+<p align="center">
+<img src="image/joint_frame.png" width="600">
+
+To create a joint in a URDF file:
+
+* First create a frame and name the joint and select the joint type.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+
+  </joint>
+  ```
+* Then select the child and parent link of this joint.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+  </joint>
+
+  ```
+* After that, add the values of the origin point in which the origin point is the transform from the parent link to the child link and the joint origin is located at the origin of child link.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+  </joint>
+  ```
+* Then, add the axis as it spacify the axis of rotation for **revolute joints**, the axis of **translation for prismatic** joints. *Fixed joint do not use the axis field*
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+     <axis xyz="0.0 0.0 0.0"/>
+  </joint>
+  ```
+* If the joint type is prismatic or revolute then the a limit should be add tho the joint in which the limit has four parameters.
+
+  * 1- `lower` : This parameter value is for the lower limit in *meters* for **parasmitic joint** and *radian* for **revolute joint**.
+  * 2- `upper` : This parameter value is for the upper limit in *meters* for **parasmitic joint** and *radian* for **revolute joint**.
+  * 3- `effort` : This parameter value is for the maximum effort in *N* for the **prismatic joint** and *N-m* for the **revolute joint**.
+  * 4- `velocity`: This parameter value is for the maximum velocity in *m/sec* for **prismatic joint** and *rad/sec* for **revolute joint**.
+
+  ```xml
+  <joint name="joint_name" type="joint_type">
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <parent link="parent_link"/>
+     <child link="child_link"/>
+     <axis xyz="0.0 0.0 0.0"/>
+     <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+  </joint>
+  ```
+
+## Types of joints
+
+### Fixed
+
+This is not really a joint because it cannot move. All degrees of freedom are locked.So, it is used to fix links that does not move.
+
+```xml
+<joint name="joint_name" type="fixed">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <parent link="parent_link"/>
+    <child link="child_link"/>
+    <axis xyz="0.0 0.0 0.0"/>
+</joint>
+```
+
+<p align="center">
+<img src="image/fixed_joint2.png" width="600">
+
+**Example:**
+
+If a robot base link is a parent link and a child link for a box which can represent a camera a fixed joint is needed to fix the box on the robot base and lock its movement. So, we can take the base link code and the camera link from the links example above and add a joint as shown in the below code.
+
+```xml
+<?xml version="1.0"?>
+<robot name="my_robot">
+  <!-- Base link (box) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.06"/>
+      </geometry>
+      <material name="">
+        <color rgba="1.0 0.70 0.0 1.0"/>
+        <texture filename=""/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.2 0.2 0.06"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.02 0.05 0.02"/>
+      </geometry>
+      <material name="">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+        <texture filename=""/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.02 0.05 0.02"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.02"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1.67e-6" ixy="0" ixz="0" iyy="1.67e-6" iyz="0" izz="1.67e-6"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0.11 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+
 
 </robot>
 
+>>>>>>> parent of fcba3c0 ( first reorganize the by adding every part in a folder and the examples too, then add a urdf.md file to be the main repo readme file to easily navigate throw the repo and its sub topics.then add a description for the topics in the main workshop md flie (README.md). add links to all partitions (introduction to urdf..... , joints , plugins and examples). At last adding the final gif for example under its hyperlinks in plugin.md file.)
 ```
 
 <p align="center">
@@ -954,4 +1096,7 @@ If a robot base link is the parent link and a linear actuator or sliding mechani
 
 <p align="center">
 <img src="image/prismatic_joint.gif">
+<<<<<<< HEAD
 >>>>>>>> parent of fcba3c0 ( first reorganize the by adding every part in a folder and the examples too, then add a urdf.md file to be the main repo readme file to easily navigate throw the repo and its sub topics.then add a description for the topics in the main workshop md flie (README.md). add links to all partitions (introduction to urdf..... , joints , plugins and examples). At last adding the final gif for example under its hyperlinks in plugin.md file.):urdf-and-simulation/An Introduction to URDF, Links, and Xacro/An Introduction to URDF, Links, and Xacro.md
+=======
+>>>>>>> parent of fcba3c0 ( first reorganize the by adding every part in a folder and the examples too, then add a urdf.md file to be the main repo readme file to easily navigate throw the repo and its sub topics.then add a description for the topics in the main workshop md flie (README.md). add links to all partitions (introduction to urdf..... , joints , plugins and examples). At last adding the final gif for example under its hyperlinks in plugin.md file.)
