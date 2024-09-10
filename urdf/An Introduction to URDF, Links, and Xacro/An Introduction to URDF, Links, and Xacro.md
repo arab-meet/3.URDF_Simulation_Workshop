@@ -507,6 +507,6 @@ And the output of this code will look like this:
 
 Now it's time to put these links in there desired place and we will use **joints** to achieve this.
 
-# [2- Joints -- &gt;](../joints/joints.md)
+# [2 - Joints -- &gt;](../joints/joints.md)
 
 # [&lt;-- Back to main](../urdf.md)
