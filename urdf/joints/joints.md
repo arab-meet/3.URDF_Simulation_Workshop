@@ -1,4 +1,13 @@
-## Joints
+
+# [&lt;-- Back to main](../urdf.md)
+
+# [&lt;-- 1- An Introduction to URDF, Links, and Xacro](../An%20Introduction%20to%20URDF,%20Links,%20and%20Xacro/An%20Introduction%20to%20URDF,%20Links,%20and%20Xacro.md)
+
+###### Author: Mohamed Elshamy
+
+###### Review: KG
+
+# Joints
 
 Joints serve to connect two links in a robot and describes the kinematics and dynamics of them. The primary link is designated as the `<parent>`, and the second link becomes the `<child>`. There are four types of joints:  **Fixed** ,  **Revolute** ,  **Continuous** , and  **Prismatic** . Each type defines how the `<parent>` link is related to the `<child>` link.
 
@@ -228,6 +237,7 @@ If a robot base link is the parent link and a robot arm is the child link in whi
   
 </robot>
 ```
+
 <p align="center">
 <img src="image/revolute_joint.png">
 
@@ -253,7 +263,6 @@ If a robot base link is the parent link and a wheel is the child link in which t
 
 <p align="center">
 <img src="image/continuous_joint2.png">
-
 
 ```xml
 <?xml version="1.0"?>
@@ -346,6 +355,7 @@ If a robot base link is the parent link and a wheel is the child link in which t
   </joint> 
 </robot>
 ```
+
 <p align="center">
 <img src="image/continuous_joint.png">
 
@@ -440,3 +450,7 @@ If a robot base link is the parent link and a linear actuator or sliding mechani
 
 <p align="center">
 <img src="image/prismatic_joint.gif">
+
+# [3 - Plugins --&gt;](../Plugins/plugins.md)
+
+# [&lt;-- Back to main](../urdf.md)

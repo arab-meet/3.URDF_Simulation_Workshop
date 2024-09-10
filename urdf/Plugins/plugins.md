@@ -1,3 +1,12 @@
+
+# [&lt;-- Back to main](../urdf.md)
+
+# [&lt;-- 2- Joints ](../joints/joints.md)
+
+###### Author: Toqa Essam
+
+###### Review: KG
+
 # Integrating Sensors and Plugins into URDF for Gazebo Simulation
 
 # Introduction
@@ -1035,4 +1044,12 @@ Uses two independently driven wheels on either side of the robot.
 
 ```
 
-# [Step-by-Step Tutorial for Building a Skid-Steer Robot](example/skid_steer_robot_example.md)
+# [Step-by-Step Tutorial for Building a Skid-Steer Robot -->;](../example/skid_steer_robot_example.md)
+
+![1725373080764](image/plugins/1724199913058.png)
+
+# [Step-by-Step Tutorial for Building a Differential drive Robot -->;](../example/differential_drive_robot_example.md)
+
+<img src="image/plugins/example1.gif" width="1000">
+
+# [<-- Back to main](../urdf.md)

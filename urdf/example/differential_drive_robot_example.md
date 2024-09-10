@@ -1,3 +1,8 @@
+
+# [&lt;-- Back to main](../urdf.md)
+
+# [&lt;-- 3- Plugins](../Plugins/plugins.md)
+
 # Differential_drive Robot Tutorial
 
 Welcome to the comprehensive tutorial on building a differential drive robot! In this guide, we will take you through the entire process of constructing a robot with a differential drive system, a popular choice for many autonomous robots due to its simplicity and effectiveness in navigating various terrains.This tutorial is designed for those who are new to robotics as well as those who want to refine their skills in building and configuring differential drive robots.
@@ -15,7 +20,7 @@ catkin_create_pkg differential_drive_robot
 
 **Create URDF Directory**
 
- Navigate into your package and create a directory for [URDF](../example/differential_drive_robot/urdf) files
+ Navigate into your package and create a directory for [URDF](differential_drive_robot/urdf) files
 
 ```bash
 cd ~/catkin_ws/src/differential_drive_robot
@@ -30,7 +35,7 @@ mkdir urdf
 touch urdf/differential_drive_robot.urdf
 ```
 
-**Visualize URDF File** : Open your [differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf) file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
+**Visualize URDF File** : Open your [differential_robot.urdf.xacro](differential_drive_robot/urdf/differential_robot.urdf.xacro) file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
 
 **Install URDF Preview Extension** : Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`. Search for “URDF Preview” and install it.
 
@@ -382,7 +387,7 @@ roslaunch differential_drive_robot robot_description.launch
 
 #### **8. Adding Lidar sensor**
 
-The lidar link and its plugin can be placed in the robot frame in the main urdf file ([differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf)) file. But, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands.
+The lidar link and its plugin can be placed in the robot frame in the main urdf file ([differential_robot.urdf.xacro](../example/differential_drive_robot/urdf/differential_robot.urdf.xacro)) file. But, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands.
 
 ```bash
 cd ~/catkin_ws/src/differential_drive_robot/urdf
@@ -544,13 +549,13 @@ Then in inside the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lid
 
 ![gazebo_model2](image/differential_drive_robot_example/gazebo2.png)
 
-Then Link the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file in the main robot urdf file ([differential_robot.urdf](../example/differential_drive_robot/urdf/differential_drive_robot.urdf)) by adding the following command inside your robot frame
+Then Link the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file in the main robot urdf file ([differential_robot.urdf.xacro](../example/differential_drive_robot/urdf/differential_robot.urdf.xacro)) by adding the following command inside your robot frame
 
 ```xml
   <xacro:include filename="$(find differential_drive_robot)/urdf/lidar_2d.xacro"/>
 ```
 
-**For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../plugins.md).**
+**For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../Plugins/plugins.md).**
 
 ### After adding sensors, your robot is now ready!
 
@@ -567,3 +572,5 @@ This will allow you to move the robot using your keyboard in the Gazebo simulati
 ##### Check out the GIF below to see the full robot in action with the sensors integrated.
 
 <img src="image/differential_drive_robot_example/example1.gif" width="1000">
+
+# [&lt;-- Back to main](../urdf.md)

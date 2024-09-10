@@ -1,3 +1,8 @@
+
+# [&lt;-- Back to main](../urdf.md)
+
+# [&lt;-- 3- Plugins](../Plugins/plugins.md)
+
 # Skid-Steering Robot Tutorial
 
 Welcome to the comprehensive tutorial on building a skid-steering robot! In this guide, we will take you through the entire process of constructing a robot with a skid-steer drive system, a popular choice for many autonomous robots due to its simplicity and effectiveness in navigating various terrains.This tutorial is designed for those who are new to robotics as well as those who want to refine their skills in building and configuring skid-steer robots.
@@ -43,7 +48,6 @@ touch urdf/skid_robot.urdf.xacro
 **Visualize URDF File** : Open your `skid_robot.urdf.xacro` file in VSCode. The URDF Preview extension will allow you to view and interact with your robot model directly within the editor.
 
 **Install URDF Preview Extension** : Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`. Search for “URDF Preview” and install it.
-
 
 ### Robot Discreption
 
@@ -403,7 +407,7 @@ In this section, we'll add sensors to your robot model and integrate their corre
 
 ![1724198141983](image/skid_steer_robot_example/1724198141983.png)
 
-**For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../plugins.md).**
+**For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../Plugins/plugins.md).**
 
 ### After adding sensors, your robot is now ready!
 
@@ -420,3 +424,9 @@ This will allow you to move the robot using your keyboard in the Gazebo simulati
 ##### Check out the GIF below to see the full robot in action with the sensors integrated.
 
 ![1724199913058](image/skid_steer_robot_example/1724199913058.png)
+
+# [Step-by-Step Tutorial for Building a Differential drive Robot --&gt;](../example/differential_drive_robot_example.md)
+
+<img src="image/differential_drive_robot_example/example1.gif" width="1000">
+
+# [&lt;-- Back to main](../urdf.md)
