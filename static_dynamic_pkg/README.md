@@ -1,49 +1,156 @@
-# Transformation
+# Transformation Matrix Computation For Tf AprilTag Example 
 
-## [A. Transformation Basics](A.%20Transformation%20Basics/Transformations_and_Frames.md)
+## Description 
 
-### Coordinate frame and transformation
+April tag can be used in Improving Mobile robots Localization , so the robot after reaching certain pose system can start listen to tag tf with respect to camera tha to the map
+then send the roobot command to move until aligning the baselink for example with the tag frame 
 
-### Why do needed frame transformation in AMR
+so the first step is to find the tf from the tag frame to the map frame
 
-### Multiple Frame
-
-**Reference Frames**
-
-- Map
-- World
-- Odom
-
-**Other Frames**
-
-- Base Link
-- Laser
-- camer frame
-
-### Rigid Body Transformation in 2D
-
-- Rotation and Transformation Matrix
-- Transform A point Example
-
-### TF in ROS
-
-- concept
-- package nodes
-
-### TF tools in ROS
-
-## [B -  Static and Dynamoc Transformation in ROS]
-
-[Static TF](Transformation_Basics_and_Stactic_Transforms/Static.md)
-[Dynamic TF](Transformation_Basics_and_Stactic_Transforms/Static.md)
+we will practice this in both code and calculations 
 
 
-### Broadcaster
+![Example Result](images/tf.gif)
 
-### Listener
 
-## [C - Robot and Joint State publisher](robot_joint_state_publisher/robot_joint_state_publisher.md)
 
-### Robot state Publisher and how does it work
+## Given:
 
-### Joint state Publisher and how does it work
+- **`mapTbase`** (Map to Base Link):
+
+$$
+T_{base}^{map} =
+\begin{bmatrix}
+1 & 0 & 0 & 1 \\
+0 & 1 & 0 & 2 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+- **`baseTcam`** (Base Link to Camera):
+
+$$
+T_{cam}^{base} =
+\begin{bmatrix}
+0 & -1 & 0 & 0.5 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+- **`camTtag`** (Camera to Apriltag):
+
+$$
+T_{tag}^{cam} =
+\begin{bmatrix}
+1 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+## Objective:
+
+Compute the transformation from `apriltag` to `map`:
+
+$$
+T_{apriltag}^{map} = T_{base}^{map} \cdot T_{cam}^{base} \cdot T_{tag}^{cam}
+$$
+
+## Steps:
+
+1. **Compute \( T_{baseTcam} \cdot T_{camTtag} \):**
+
+$$
+T_{baseTcam} \cdot T_{camTtag} =
+\begin{bmatrix}
+0 & -1 & 0 & 0.5 \\
+1 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+1 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & -1 & 0 & 1.5 \\
+1 & 0 & 0 & 3.0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+2. **Compute \( T_{mapTbase} \cdot \left( T_{baseTcam} \cdot T_{camTtag} \right) \):**
+
+$$
+T_{mapTbase} \cdot \left( T_{baseTcam} \cdot T_{camTtag} \right) =
+\begin{bmatrix}
+1 & 0 & 0 & 1 \\
+0 & 1 & 0 & 2 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+0 & -1 & 0 & 1.5 \\
+1 & 0 & 0 & 3.0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & -1 & 0 & 1.5 \\
+1 & 0 & 0 & 3.0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+## Result:
+
+The transformation matrix from `apriltag` to `map` is:
+
+$$
+T_{apriltag}^{map} =
+\begin{bmatrix}
+0 & -1 & 0 & 1.5 \\
+1 & 0 & 0 & 3.0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+## Translation
+
+The translation vector is:
+
+$$
+\text{Translation} = [1.500, 3.000, 0.000]
+$$
+
+## Rotation
+
+The rotation matrix \( R \) is:
+
+$$
+Rotation =
+\begin{bmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+### RPY Angles (in degrees):
+
+- **Roll**: 0.000
+- **Pitch**: 0.000
+- **Yaw**: 90.000
