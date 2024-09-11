@@ -66,12 +66,13 @@ we have two types of LiDAR: **2D LiDAR** and  **3D LiDAR** .
       </collision>
   </link>
 
-joint name="lidar_joint" type="fixed">
+<joint name="lidar_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz="0 0 0.06" rpy="0 0 0"/>
     <parent link="lidar_base_link"/>
     <child link="lidar_link"/>
   </joint>
+
 
 ```
 
