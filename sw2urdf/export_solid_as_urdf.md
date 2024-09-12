@@ -57,7 +57,7 @@ Creating accurate coordinate systems for each part of your robot is critical for
 In ROS and Gazebo, the standard convention for coordinate systems is as follows:
 
 * **X-axis** : Points **forward** (the robot's forward direction, or "front").
-* **Y-axis** : Points **to the right** of the robot.
+* **Y-axis** : Points **to the left** of the robot.
 * **Z-axis** : Points **upward** (towards the sky).
 
 ![1726115300808](image/solidworks/1726115300808.png)
