@@ -230,3 +230,80 @@ Click the **Preview and Export** button in the URDF Exporter to review the gener
  Choose a location to save your exported URDF file, along with any associated files (e.g., meshes, textures).
 
 The export process will create a folder containing the URDF file, meshes, and any launch files.
+
+Here’s the rewritten version of the package structure, presented clearly and with a touch of creative flair to make it more engaging:
+
+---
+## after exporting Robot from SolidWorks
+When you open this package after exporting it from SolidWorks, you'll be greeted by a collection of essential files and directories that form the backbone of your robotic project. Here's what you’ll find:
+
+```
+├── CMakeLists.txt          # Build configuration for the project
+├── config
+│   └── joint_names_arabian_robot.yaml  # Configuration for joint names
+├── export.log              # Export log from SolidWorks
+├── launch                  # Launch files for various purposes
+│   ├── display.launch      # Visualization launch file
+│   ├── gazebo.launch       # Gazebo simulation launch file
+│   └── robot_description.launch  # Launch file to load robot description
+├── meshes                  # 3D models for robot components
+│   ├── 2d_lidar.STL        # Lidar sensor mesh
+│   ├── arabian_link.STL    # Main robot body mesh
+│   ├── base_link.STL       # Base link of the robot
+│   ├── camera_link.STL     # Camera attachment mesh
+│   ├── front_left_wheel.STL  # Front left wheel mesh
+│   ├── front_right_wheel.STL  # Front right wheel mesh
+│   ├── gps_Link.STL        # GPS module attachment mesh
+│   ├── imu_Link.STL        # IMU sensor link mesh
+│   ├── lidar_link.STL      # Lidar sensor link mesh
+│   ├── plug_collision.stl  # Collision geometry for plug
+│   ├── plug.stl            # Charging plug mesh
+│   ├── realsenseD435.dae   # RealSense camera model
+│   ├── rear_left_wheel.STL   # Rear left wheel mesh
+│   ├── rear_right_wheel.STL  # Rear right wheel mesh
+│   ├── rear_ultrasonic_link.STL  # Rear ultrasonic sensor link mesh
+│   ├── rear_ultrasonic.STL  # Rear ultrasonic sensor mesh
+│   ├── ultrasonic_link.STL  # Ultrasonic sensor link mesh
+│   └── upper_Link.STL      # Upper robot body part mesh
+├── package.xml             # ROS package manifest
+├── readme.md               # Documentation for this package
+├── textures                # Placeholder for any textures used in the models
+└── urdf                    # Robot description files in URDF/Xacro format
+    ├── arabian_robot.csv    # CSV data related to robot configuration
+    ├── arabian_robot.urdf.xacro   # Main URDF file in Xacro format
+    ├── _d435.gazebo.xacro   # RealSense camera Gazebo model
+    ├── _d435.urdf.xacro     # RealSense camera URDF description
+    ├── imu.xacro            # IMU sensor Xacro file
+    ├── lidar_2d.xacro       # 2D Lidar sensor Xacro file
+    ├── _materials.urdf.xacro   # Material properties for the robot
+    ├── rear_ultrasonic.xacro  # Rear ultrasonic sensor Xacro
+    ├── ultrasonic.xacro     # Ultrasonic sensor Xacro
+    └── _usb_plug.urdf.xacro  # USB plug Xacro description
+```
+
+---
+
+This structure provides everything you need to bring your robot to life—from the physical models to launch files for simulations and real-world interactions!
+
+
+
+
+## Steps to Set Up and Run the Robot
+#### 1.  Create and Build the Workspace
+First, create your ROS workspace and clone the robot package:
+``` 
+mkdir -p  catkin_ws/src
+cd ~/catkin_ws/src
+git clone http:// 
+cd ..
+catkin_make
+```
+#### 2. Running Both Gazebo and RViz Together
+to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
+```
+roslaunch arabian_robot robot_description.launch
+```
+
+
+
+
