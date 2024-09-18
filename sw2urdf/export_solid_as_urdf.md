@@ -286,71 +286,163 @@ When you open this package after exporting it from SolidWorks, you'll be greeted
 This structure provides everything you need to bring your robot to life—from the physical models to launch files for simulations and real-world interactions!
 
 
-
-
-## Steps to Set Up and Run the Robot
-#### 1.  Create and Build the Workspace
-First, create your ROS workspace and clone the robot package:
-``` 
-mkdir -p  catkin_ws/src
-cd ~/catkin_ws/src
-git clone http:// 
-cd ..
-catkin_make
-```
-#### 2. Running Both Gazebo and RViz Together
-to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
-```
-roslaunch arabian_robot robot_description.launch
-```
-
 ## Custom Materials and Textures for Your Robot in Gazebo
-> To create a part with a white color in Gazebo, follow these steps:
 
-Copy the Material File:
+To create a part with a white color in Gazebo, follow these steps:
 
-First, copy the [white_material.material](meshes/white_material.material) file to Gazebo’s materials scripts directory:
+1. Create the Material File:
 
+   >  Open your terminal and create a new material file:
+    ```sh
+    nano white_material.material
+    ```
+    > Then, paste this content into the file:
 
+    ```xml
+    material WhiteMaterial
+    {
+        technique
+        {
+            pass
+            {
+                ambient 1 1 1 1
+                diffuse 1 1 1 1
+                specular 1 1 1 1
+                emissive 1 1 1 1
+            }
+        }
+    }
+    ```
 
-using this command
-```
-cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
-```
->If you encounter a Permission denied error, use sudo to gain the necessary permissions:
+    This file defines a WhiteMaterial for a robot model, specifying how it reacts to light:
 
+    - Ambient: Reflects environment light (white).
+    - Diffuse: Reflects direct light (white).
+    - Specular: Adds shiny highlights (white).
+    - Emissive: Makes the surface glow (white).
+    This creates a bright, white, glowing effect for the robot in the simulation.
 
-```sh
-sudo cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
-```
+2. Copy the Material File to gazebo matrial:
+    copy the [white_material.material](meshes/white_material.material) file to Gazebo’s materials scripts directory:
+    using this command
+
+    ```sh
+    cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
+    ```
+
+    > If you encounter a Permission denied error, use sudo to gain the necessary permissions:
+
+    ```sh
+    sudo cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
+    ```
+
+3. Apply the White Material in Your URDF:
+    To apply the material to your robot, add this to your URDF file:
+
+    ```xml
+    <gazebo reference="upper_Link">
+        <material>WhiteMaterial</material>
+    </gazebo>
+    ```
 
 ---
 
-## Adding a Custom Logo
-To add a custom logo to your robot, you need to:
-1. Copy the Material Definition File:
+## Adding a Custom Logo to Your Robot
+
+
+Follow these steps to apply a custom logo texture:
+
+1. Create the Logo Material File:
+
+    > Open your terminal and create a material file for the logo:
+    ```sh
+    nano logo.material
+    ```
+    > Then, paste this content into the file:
+
+    ```xml
+    material testing/material
+    {
+        technique
+        {
+            pass
+            {
+                ambient 1 1 1 1
+                diffuse 1 1 1 1
+                specular 1 1 1 1
+                emissive 1 1 1 1
+
+                texture_unit
+                {
+                    texture logo.png
+                }
+            }
+        }
+    }
+    ```
+    This material script defines how a surface looks in a 3D environment:
+
+    - Material name: testing/material
+    - Color properties:
+    ambient, diffuse, specular, and emissive are all set to white (1 1 1 1), meaning the material appears fully lit in white.
+    - Texture: A texture image logo.png is applied to the surface.
+
+
+2. Copy the Material File to gazebo matrial:
+
     Copy the [logo.material](meshes/logo.material) file to Gazebo’s materials scripts directory:
 
     ```sh
     sudo cp logo.material /usr/share/gazebo-11/media/materials/scripts/
     ```
-2. Copy the Logo Image
-Copy the logo image to Gazebo’s materials textures directory:
- using this command 
-    ```sh
-    sudo cp logo.png /usr/share/gazebo-11/media/materials/textures
 
+3.  Copy the Logo Image:
+
+    Copy the logo image to Gazebo’s materials textures directory:
+
+    ````sh
+    sudo cp logo.png /usr/share/gazebo-11/media/
+    ````
+
+4. Apply the Logo in Your URDF:
+    Update your URDF file to reference the new material for the robot component where you want the logo:
+
+    ```xml
+    <gazebo reference="logo">
+        <material>testing/material</material>
+    </gazebo>
     ```
-#### Updating Your URDF
-Ensure that your URDF file references the new materials correctly. Use the material names defined in the .material files to apply the textures and colors to your robot's components.
 
-To apply the logo material, you can add the following snippet to your URDF file:
-```xml
-<gazebo reference="logo">
-  <material>testing/material</material>
-</gazebo>
-```
-Replace "logo" with the appropriate reference to the part of your robot where the logo should be applied.
+    Replace "logo" with the appropriate reference to the part of your robot where the logo should be applied.
+    -----
+
+   
+By following these steps, you can add custom materials and textures, including logos, to your robot in Gazebo.
+
+----
+
+## Steps to Set Up and Run the Robot
+
+1. Create and Build the Workspace
+
+    First, create your ROS workspace and clone the robot package:
+
+    ```sh
+    mkdir -p  catkin_ws/src
+    cd ~/catkin_ws/src
+    git clone http://
+    cd ..
+    catkin_make
+    ```
+2. Running Both Gazebo and RViz Together
+
+    to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
+
+    ```sh
+    roslaunch arabian_robot robot_description.launch
+    ```
+------
+
 
 
 
