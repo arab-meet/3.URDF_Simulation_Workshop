@@ -115,7 +115,7 @@ Now, we need to ensure that the axes of the coordinate system follow the  **ROS 
 * **X-axis** should point  **forward** . Click on the front surface of the base link to align the **X-axis** in the forward direction (robot’s forward movement direction).
 * **Y-axis** should point  **to the left** . This axis is critical because it serves as the **axis of rotation** for the robot’s yaw. The Y-axis will automatically adjust to be perpendicular to the X and Z axes, ensuring that it points to the left of the robot and supports proper rotational behavior in simulation.
 
-## **Step 4: Setting the Axis of Rotation for Wheels**
+## **Setting the Axis of Rotation for Wheels**
 
 In this step, we will create the **axis of rotation** for the robot. The Y-axis in ROS conventions represents the axis about which yaw (rotation around the vertical axis) occurs. Here’s how you can set the axis of rotation:
 
