@@ -1,5 +1,22 @@
 # **Guide: Exporting SolidWorks Design as URDF for ROS**
 
+this is our Robot
+
+Got it! Here’s a clear list of the sensors on your robot:
+
+- **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
+
+- **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
+
+- **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
+
+- **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
+
+- **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
+
+---
+
+
 ## **Step 1: Install the SolidWorks to URDF Exporter Plugin**
 
 To export your SolidWorks model as a URDF file for use in ROS, you need to install the appropriate URDF Exporter Plugin. Follow these steps to install the correct plugin based on your version of SolidWorks.
@@ -217,3 +234,239 @@ Click the **Preview and Export** button in the URDF Exporter to review the gener
  Choose a location to save your exported URDF file, along with any associated files (e.g., meshes, textures).
 
 The export process will create a folder containing the URDF file, meshes, and any launch files.
+----
+
+this is our Robot
+
+Got it! Here’s a clear list of the sensors on your robot:
+
+- **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
+
+- **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
+
+- **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
+
+- **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
+
+- **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
+
+---
+
+When you open this package after exporting it from SolidWorks, you'll be greeted by a collection of essential files and directories that form the backbone of your robotic project. Here's what you’ll find:
+
+```
+├── CMakeLists.txt          # Build configuration for the project
+├── config
+│   └── joint_names_arabian_robot.yaml  # Configuration for joint names
+├── export.log              # Export log from SolidWorks
+├── launch                  # Launch files for various purposes
+│   ├── display.launch      # Visualization launch file
+│   └── gazebo.launch       # Gazebo simulation launch file
+├── meshes                  # 3D models for robot components
+│   ├── 2d_lidar.STL        # Lidar sensor mesh
+│   ├── arabian_link.STL    # Main robot body mesh
+│   ├── base_link.STL       # Base link of the robot
+│   ├── camera_link.STL     # Camera attachment mesh
+│   ├── front_left_wheel.STL  # Front left wheel mesh
+│   ├── front_right_wheel.STL  # Front right wheel mesh
+│   ├── gps_Link.STL        # GPS module attachment mesh
+│   ├── imu_Link.STL        # IMU sensor link mesh
+│   ├── lidar_link.STL      # Lidar sensor link mesh
+│   ├── plug_collision.stl  # Collision geometry for plug
+│   ├── plug.stl            # Charging plug mesh
+│   ├── realsenseD435.dae   # RealSense camera model
+│   ├── rear_left_wheel.STL   # Rear left wheel mesh
+│   ├── rear_right_wheel.STL  # Rear right wheel mesh
+│   ├── rear_ultrasonic_link.STL  # Rear ultrasonic sensor link mesh
+│   ├── rear_ultrasonic.STL  # Rear ultrasonic sensor mesh
+│   ├── ultrasonic_link.STL  # Ultrasonic sensor link mesh
+│   └── upper_Link.STL      # Upper robot body part mesh
+├── package.xml             # ROS package manifest
+├── readme.md               # Documentation for this package
+├── textures                # Placeholder for any textures used in the models
+└── urdf                    # Robot description files in URDF/Xacro format
+    ├── arabian_robot.csv    # CSV data related to robot configuration
+    └── arabian_robot.urdf   # Main URDF file in Xacro format
+```
+
+Note: This structure provides everything you need to bring your robot to life—from the physical models to launch files for simulations and real-world interactions!
+
+---
+
+### Editing URDF Structure and Launch Files
+
+1. **URDF Files:**
+   We will divide this file **`arabian_robot.urdf`** into two separate files **`robot.xacro`** , **`sensor.xacro`**
+
+   - **Create `robot.xacro`**: Edit this file to define the body of your robot. This includes specifying the robot's physical structure and components.
+   - **Create `sensor.xacro`**: Define the sensors on your robot in this file. It should describe the placement and properties of each sensor.
+   - **Create `plugin.gazebo`**: Add this file to specify any Gazebo plugins required for your robot. This could include plugins for simulation purposes like camera sensors or controllers.
+     > For more details, you can refer to our explanation in the plugin section or watch the related video on our YouTube channel.
+
+2. **Launch Files:**
+
+   We have two launch files: `display.launch` for launching the robot in RViz for visualization, and `gazebo.launch` for launching the robot in the Gazebo simulation. Next, we will: **Create `robot_description.launch`**, to run both Gazebo and RViz.
+
+---
+
+## Custom Materials and Textures for Your Robot in Gazebo
+
+To create a part with a white color in Gazebo, follow these steps:
+
+1. Create the Material File:
+
+   > Open your terminal and create a new material file:
+
+   ```sh
+   nano white_material.material
+   ```
+
+   > Then, paste this content into the file:
+
+   ```xml
+   material WhiteMaterial
+   {
+       technique
+       {
+           pass
+           {
+               ambient 1 1 1 1
+               diffuse 1 1 1 1
+               specular 1 1 1 1
+               emissive 1 1 1 1
+           }
+       }
+   }
+   ```
+
+   This file defines a WhiteMaterial for a robot model, specifying how it reacts to light:
+
+   - Ambient: Reflects environment light (white).
+   - Diffuse: Reflects direct light (white).
+   - Specular: Adds shiny highlights (white).
+   - Emissive: Makes the surface glow (white).
+     This creates a bright, white, glowing effect for the robot in the simulation.
+
+2. Copy the Material File to gazebo matrial:
+   copy the [white_material.material](meshes/white_material.material) file to Gazebo’s materials scripts directory:
+   using this command
+
+   ```sh
+   cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
+   ```
+
+   > If you encounter a Permission denied error, use sudo to gain the necessary permissions:
+
+   ```sh
+   sudo cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
+   ```
+
+3. Apply the White Material in Your URDF:
+   To apply the material to your robot, add this to your URDF file:
+
+   ```xml
+   <gazebo reference="upper_Link">
+       <material>WhiteMaterial</material>
+   </gazebo>
+   ```
+
+---
+
+## Adding a Custom Logo to Your Robot
+
+Follow these steps to apply a custom logo texture:
+
+1. Create the Logo Material File:
+
+   > Open your terminal and create a material file for the logo:
+
+   ```sh
+   nano logo.material
+   ```
+
+   > Then, paste this content into the file:
+
+   ```xml
+   material testing/material
+   {
+       technique
+       {
+           pass
+           {
+               ambient 1 1 1 1
+               diffuse 1 1 1 1
+               specular 1 1 1 1
+               emissive 1 1 1 1
+
+               texture_unit
+               {
+                   texture logo.png
+               }
+           }
+       }
+   }
+   ```
+
+   This material script defines how a surface looks in a 3D environment:
+
+   - Material name: testing/material
+   - Color properties:
+     ambient, diffuse, specular, and emissive are all set to white (1 1 1 1), meaning the material appears fully lit in white.
+   - Texture: A texture image logo.png is applied to the surface.
+
+2. Copy the Material File to gazebo matrial:
+
+   Copy the [logo.material](meshes/logo.material) file to Gazebo’s materials scripts directory:
+
+   ```sh
+   sudo cp logo.material /usr/share/gazebo-11/media/materials/scripts/
+   ```
+
+3. Copy the Logo Image:
+
+   Copy the logo image to Gazebo’s materials textures directory:
+
+   ```sh
+   sudo cp logo.png /usr/share/gazebo-11/media/
+   ```
+
+4. Apply the Logo in Your URDF:
+   Update your URDF file to reference the new material for the robot component where you want the logo:
+
+   ```xml
+   <gazebo reference="logo">
+       <material>testing/material</material>
+   </gazebo>
+   ```
+
+   Replace "logo" with the appropriate reference to the part of your robot where the logo should be applied.
+
+---
+
+By following these steps, you can add custom materials and textures, including logos, to your robot in Gazebo.
+
+## Steps to Set Up and Run the Robot
+
+1. Create and Build the Workspace
+
+   First, create your ROS workspace and clone the robot package:
+
+   ```sh
+   mkdir -p  catkin_ws/src
+   cd ~/catkin_ws/src
+   git clone http://
+   catkin_init_workspace
+   cd ..
+   catkin_make
+   ```
+
+2. Running Both Gazebo and RViz Together
+
+   to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
+
+   ```sh
+   roslaunch arabian_robot robot_description.launch
+   ```
+
+---
+
