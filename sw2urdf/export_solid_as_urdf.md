@@ -2,6 +2,8 @@
 
 ### **"Meet Our Arabian Robotics and ROS Meetup Robot!"**
 
+![1726916378074](image/export_solid_as_urdf/1726916378074.png)
+
 Here’s a clear list of the sensors on your robot:
 
 - **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
