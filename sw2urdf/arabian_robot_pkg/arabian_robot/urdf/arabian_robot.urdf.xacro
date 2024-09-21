@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="arabian_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  
+  <xacro:include filename="$(find arabian_robot)/urdf/sensors.xacro"/>
+  <xacro:include filename="$(find arabian_robot)/urdf/_d435.urdf.xacro"/>
+
+
+
+  
+
+<!-- Add Dummy Link  -->
+  
+<link name="base_footprint">  
+</link>
+
+<joint name="base_footprint_joint" type="fixed">
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+    <parent link ="base_footprint"/>
+    <child link ="base_link"/>   
+</joint>
+
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00133744334022522 6.05357174165988E-07 -0.000970131886296771"
+        rpy="0 0 0" />
+      <mass
+        value="1.1439176852714" />
+      <inertia
+        ixx="0.446134400302526"
+        ixy="-2.18000480348373E-05"
+        ixz="0.0113470100455749"
+        iyy="0.985173237691484"
+        iyz="2.52721045797753E-06"
+        izz="1.332699788346" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="LightBlue">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="upper_Link">
+    <inertial>
+      <origin
+        xyz="-0.0774751291643895 2.86227406331996E-06 0.156846795584232"
+        rpy="0 0 0" />
+      <mass
+        value="0.166872826924751" />
+      <inertia
+        ixx="0.000489929792443678"
+        ixy="-7.74903089672872E-18"
+        ixz="2.30455917227275E-21"
+        iyy="0.00269350489980573"
+        iyz="1.16991430571828E-20"
+        izz="0.00318332344369813" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/upper_Link.STL" />
+      </geometry>
+      
+      <material name="WhiteMaterial">
+        <color rgba="1 1 1 1"/>  
+      
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/upper_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="upper_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="upper_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="gps_Link">
+    <inertial>
+      <origin
+        xyz="-0.00552669793165875 -0.00118224141647627 -0.00896657800103323"
+        rpy="0 0 0" />
+      <mass
+        value="0.0127132662252549" />
+      <inertia
+        ixx="1.20831853041308E-06"
+        ixy="-5.44358548700915E-09"
+        ixz="1.50727133950842E-11"
+        iyy="1.20480332035559E-06"
+        iyz="6.72543334858403E-11"
+        izz="2.39140266302316E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/gps_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.937254901960784 0.937254901960784 0.937254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/gps_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gps_joint"
+    type="fixed">
+    <origin
+      xyz="-0.266508120384244 -0.000331462288671536 0.174846795584232"
+      rpy="0 0 0" />
+    <parent
+      link="upper_Link" />
+    <child
+      link="gps_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_right_wheel">
+    <inertial>
+      <origin
+        xyz="-5.92307982660856E-07 0.00883833779366749 -4.20445877558073E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.260404298470105" />
+      <inertia
+        ixx="0.000768916188073183"
+        ixy="-3.91608887242284E-09"
+        ixz="-1.86122419709981E-08"
+        iyy="0.00137090251737553"
+        iyz="-4.72596045124545E-10"
+        izz="0.000769014346730516" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/front_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.2 0.4 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/front_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.18279 -0.243 -0.014153"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="rear_right_wheel">
+    <inertial>
+      <origin
+        xyz="5.91746743994204E-07 0.00865068531718727 4.89179091955894E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.260404298477464" />
+      <inertia
+        ixx="0.000768916632775559"
+        ixy="3.91036360372682E-09"
+        ixz="-1.97450781846868E-08"
+        iyy="0.00137090251739636"
+        iyz="5.1794015532165E-10"
+        izz="0.000769013902049739" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/rear_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.2 0.4 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/rear_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.17721 -0.24281 -0.014153"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_right_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_left_wheel">
+    <inertial>
+      <origin
+        xyz="-5.43240281369872E-07 -0.0088383378086567 2.3961098227776E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.260404298193649" />
+      <inertia
+        ixx="0.000768939223288773"
+        ixy="3.52640785354548E-09"
+        ixz="4.55730439449201E-08"
+        iyy="0.00137090251681853"
+        iyz="-1.76774536234723E-09"
+        izz="0.000768991310917154" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/front_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.2 0.4 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/front_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.18279 0.243 -0.014153"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="rear_left_wheel">
+    <inertial>
+      <origin
+        xyz="-5.77441466698136E-07 -0.0088383378011283 1.38298648810764E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.260404298330934" />
+      <inertia
+        ixx="0.000768924810397154"
+        ixy="3.78629360408607E-09"
+        ixz="3.34428239014459E-08"
+        iyy="0.00137090251712043"
+        iyz="-1.10616458599264E-09"
+        izz="0.000769005724131009" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/rear_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.2 0.4 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/rear_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.17721 0.243 -0.014153"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_left_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  
+  <link
+    name="arabian_link">
+    <inertial>
+      <origin
+        xyz="0.310363407646962 -0.000888981559154955 0.024407645712155"
+        rpy="0 0 0" />
+      <mass
+        value="0.00950204606844057" />
+      <inertia
+        ixx="2.22232620057898E-07"
+        ixy="-7.20010067600906E-10"
+        ixz="4.32123218517469E-08"
+        iyy="1.59736508017579E-07"
+        iyz="1.6967868671769E-09"
+        izz="1.38773174550699E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/arabian_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.364705882352941 0.768627450980392 0.870588235294118 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/arabian_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arabian_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arabian_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link name="logo">
+    <collision>
+        <origin xyz="-0.05 -0.05 0.16" rpy="0 0 1.57"/>
+        <geometry>
+            <box size="0 0 0"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0 0.09 0.16" rpy="0 0 1.57"/>
+        <geometry>
+            <box size="0.19 0.19 0.001"/>
+        </geometry>
+        <material name=""/>
+    </visual>
+    <inertial>
+        <mass value="0.00001"/>
+        <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.4"/>
+    </inertial>
+</link>
+<joint
+  name="logo_joint"
+  type="fixed">
+  <origin
+    xyz="0 0.0 0.0"
+    rpy="0 0 1.57" />
+  <parent
+    link="upper_Link" />
+  <child
+    link="logo" />
+  <axis
+    xyz="0 0 0" />
+</joint>
+
+<gazebo reference="logo">
+  <material>testing/material</material>
+</gazebo>
+
+  <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="true">
+    <origin xyz="0.28252 -0.0017175 0.029009" rpy="0 -0.25 0"/>
+  </xacro:sensor_d435>
+  
+
+<gazebo reference="front_left_wheel">
+  <material>Gazebo/Black</material> 
+</gazebo>
+<gazebo reference="front_right_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+<gazebo reference="rear_left_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+<gazebo reference="rear_right_wheel">
+  <material>Gazebo/Black</material>  
+</gazebo>
+
+
+
+
+<gazebo reference="arabian_link">
+  <material>Gazebo/Blue</material>  
+</gazebo>
+
+<gazebo reference="upper_Link">
+  <material>WhiteMaterial</material>  
+</gazebo>
+<gazebo reference="base_link">
+  <material>Gazebo/White</material>  
+</gazebo>
+<gazebo reference="gps_Link">
+  <material>Gazebo/Blue</material>  
+</gazebo>
+
+</robot>

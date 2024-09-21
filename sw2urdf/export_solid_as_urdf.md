@@ -1,21 +1,16 @@
 # **Guide: Exporting SolidWorks Design as URDF for ROS**
 
-this is our Robot
+### **"Meet Our Arabian Robotics and ROS Meetup Robot!"**
 
-Got it! Here’s a clear list of the sensors on your robot:
+Here’s a clear list of the sensors on Arabian Robotics and ROS Meetup Robot:
 
 - **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
-
 - **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
-
 - **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
-
 - **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
-
 - **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
 
 ---
-
 
 ## **Step 1: Install the SolidWorks to URDF Exporter Plugin**
 
@@ -73,7 +68,6 @@ According to  [REP 103](https://www.ros.org/reps/rep-0103.html)**:** Standard Un
 * **Test in simulation** : Load your URDF model in RViz or Gazebo to verify that the transformations and orientations are correct according to REP 103.
 
 ![1726115300808](image/solidworks/1726115300808.png)
-
 
 ### **Steps to Create and Align Coordinate Systems:**
 
@@ -234,20 +228,16 @@ Click the **Preview and Export** button in the URDF Exporter to review the gener
  Choose a location to save your exported URDF file, along with any associated files (e.g., meshes, textures).
 
 The export process will create a folder containing the URDF file, meshes, and any launch files.
-----
+-----------------------------------------------------------------------------------------------
 
 this is our Robot
 
 Got it! Here’s a clear list of the sensors on your robot:
 
 - **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
-
 - **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
-
 - **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
-
 - **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
-
 - **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
 
 ---
@@ -302,7 +292,7 @@ Note: This structure provides everything you need to bring your robot to life—
    - **Create `sensor.xacro`**: Define the sensors on your robot in this file. It should describe the placement and properties of each sensor.
    - **Create `plugin.gazebo`**: Add this file to specify any Gazebo plugins required for your robot. This could include plugins for simulation purposes like camera sensors or controllers.
      > For more details, you can refer to our explanation in the plugin section or watch the related video on our YouTube channel.
-
+     >
 2. **Launch Files:**
 
    We have two launch files: `display.launch` for launching the robot in RViz for visualization, and `gazebo.launch` for launching the robot in the Gazebo simulation. Next, we will: **Create `robot_description.launch`**, to run both Gazebo and RViz.
@@ -316,12 +306,14 @@ To create a part with a white color in Gazebo, follow these steps:
 1. Create the Material File:
 
    > Open your terminal and create a new material file:
+   >
 
    ```sh
    nano white_material.material
    ```
 
    > Then, paste this content into the file:
+   >
 
    ```xml
    material WhiteMaterial
@@ -346,7 +338,6 @@ To create a part with a white color in Gazebo, follow these steps:
    - Specular: Adds shiny highlights (white).
    - Emissive: Makes the surface glow (white).
      This creates a bright, white, glowing effect for the robot in the simulation.
-
 2. Copy the Material File to gazebo matrial:
    copy the [white_material.material](meshes/white_material.material) file to Gazebo’s materials scripts directory:
    using this command
@@ -356,11 +347,11 @@ To create a part with a white color in Gazebo, follow these steps:
    ```
 
    > If you encounter a Permission denied error, use sudo to gain the necessary permissions:
+   >
 
    ```sh
    sudo cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
    ```
-
 3. Apply the White Material in Your URDF:
    To apply the material to your robot, add this to your URDF file:
 
@@ -379,12 +370,14 @@ Follow these steps to apply a custom logo texture:
 1. Create the Logo Material File:
 
    > Open your terminal and create a material file for the logo:
+   >
 
    ```sh
    nano logo.material
    ```
 
    > Then, paste this content into the file:
+   >
 
    ```xml
    material testing/material
@@ -413,7 +406,6 @@ Follow these steps to apply a custom logo texture:
    - Color properties:
      ambient, diffuse, specular, and emissive are all set to white (1 1 1 1), meaning the material appears fully lit in white.
    - Texture: A texture image logo.png is applied to the surface.
-
 2. Copy the Material File to gazebo matrial:
 
    Copy the [logo.material](meshes/logo.material) file to Gazebo’s materials scripts directory:
@@ -421,7 +413,6 @@ Follow these steps to apply a custom logo texture:
    ```sh
    sudo cp logo.material /usr/share/gazebo-11/media/materials/scripts/
    ```
-
 3. Copy the Logo Image:
 
    Copy the logo image to Gazebo’s materials textures directory:
@@ -429,7 +420,6 @@ Follow these steps to apply a custom logo texture:
    ```sh
    sudo cp logo.png /usr/share/gazebo-11/media/
    ```
-
 4. Apply the Logo in Your URDF:
    Update your URDF file to reference the new material for the robot component where you want the logo:
 
@@ -459,7 +449,6 @@ By following these steps, you can add custom materials and textures, including l
    cd ..
    catkin_make
    ```
-
 2. Running Both Gazebo and RViz Together
 
    to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
@@ -469,4 +458,3 @@ By following these steps, you can add custom materials and textures, including l
    ```
 
 ---
-
