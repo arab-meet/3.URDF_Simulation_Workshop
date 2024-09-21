@@ -1,0 +1,319 @@
+<?xml version="1.0"?>
+
+<myrobot>
+
+
+<!-- Skid-Steer Drive Plugin -->
+<gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <robotNamespace>/</robotNamespace>
+    <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+    <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+    <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
+    <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
+    <wheelSeparation>0.34</wheelSeparation>
+    <wheelDiameter>0.12</wheelDiameter>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+    <torque>20</torque>
+    <topicName>cmd_vel</topicName>
+    <broadcastTF>false</broadcastTF>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <covariance_x>0.000100</covariance_x>
+    <covariance_y>0.000100</covariance_y>
+    <covariance_yaw>0.010000</covariance_yaw>
+  </plugin>
+</gazebo>
+
+
+
+  <!-- LIDAR Sensor -->
+  <gazebo reference="lidar_link">
+    <!-- Define a sensor of type "ray" (commonly used for LiDAR sensors) -->
+    <sensor type="ray" name="lidar_sensor">
+        <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
+        <pose>0 0 0 0 0 0</pose>
+  
+        <!-- Enable or disable visualization of the sensor in Gazebo -->
+        <visualize>true</visualize>
+  
+        <!-- Set the update rate for the sensor in Hz (how often it produces data) -->
+        <update_rate>40</update_rate>
+  
+        <!-- Define the ray properties of the sensor (LiDAR emits rays to measure distances) -->
+        <ray>
+            <scan>
+                <horizontal>
+                    <!-- Number of samples (rays) per scan -->
+                    <samples>720</samples>
+        
+                    <!-- Resolution of the scan (typically 1 means 1 ray per angle unit) -->
+                    <resolution>1</resolution>
+        
+                    
+                    <!-- Minimum angle of the scan (in radians, -3π/4 for a 270-degree scan) -->
+                          <min_angle>-2.356194</min_angle>
+
+                          <!-- Maximum angle of the scan (in radians, 3π/4 for a 270-degree scan) -->
+                          <max_angle>2.356194</max_angle>
+
+                </horizontal>
+            </scan>
+  
+            <range>
+                <!-- Minimum range (distance) the sensor can detect -->
+                <min>0.10</min>
+    
+                <!-- Maximum range (distance) the sensor can detect -->
+                <max>10.0</max>
+    
+                <!-- Resolution of the distance measurements (smallest measurable distance change) -->
+                <resolution>0.01</resolution>
+            </range>
+  
+            <!-- Define noise characteristics for the sensor -->
+            <noise>
+                <!-- Type of noise (Gaussian noise is commonly used for sensors) -->
+                <type>gaussian</type>
+    
+                <!-- Mean value of the noise (0.0 means no bias) -->
+                <mean>0.0</mean>
+    
+                <!-- Standard deviation of the noise (how much variation there is) -->
+                <stddev>0.01</stddev>
+            </noise>
+        </ray>
+  
+        <!-- Attach a Gazebo plugin to simulate the LiDAR sensor in ROS -->
+        <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+            <!-- Define the ROS topic name where the LiDAR data will be published -->
+            <topicName>/scan</topicName>
+  
+            <!-- Specify the frame name associated with the LiDAR link (used for transformations) -->
+            <frameName>lidar_link</frameName>
+        </plugin>
+    </sensor>
+</gazebo>
+
+<gazebo reference="lidar_link">
+  <material>Gazebo/Black</material>  
+</gazebo>
+
+
+
+
+  <!-- front ultrasonic Sensor -->
+
+<gazebo reference="ultrasonic_link">
+    <!-- Define a sensor of type "ray" with the name "sonar" -->
+    <sensor type="ray" name="sonar">
+  
+        <!-- Set the position and orientation of the sensor relative to the reference link (x, y, z, roll, pitch, yaw) -->
+        <pose>0 0 0 0 0 0</pose>
+  
+        <!-- Enable or disable visualization of the sensor in the Gazebo simulation -->
+        <visualize>false</visualize>
+  
+        <!-- Set the update rate for the sensor in Hz (how often it updates) -->
+        <update_rate>5</update_rate>
+  
+        <!-- Define the ray properties of the sensor -->
+        <ray>
+            <!-- Define the scan parameters for the sensor -->
+            <scan>
+                <horizontal>
+                    <!-- Number of horizontal samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the scan (how fine the angular increments are) -->
+                    <resolution>1.0</resolution>
+      
+                    <!-- Minimum angle for the horizontal scan in radians -->
+                    <min_angle>-0.18</min_angle>
+      
+                    <!-- Maximum angle for the horizontal scan in radians -->
+                    <max_angle>0.18</max_angle>
+                </horizontal>
+  
+                <vertical>
+                    <!-- Number of vertical samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the vertical scan -->
+                    <resolution>1</resolution>
+      
+                    <!-- Minimum angle for the vertical scan in radians -->
+                    <min_angle>-0.035</min_angle>
+      
+                    <!-- Maximum angle for the vertical scan in radians -->
+                    <max_angle>0.035</max_angle>
+                </vertical>
+            </scan>
+  
+            <!-- Define the range properties of the sensor -->
+            <range>
+                <!-- Minimum distance the sensor can measure -->
+                <min>0.01</min>
+  
+                <!-- Maximum distance the sensor can measure -->
+                <max>4</max>
+  
+                <!-- Resolution of the distance measurements -->
+                <resolution>0.01</resolution>
+            </range>
+        </ray>
+  
+        <!-- Attach a Gazebo plugin for interfacing with ROS -->
+        <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+            <!-- Gaussian noise added to the sensor readings -->
+            <gaussianNoise>0.005</gaussianNoise>
+  
+            <!-- Always keep the sensor active -->
+            <alwaysOn>true</alwaysOn>
+  
+            <!-- Update rate for the sensor in Hz -->
+            <updateRate>30</updateRate>
+  
+            <!-- ROS topic name where the sensor data will be published -->
+            <topicName>/ultrasonic1</topicName>
+  
+            <!-- Frame name for the sensor, used for transformations -->
+            <frameName>ultrasonic_link</frameName>
+  
+            <!-- Field of view of the sensor in radians -->
+            <fov>0.5</fov>
+  
+            <!-- Type of radiation emitted by the sensor (here, 'ultrasound' for an ultrasonic sensor) -->
+            <radiation>ultrasound</radiation>
+        </plugin>
+    </sensor>
+</gazebo>
+
+<gazebo reference="ultrasonic_link">
+  <material>Gazebo/Black</material>  
+</gazebo>
+
+
+
+
+  <!-- rear ultrasonic Sensor -->
+
+
+<gazebo reference="rear_ultrasonic">
+    <!-- Define a sensor of type "ray" with the name "sonar" -->
+    <sensor type="ray" name="sonar">
+  
+        <!-- Set the position and orientation of the sensor relative to the reference link (x, y, z, roll, pitch, yaw) -->
+        <pose>0 0 0 0 0 0</pose>
+  
+        <!-- Enable or disable visualization of the sensor in the Gazebo simulation -->
+        <visualize>false</visualize>
+  
+        <!-- Set the update rate for the sensor in Hz (how often it updates) -->
+        <update_rate>5</update_rate>
+  
+        <!-- Define the ray properties of the sensor -->
+        <ray>
+            <!-- Define the scan parameters for the sensor -->
+            <scan>
+                <horizontal>
+                    <!-- Number of horizontal samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the scan (how fine the angular increments are) -->
+                    <resolution>1.0</resolution>
+      
+                    <!-- Minimum angle for the horizontal scan in radians -->
+                    <min_angle>-0.18</min_angle>
+      
+                    <!-- Maximum angle for the horizontal scan in radians -->
+                    <max_angle>0.18</max_angle>
+                </horizontal>
+  
+                <vertical>
+                    <!-- Number of vertical samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the vertical scan -->
+                    <resolution>1</resolution>
+      
+                    <!-- Minimum angle for the vertical scan in radians -->
+                    <min_angle>-0.035</min_angle>
+      
+                    <!-- Maximum angle for the vertical scan in radians -->
+                    <max_angle>0.035</max_angle>
+                </vertical>
+            </scan>
+  
+            <!-- Define the range properties of the sensor -->
+            <range>
+                <!-- Minimum distance the sensor can measure -->
+                <min>0.01</min>
+  
+                <!-- Maximum distance the sensor can measure -->
+                <max>4</max>
+  
+                <!-- Resolution of the distance measurements -->
+                <resolution>0.01</resolution>
+            </range>
+        </ray>
+  
+        <!-- Attach a Gazebo plugin for interfacing with ROS -->
+        <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+            <!-- Gaussian noise added to the sensor readings -->
+            <gaussianNoise>0.005</gaussianNoise>
+  
+            <!-- Always keep the sensor active -->
+            <alwaysOn>true</alwaysOn>
+  
+            <!-- Update rate for the sensor in Hz -->
+            <updateRate>60</updateRate>
+  
+            <!-- ROS topic name where the sensor data will be published -->
+            <topicName>/ultrasonic2</topicName>
+  
+            <!-- Frame name for the sensor, used for transformations -->
+            <frameName>rear_ultrasonic</frameName>
+  
+            <!-- Field of view of the sensor in radians -->
+            <fov>0.5</fov>
+  
+            <!-- Type of radiation emitted by the sensor (here, 'ultrasound' for an ultrasonic sensor) -->
+            <radiation>ultrasound</radiation>
+        </plugin>
+    </sensor>
+</gazebo>
+
+<gazebo reference="rear_ultrasonic">
+  <material>Gazebo/Black</material>  
+</gazebo>
+
+
+  <!-- IMU Sensor -->
+
+<gazebo reference="imu_Link">  
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>100.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_Link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+  <gazebo reference="imu_Link">
+    <material>Gazebo/Blue</material>  
+  </gazebo>
+
+</myrobot>
