@@ -270,13 +270,19 @@ we have two types of LiDAR: **2D LiDAR** and  **3D LiDAR** .
 
 #### The RealSense ROS Package
 
-First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`
+**First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`**
 
 ```bash
 git clone https://github.com/IntelRealSense/realsense-ros.git
 ```
 
 This package contains everything you need to set up and use the RealSense camera in ROS, including URDF
+
+**Install the RealSense Gazebo plugin from PAL Robotics**
+
+```basg
+git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git
+```
 
 Add the D435 URDF
 
