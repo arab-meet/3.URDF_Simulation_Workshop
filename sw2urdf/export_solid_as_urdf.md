@@ -2,9 +2,7 @@
 
 ### **"Meet Our Arabian Robotics and ROS Meetup Robot!"**
 
-![1726916053297](image/export_solid_as_urdf/1726916053297.png)
-
-Here’s a clear list of the sensors on Arabian Robotics and ROS Meetup Robot:
+Here’s a clear list of the sensors on your robot:
 
 - **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
 - **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
