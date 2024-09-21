@@ -65,7 +65,7 @@ According to  [REP 103](https://www.ros.org/reps/rep-0103.html)**:** Standard Un
 * **Align axes per REP 103** :
 
   * **X-axis** : Points **forward** (the robot's forward direction, or "front").
-  * **Y-axis** : Points **to the right** of the robot.
+  * **Y-axis** : Points **to the left** of the robot.
   * **Z-axis** : Points **upward** (towards the sky).
 * **Test in simulation** : Load your URDF model in RViz or Gazebo to verify that the transformations and orientations are correct according to REP 103.
 
