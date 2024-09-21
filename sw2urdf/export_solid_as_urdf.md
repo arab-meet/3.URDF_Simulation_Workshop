@@ -294,7 +294,40 @@ Note: This structure provides everything you need to bring your robot to life—
    - **Create `sensor.xacro`**: Define the sensors on your robot in this file. It should describe the placement and properties of each sensor.
    - **Create `plugin.gazebo`**: Add this file to specify any Gazebo plugins required for your robot. This could include plugins for simulation purposes like camera sensors or controllers.
      > For more details, you can refer to our explanation in the plugin section or watch the related video on our YouTube channel.
-     >
+     
+      **Add the GPS Plugin**
+
+        1. **Install the necessary ROS package**:  
+        Open your terminal and run the following command to install the required Gazebo plugin for GPS:
+            ```bash
+            sudo apt-get install ros-noetic-hector-gazebo-plugins
+            ```
+
+        2. **Add the GPS plugin to your Gazebo model**:  
+        Next, include the following plugin configuration in your robot's URDF file to integrate GPS functionality:
+
+            ```xml
+            <gazebo>
+                <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so">
+                    <updateRate>4.0</updateRate>
+                    <bodyName>gps_Link</bodyName>
+                    <frameId>gps_Link</frameId>
+                    <topicName>/gps/fix</topicName>
+                    <velocityTopicName>/gps/fix_velocity</velocityTopicName>
+                    <referenceLatitude>-30.06022459407145675</referenceLatitude>
+                    <referenceLongitude>-51.173913575780311191</referenceLongitude>
+                    <referenceHeading>90</referenceHeading>
+                    <referenceAltitude>10</referenceAltitude>
+                    <offset>0 0 0</offset>
+                    <drift>0.001 0.001 0.001</drift>
+                    <gaussianNoise>0.05 0.05 0.05</gaussianNoise>
+                    <velocityDrift>0.001 0.001 0.001</velocityDrift>
+                    <velocityGaussianNoise>0.5 0.5 0.5</velocityGaussianNoise>
+                </plugin>
+            </gazebo>
+            ```
+
+            To find your location's latitude and longitude, visit this website: [GPS Coordinates](https://gps-coordinates.org/). Simply enter your location, and the website will provide you with the corresponding latitude and longitude values.
 2. **Launch Files:**
 
    We have two launch files: `display.launch` for launching the robot in RViz for visualization, and `gazebo.launch` for launching the robot in the Gazebo simulation. Next, we will: **Create `robot_description.launch`**, to run both Gazebo and RViz.
