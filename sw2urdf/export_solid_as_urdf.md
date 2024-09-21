@@ -232,17 +232,6 @@ Click the **Preview and Export** button in the URDF Exporter to review the gener
 The export process will create a folder containing the URDF file, meshes, and any launch files.
 -----------------------------------------------------------------------------------------------
 
-this is our Robot
-
-Got it! Here’s a clear list of the sensors on your robot:
-
-- **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
-- **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
-- **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
-- **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
-- **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
-
----
 
 When you open this package after exporting it from SolidWorks, you'll be greeted by a collection of essential files and directories that form the backbone of your robotic project. Here's what you’ll find:
 
@@ -288,46 +277,47 @@ Note: This structure provides everything you need to bring your robot to life—
 ### Editing URDF Structure and Launch Files
 
 1. **URDF Files:**
-   We will divide this file **`arabian_robot.urdf`** into two separate files **`robot.xacro`** , **`sensor.xacro`**
+   We will divide this file **`arabian_robot.urdf`** into two separate files **`arabian_robot.urdf.xacro`** , **`sensor.xacro`**
 
-   - **Create `robot.xacro`**: Edit this file to define the body of your robot. This includes specifying the robot's physical structure and components.
+   - **Create `arabian_robot.urdf.xacro`**: Edit this file to define the body of your robot. This includes specifying the robot's physical structure and components.
    - **Create `sensor.xacro`**: Define the sensors on your robot in this file. It should describe the placement and properties of each sensor.
    - **Create `plugin.gazebo`**: Add this file to specify any Gazebo plugins required for your robot. This could include plugins for simulation purposes like camera sensors or controllers.
+
      > For more details, you can refer to our explanation in the plugin section or watch the related video on our YouTube channel.
-     
-      **Add the GPS Plugin**
+     >
 
-        1. **Install the necessary ROS package**:  
-        Open your terminal and run the following command to install the required Gazebo plugin for GPS:
-            ```bash
-            sudo apt-get install ros-noetic-hector-gazebo-plugins
-            ```
+     **Add the GPS Plugin**
 
-        2. **Add the GPS plugin to your Gazebo model**:  
+     1. **Install the necessary ROS package**:Open your terminal and run the following command to install the required Gazebo plugin for GPS:
+
+        ```bash
+        sudo apt-get install ros-noetic-hector-gazebo-plugins
+        ```
+     2. **Add the GPS plugin to your Gazebo model**:
         Next, include the following plugin configuration in your robot's URDF file to integrate GPS functionality:
 
-            ```xml
-            <gazebo>
-                <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so">
-                    <updateRate>4.0</updateRate>
-                    <bodyName>gps_Link</bodyName>
-                    <frameId>gps_Link</frameId>
-                    <topicName>/gps/fix</topicName>
-                    <velocityTopicName>/gps/fix_velocity</velocityTopicName>
-                    <referenceLatitude>-30.06022459407145675</referenceLatitude>
-                    <referenceLongitude>-51.173913575780311191</referenceLongitude>
-                    <referenceHeading>90</referenceHeading>
-                    <referenceAltitude>10</referenceAltitude>
-                    <offset>0 0 0</offset>
-                    <drift>0.001 0.001 0.001</drift>
-                    <gaussianNoise>0.05 0.05 0.05</gaussianNoise>
-                    <velocityDrift>0.001 0.001 0.001</velocityDrift>
-                    <velocityGaussianNoise>0.5 0.5 0.5</velocityGaussianNoise>
-                </plugin>
-            </gazebo>
-            ```
+        ```xml
+        <gazebo>
+            <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so">
+                <updateRate>4.0</updateRate>
+                <bodyName>gps_Link</bodyName>
+                <frameId>gps_Link</frameId>
+                <topicName>/gps/fix</topicName>
+                <velocityTopicName>/gps/fix_velocity</velocityTopicName>
+                <referenceLatitude>-30.06022459407145675</referenceLatitude>
+                <referenceLongitude>-51.173913575780311191</referenceLongitude>
+                <referenceHeading>90</referenceHeading>
+                <referenceAltitude>10</referenceAltitude>
+                <offset>0 0 0</offset>
+                <drift>0.001 0.001 0.001</drift>
+                <gaussianNoise>0.05 0.05 0.05</gaussianNoise>
+                <velocityDrift>0.001 0.001 0.001</velocityDrift>
+                <velocityGaussianNoise>0.5 0.5 0.5</velocityGaussianNoise>
+            </plugin>
+        </gazebo>
+        ```
 
-            To find your location's latitude and longitude, visit this website: [GPS Coordinates](https://gps-coordinates.org/). Simply enter your location, and the website will provide you with the corresponding latitude and longitude values.
+        To find your location's latitude and longitude, visit this website: [GPS Coordinates](https://gps-coordinates.org/). Simply enter your location, and the website will provide you with the corresponding latitude and longitude values.
 2. **Launch Files:**
 
    We have two launch files: `display.launch` for launching the robot in RViz for visualization, and `gazebo.launch` for launching the robot in the Gazebo simulation. Next, we will: **Create `robot_description.launch`**, to run both Gazebo and RViz.
@@ -374,7 +364,7 @@ To create a part with a white color in Gazebo, follow these steps:
    - Emissive: Makes the surface glow (white).
      This creates a bright, white, glowing effect for the robot in the simulation.
 2. Copy the Material File to gazebo matrial:
-   copy the [white_material.material](meshes/white_material.material) file to Gazebo’s materials scripts directory:
+   copy the [white_material.material](arabian_robot_pkg/material/white_material.material) file to Gazebo’s materials scripts directory:
    using this command
 
    ```sh
@@ -443,12 +433,12 @@ Follow these steps to apply a custom logo texture:
    - Texture: A texture image logo.png is applied to the surface.
 2. Copy the Material File to gazebo matrial:
 
-   Copy the [logo.material](meshes/logo.material) file to Gazebo’s materials scripts directory:
+   Copy the [logo.material](arabian_robot_pkg/material/logo.material) file to Gazebo’s materials scripts directory:
 
    ```sh
    sudo cp logo.material /usr/share/gazebo-11/media/materials/scripts/
    ```
-3. Copy the Logo Image:
+3. Copy the [Logo_Image](arabian_robot_pkg/material/logo.png):
 
    Copy the logo image to Gazebo’s materials textures directory:
 
@@ -491,5 +481,7 @@ By following these steps, you can add custom materials and textures, including l
    ```sh
    roslaunch arabian_robot robot_description.launch
    ```
+
+![1726917503357](image/export_solid_as_urdf/1726917503357.png)
 
 ---
