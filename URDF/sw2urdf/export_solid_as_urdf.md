@@ -2,7 +2,9 @@
 
 ### **"Meet Our Arabian Robotics and ROS Meetup Robot!"**
 
-![1726916378074](image/export_solid_as_urdf/1726916378074.png)
+
+<p align="center">
+<img src="image/solidworks/1726916378074.png">
 
 Here’s a clear list of the sensors on your robot:
 
@@ -44,16 +46,21 @@ To export your SolidWorks model as a URDF file for use in ROS, you need to insta
 * Navigate to **Tools** >  **Add-ins** .
 * In the Add-ins menu, find the **URDF Exporter Plugin** and enable it by checking both **Active Add-ins** and  **Start-Up** .
 
-![1726113039818](image/solidworks/1726113039818.png)
+
+  <p align="center">
+  <img src="image/solidworks/1726113039818.png">
 
 #### **Verify Installation:**
 
 * Once activated, you should see a new tab labeled **URDF Exporter** in the SolidWorks toolbar.
 * If the tab is visible, the plugin is installed and ready for us
 
-![1726113064324](image/solidworks/1726113064324.png)
 
-## **Step 2: Create Coordinate Systems for URDF Export**
+  <p align="center">
+  <img src="image/solidworks/1726113064324.png">
+
+
+## Step 2: Create Coordinate Systems for URDF Export
 
 Creating accurate coordinate systems for each part of your robot is critical for proper URDF export. The coordinate systems should follow the **standard ROS conventions** as defined in  **REP 103** , ensuring correct transformations and behavior in simulation environments like RViz and Gazebo.
 
@@ -69,58 +76,66 @@ According to  [REP 103](https://www.ros.org/reps/rep-0103.html)**:** Standard Un
   * **Z-axis** : Points **upward** (towards the sky).
 * **Test in simulation** : Load your URDF model in RViz or Gazebo to verify that the transformations and orientations are correct according to REP 103.
 
-![1726115300808](image/solidworks/1726115300808.png)
 
-### **Steps to Create and Align Coordinate Systems:**
+  <p align="center">
+  <img src="image/solidworks/1726115300808.png">
 
-### **To Create Base Link Coordinate System (Center of Mass)**
+# Steps to Create and Align Coordinate Systems:
 
-#### 1. Open **Reference Geometry** > **Center of Mass** to locate the CoM.
+### To Create Base Link Coordinate System (Center of Mass)
 
-* Start by selecting the **Center of Mass (COM)** of the base link as the origin point for the coordinate system. This ensures that the coordinate system is centered at the most balanced point of the robot base.
+- ### 1. Open **Reference Geometry** > **Center of Mass** to locate the CoM.
 
-![1726385079906](image/solidworks/1726385079906.png)
+  Start by selecting the **Center of Mass (COM)** of the base link as the origin point for the coordinate system. This ensures that the coordinate system is centered at the most balanced point of the robot base.
 
-### **2- Create **Coordinate System****
 
-Navigate to the **Reference Geometry** tool and select  **Coordinate System** . This tool will allow us to define a new coordinate system at the base link.
+    <p align="center">
+    <img src="image/solidworks/1726385079906.png">
 
-#### **Set Axis Alignment** :
+- ### 2- Create **Coordinate System**
 
-Now, we need to ensure that the axes of the coordinate system follow the  **ROS conventions** . For this:
+  Navigate to the **Reference Geometry** tool and select  **Coordinate System** . This tool will allow us to define a new coordinate system at the base link.
 
-* **Z-axis** should point  **upwards** . Click on the upper surface of the base link or any part of the robot that faces upward to ensure that the **Z-axis** points in the correct direction.
-* **X-axis** should point  **forward** . Click on the front surface of the base link to align the **X-axis** in the forward direction (robot’s forward movement direction).
-* **Y-axis** should point  **to the left** . The Y-axis should automatically adjust to be perpendicular to the X and Z axes, pointing left.
+  #### **Set Axis Alignment** :
 
-#### **Verify the Coordinate System** :
+  Now, we need to ensure that the axes of the coordinate system follow the  **ROS conventions** . For this:
 
-After assigning the axes, make sure to **review the coordinate system** visually. You should see:
+  * **Z-axis** should point  **upwards** . Click on the upper surface of the base link or any part of the robot that faces upward to ensure that the **Z-axis** points in the correct direction.
+  * **X-axis** should point  **forward** . Click on the front surface of the base link to align the **X-axis** in the forward direction (robot’s forward movement direction).
+  * **Y-axis** should point  **to the left** . The Y-axis should automatically adjust to be perpendicular to the X and Z axes, pointing left.
 
-* The **Z-axis** pointing **upwards** (toward the sky or top of the robot).
-* The **X-axis** pointing **forward** (robot’s movement direction).
-* The **Y-axis** pointing  **to the left** .
+  #### **Verify the Coordinate System** :
 
-![1726385187139](image/solidworks/1726385187139.png)
+  After assigning the axes, make sure to **review the coordinate system** visually. You should see:
 
-### **Steps to Create the Wheel's Coordinate System**
+  * The **Z-axis** pointing **upwards** (toward the sky or top of the robot).
+  * The **X-axis** pointing **forward** (robot’s movement direction).
+  * The **Y-axis** pointing  **to the left** .
 
-#### **1. Create a Point at the Wheel’s Center:**
+    <p align="center">
+    <img src="image/solidworks/1726385187139.png">
 
-* Navigate to the **Reference Geometry** > **Point** tab to create a reference **point** at the wheel’s center. This point will serve as the origin for the wheel’s coordinate system.
+### Steps to Create the Wheel's Coordinate System
 
-![1726387451380](image/solidworks/1726387451380.png)
+  - ### 1. Create a Point at the Wheel’s Center:
 
-#### **2. Create the Coordinate System Using the Center Point:**
+    Navigate to the **Reference Geometry** > **Point** tab to create a reference **point** at the wheel’s center. This point will serve as the origin for the wheel’s coordinate system.
 
-Once the point is defined, you can create the coordinate system aligned with the wheel’s intended motion.
+    
+    <p align="center">
+    <img src="image/solidworks/1726387451380.png">
 
-* Go to the **Reference Geometry** tab and select  **Coordinate System** .
-* Set the origin of the coordinate system to the **center point** you just created.
+- ### 2. Create the Coordinate System Using the Center Point:
 
-![1726387523071](image/solidworks/1726387523071.png)
+  Once the point is defined, you can create the coordinate system aligned with the wheel’s intended motion.
 
-#### **Set Axis Alignment** :
+  * Go to the **Reference Geometry** tab and select  **Coordinate System** .
+  * Set the origin of the coordinate system to the **center point** you just created.
+
+  <p align="center">
+      <img src="image/solidworks/1726387523071.png">
+
+### Set Axis Alignment :
 
 Now, we need to ensure that the axes of the coordinate system follow the  **ROS conventions** . For this:
 
@@ -149,7 +164,9 @@ In this step, rather than selecting just the Y-axis of the robot's base link, yo
 * select the cylindrical surface of the axle or the circular edge of the wheel’s mounting point. This ensures that the  axis of rotation aligns correctly with the actual wheel's movement .
 * The axis should point along the Y-axis of the wheel as this is the direction the wheel will rotate around.
 
-![1726736360517](image/solidworks/1726736360517.png)
+
+    <p align="center">
+    <img src="image/solidworks/1726736360517.png">
 
 ### **Steps to Create Coordinate Systems for Sensors**
 
@@ -172,7 +189,9 @@ The **aperture** is where the LiDAR beam originates. You will need to create a *
 * Use the **Reference Geometry** > **Poin**t tab to create a reference **point** at the LiDAR’s aperture (typically the center of the scanning plane or the origin of the emitted beams).
 * Make sure the point is placed at the exact center of the LiDAR’s scanning area, as this will be the reference for the LiDAR’s coordinate system.
 
-![1726736775727](image/solidworks/1726736775727.png)
+
+    <p align="center">
+    <img src="image/solidworks/1726736775727.png">
 
 #### **Create the Coordinate System Using the LiDAR's Aperture** :
 
@@ -180,7 +199,8 @@ After creating the point, you can now define the coordinate system using the ape
 
 then ,Set the **origin** to the point you just created at the LiDAR's aperture
 
-![1726736829277](image/solidworks/1726736829277.png)
+<p align="center">
+<img src="image/solidworks/1726736829277.png">
 
 ### **Step 3: Export the Design to URDF**
 
@@ -193,7 +213,9 @@ After setting up all coordinate systems and rotation axes, follow these steps to
 
 ##### **Starting with Base Link**
 
-![1726737383716](image/solidworks/1726737383716.png)
+
+<p align="center">
+<img src="image/solidworks/1726737383716.png">
 
 * **Choose the Coordinate System** : Start by selecting the coordinate system you created for the base link.
 * **Set Up the Base Link**
@@ -205,14 +227,17 @@ After setting up all coordinate systems and rotation axes, follow these steps to
 * Add the wheels as child links to the base link.
 * Ensure each wheel is properly positioned and oriented according to its coordinate system and rotation axis
 
-![1726737424882](image/solidworks/1726737424882.png)
+  <p align="center">
+  <img src="image/solidworks/1726737424882.png">
 
 ##### **Add Sensor Links**
 
 * **Choose the Coordinate System**
 * **Specify Joint Type** :Use a fixed joint for the sensor links.
 
-![1726737552655](image/solidworks/1726737552655.png)
+
+  <p align="center">
+  <img src="image/solidworks/1726737552655.png">
 
 ### **Export the Complete URDF**
 
@@ -220,7 +245,9 @@ After setting up all coordinate systems and rotation axes, follow these steps to
 
 Click the **Preview and Export** button in the URDF Exporter to review the generated URDF file.
 
-![1726124175398](image/solidworks/1726124175398.png)
+
+<p align="center">
+<img src="image/solidworks/1726124175398.png">
 
 * Ensure everything appears as expected in the preview.
 * If satisfied, click the **Preview and** **Export** button to generate the final URDF file.
@@ -233,7 +260,7 @@ The export process will create a folder containing the URDF file, meshes, and an
 -----------------------------------------------------------------------------------------------
 
 
-When you open this package after exporting it from SolidWorks, you'll be greeted by a collection of essential files and directories that form the backbone of your robotic project. Here's what you’ll find:
+### When you open this package after exporting it from SolidWorks, you'll be greeted by a collection of essential files and directories that form the backbone of your robotic project. Here's what you’ll find:
 
 ```
 ├── CMakeLists.txt          # Build configuration for the project
@@ -481,6 +508,12 @@ By following these steps, you can add custom materials and textures, including l
    roslaunch arabian_robot robot_description.launch
    ```
 
-![1726917503357](image/export_solid_as_urdf/1726917503357.png)
+
+<p align="center">
+<img src="image/solidworks/1726917503357.gif">
+
+
 
 ---
+
+## [↩Back to main](../README.md)
