@@ -1,10 +1,6 @@
-# [&lt;-- Back to main](../urdf.md)
+Author: Toqa Essam
 
-# [&lt;-- 2- Joints ](../joints/joints.md)
-
-###### Author: Toqa Essam
-
-###### Review: KG
+Review: KG
 
 # Integrating Sensors and Plugins into URDF for Gazebo Simulation
 
@@ -20,466 +16,479 @@ This guide explains how to incorporate sensors and Gazebo plugins into a URDF (U
 
 ---
 
-### Adding a LIDAR Sensor Link
+## LIDAR Sensor
 
-we have two types of LiDAR: **2D LiDAR** and  **3D LiDAR** .
+we have two types of LiDAR: **`2D LiDAR`** and **`3D LiDAR`** .
 
-* **2D LiDAR** : This type of LiDAR scans in a single plane, either horizontal or vertical, and outputs data in the form of **LaserScan** messages. These messages represent a 2D point cloud.
-* **3D LiDAR** : This LiDAR scans in multiple planes or provides full 3D coverage, generating data in **PointCloud** messages.
+- **2D LiDAR** : This type of LiDAR scans in a single plane, either horizontal or vertical, and outputs data in the form of **LaserScan** messages. These messages represent a 2D point cloud.
+- **3D LiDAR** : This LiDAR scans in multiple planes or provides full 3D coverage, generating data in **PointCloud** messages.
 
 **In Gazebo, there are two sensor types related to ray-based sensors:**
 
-#### **`ray` Sensor:**
+- **`ray` Sensor:**
 
-* **CPU-Based:** The `ray` sensor type primarily relies on the CPU for data generation and processing. This involves calculating distances, handling scans, and simulating sensor noise.
+  **CPU-Based:** The `ray` sensor type primarily relies on the CPU for data generation and processing. This involves calculating distances, handling scans, and simulating sensor noise.
 
-#### **`gpu_ray` Sensor:**
+- **`gpu_ray` Sensor:**
 
-* **GPU-Based:** The `gpu_ray` sensor type leverages the GPU to perform ray calculations and data generation. It efficiently handles large numbers of rays and complex computations, offering better performance than the CPU.
+  **GPU-Based:** The `gpu_ray` sensor type leverages the GPU to perform ray calculations and data generation. It efficiently handles large numbers of rays and complex computations, offering better performance than the CPU.
 
-#### 1. 2D Lidar Link
+### Now, let's demonstrate how to add a LiDAR link and the corresponding plugin.
 
-##### URDF
+- ## 1. 2D Lidar Link
 
-```xml
-     <link name="lidar_link">
-      <inertial>
-          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-          <mass value="0.0"/>
-          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-      </inertial>
-      <visual>
-          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0"/>
-          <geometry>
-         <mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>   
-            </geometry>
-          <material name="">
-              <color rgba="1.0 1.0 1.0 1.0"/>
-              <texture filename=""/>
-          </material>
-      </visual>
-      <collision>
-          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-          <geometry>
-         <mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>   
-          </geometry>
-      </collision>
-  </link>
+  - ### In your URDF file, add the following link for your robot:
 
-<joint name="lidar_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="0 0 0.06" rpy="0 0 0"/>
-    <parent link="lidar_base_link"/>
-    <child link="lidar_link"/>
-  </joint>
-
-
-```
-
-> `<mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>`: Uses a mesh file (2d_lidar.STL) from the specified package to visually represent the LIDAR. click [here](example/skid_steer_robot/meshes/2d_lidar.STL) to get the mesh file
-
-![1724190516327](image/plugins/1724190516327.png)
-
-#### Gazebo Plugin of 2D Lidar
-
-**2D LIDAR** : Uses `sensor_msgs/LaserScan` to provide a 2D array of distances and optionally intensities.
-
-```xml
-<!-- LIDAR Sensor -->
-  <gazebo reference="lidar_link">
-    <!-- Define a sensor of type "ray" (commonly used for LiDAR sensors) -->
-    <sensor type="ray" name="lidar_sensor">
-        <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
-        <pose>0 0 0 0 0 0</pose>
-  
-        <!-- Enable or disable visualization of the sensor in Gazebo -->
-        <visualize>true</visualize>
-  
-        <!-- Set the update rate for the sensor in Hz (how often it produces data) -->
-        <update_rate>40</update_rate>
-  
-        <!-- Define the ray properties of the sensor (LiDAR emits rays to measure distances) -->
-        <ray>
-            <scan>
-                <horizontal>
-                    <!-- Number of samples (rays) per scan -->
-                    <samples>720</samples>
-  
-                    <!-- Resolution of the scan (typically 1 means 1 ray per angle unit) -->
-                    <resolution>1</resolution>
-  
-                    <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
-                    <min_angle>-1.570796</min_angle>
-  
-                    <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
-                    <max_angle>1.570796</max_angle>
-                </horizontal>
-            </scan>
-  
-            <range>
-                <!-- Minimum range (distance) the sensor can detect -->
-                <min>0.10</min>
-  
-                <!-- Maximum range (distance) the sensor can detect -->
-                <max>30.0</max>
-  
-                <!-- Resolution of the distance measurements (smallest measurable distance change) -->
-                <resolution>0.01</resolution>
-            </range>
-  
-            <!-- Define noise characteristics for the sensor -->
-            <noise>
-                <!-- Type of noise (Gaussian noise is commonly used for sensors) -->
-                <type>gaussian</type>
-  
-                <!-- Mean value of the noise (0.0 means no bias) -->
-                <mean>0.0</mean>
-  
-                <!-- Standard deviation of the noise (how much variation there is) -->
-                <stddev>0.01</stddev>
-            </noise>
-        </ray> 
-        <!-- Attach a Gazebo plugin to simulate the LiDAR sensor in ROS -->
-        <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-            <!-- Define the ROS topic name where the LiDAR data will be published -->
-            <topicName>/scan</topicName>
-  
-            <!-- Specify the frame name associated with the LiDAR link (used for transformations) -->
-            <frameName>lidar_link</frameName>
-        </plugin>
-    </sensor>
-</gazebo>
-```
-
-![1724190624239](image/plugins/1724190624239.png)
-
-#### 2. 3D Lidar Link
-
-**3D LIDAR** : Uses `sensor_msgs/PointCloud` to provide a collection of 3D points .
-
-##### URDF
-
-```xml
- <link name="3d_lidar_link">
+    ```xml
+    <link name="lidar_link">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.0"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
         <visual>
-          <geometry>
-            <cylinder length="0.03" radius="0.02"/>
-          </geometry>
-          <material name="">
-            <color rgba="0.0 0.0 0.0 1.0"/> 
-          </material>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0"/>
+            <geometry>
+        <mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1.0 1.0 1.0 1.0"/>
+                <texture filename=""/>
+            </material>
         </visual>
         <collision>
-          <geometry>
-            <cylinder length="0.03" radius="0.01"/>
-          </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+        <mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>
+            </geometry>
         </collision>
-      </link>
-        <!-- Joint to connect the sensor to the robot -->
-  <joint name="3d_lidar_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="3d_lidar_link"/>
-    <origin xyz="-0.04 0 0.2" rpy="0 0 0"/>
-  </joint>
-```
+    </link>
 
-![1724191374867](image/plugins/1724191374867.png)
-
-#### Gazebo Plugin of 3D Lidar
-
-```xml
+    <joint name="lidar_joint" type="fixed">
+        <axis xyz="0 1 0" />
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <parent link="lidar_base_link"/>
+        <child link="lidar_link"/>
+    </joint>
 
 
-<gazebo reference="3d_lidar_link">
-    <!-- Define a sensor of type "gpu_ray" (GPU-accelerated LiDAR sensor) -->
-    <sensor type="gpu_ray" name="3d_lidar_sensor">
-        <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
-        <pose>0 0 0 0 0 0</pose>
-  
-        <!-- Enable or disable visualization of the sensor in Gazebo -->
-        <visualize>true</visualize>
-  
-        <update_rate>10</update_rate>
+    ```
 
-        <ray>
-            <scan>
-                <horizontal>
-                    <!-- Number of horizontal rays per scan -->
-                    <samples>720</samples>
-  
-                    <!-- Resolution of the scan (1 means 1 ray per angle unit) -->
-                    <resolution>1</resolution>
-  
-                    <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
-                    <min_angle>-1.5708</min_angle>
-  
-                    <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
-                    <max_angle>1.5708</max_angle>
-                </horizontal>
-                <vertical>
-                    <!-- Number of vertical layers per scan -->
-                    <samples>16</samples>
-  
-                    <!-- Resolution of the vertical scan (1 means 1 layer per angle unit) -->
-                    <resolution>1</resolution>
-  
-                    <!-- Minimum angle of the vertical scan (in radians, -π/6 for a 30-degree scan) -->
-                    <min_angle>-0.5236</min_angle>
-  
-                    <!-- Maximum angle of the vertical scan (in radians, π/6 for a 30-degree scan) -->
-                    <max_angle>0.5236</max_angle>
-                </vertical>
-            </scan>
-            <range>
-                <!-- Minimum distance the sensor can detect -->
-                <min>0.1</min>
-  
-                <!-- Maximum distance the sensor can detect -->
-                <max>90.0</max>
-  
-                <!-- Resolution of the distance measurements (smallest detectable distance change) -->
-                <resolution>0.01</resolution>
-            </range>
-            <noise>
-                <!-- Type of noise added to the sensor data -->
-                <type>gaussian</type>
-  
-                <!-- Mean value of the noise -->
-                <mean>0.0</mean>
-  
-                <!-- Standard deviation of the noise (indicates the amount of variation) -->
-                <stddev>0.01</stddev>
-            </noise>
-        </ray>
-  
-        <!-- Attach a Gazebo plugin to interface with the LiDAR sensor and ROS -->
-        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_block_laser.so">
-            <!-- Define the ROS topic name where the sensor data will be published -->
-            <topicName>/point_cloud</topicName>
-  
-            <!-- Specify the frame name associated with the sensor link (used for transformations) -->
-            <frameName>3d_lidar_link</frameName>
-        </plugin>
-    </sensor>
-</gazebo>
-```
+    > `<mesh filename="package://skid_steer_robot/meshes/2d_lidar.STL"/>`: Uses a mesh file (2d_lidar.STL) from the specified package to visually represent the LIDAR. click [here](example/skid_steer_robot/meshes/2d_lidar.STL) to get the mesh file
 
-![1724192325174](image/plugins/1724192325174.png)
+    <p align="center">
+    <img src="image/plugins/1724190516327.png">
+
+  - ### Gazebo Plugin of 2D Lidar
+
+    **2D LIDAR** : Uses `sensor_msgs/LaserScan` to provide a 2D array of distances and optionally intensities.
+
+    ```xml
+    <!-- LIDAR Sensor -->
+        <gazebo reference="lidar_link">
+        <!-- Define a sensor of type "ray" (commonly used for LiDAR sensors) -->
+        <sensor type="ray" name="lidar_sensor">
+            <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
+            <pose>0 0 0 0 0 0</pose>
+
+            <!-- Enable or disable visualization of the sensor in Gazebo -->
+            <visualize>true</visualize>
+
+            <!-- Set the update rate for the sensor in Hz (how often it produces data) -->
+            <update_rate>40</update_rate>
+
+            <!-- Define the ray properties of the sensor (LiDAR emits rays to measure distances) -->
+            <ray>
+                <scan>
+                    <horizontal>
+                        <!-- Number of samples (rays) per scan -->
+                        <samples>720</samples>
+
+                        <!-- Resolution of the scan (typically 1 means 1 ray per angle unit) -->
+                        <resolution>1</resolution>
+
+                        <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
+                        <min_angle>-1.570796</min_angle>
+
+                        <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
+                        <max_angle>1.570796</max_angle>
+                    </horizontal>
+                </scan>
+
+                <range>
+                    <!-- Minimum range (distance) the sensor can detect -->
+                    <min>0.10</min>
+
+                    <!-- Maximum range (distance) the sensor can detect -->
+                    <max>30.0</max>
+
+                    <!-- Resolution of the distance measurements (smallest measurable distance change) -->
+                    <resolution>0.01</resolution>
+                </range>
+
+                <!-- Define noise characteristics for the sensor -->
+                <noise>
+                    <!-- Type of noise (Gaussian noise is commonly used for sensors) -->
+                    <type>gaussian</type>
+
+                    <!-- Mean value of the noise (0.0 means no bias) -->
+                    <mean>0.0</mean>
+
+                    <!-- Standard deviation of the noise (how much variation there is) -->
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <!-- Attach a Gazebo plugin to simulate the LiDAR sensor in ROS -->
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <!-- Define the ROS topic name where the LiDAR data will be published -->
+                <topicName>/scan</topicName>
+
+                <!-- Specify the frame name associated with the LiDAR link (used for transformations) -->
+                <frameName>lidar_link</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+    ```
+
+    <p align="center">
+    <img src="image/plugins/1724190624239.png">
+
+- ## 2. 3D Lidar Link
+
+  - ### In your URDF file, add the following link for your robot:
+
+    ```xml
+    <link name="3d_lidar_link">
+        <visual>
+        <geometry>
+            <cylinder length="0.03" radius="0.02"/>
+        </geometry>
+        <material name="">
+            <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+        </visual>
+        <collision>
+        <geometry>
+            <cylinder length="0.03" radius="0.01"/>
+        </geometry>
+        </collision>
+    </link>
+            <!-- Joint to connect the sensor to the robot -->
+    <joint name="3d_lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="3d_lidar_link"/>
+        <origin xyz="-0.04 0 0.2" rpy="0 0 0"/>
+    </joint>
+    ```
+
+      <p align="center">
+      <img src="image/plugins/1724191374867.png">
+
+  - ### Gazebo Plugin of 3D Lidar
+
+    **3D LIDAR** : Uses `sensor_msgs/PointCloud` to provide a collection of 3D points .
+
+    ```xml
+
+    <gazebo reference="3d_lidar_link">
+        <!-- Define a sensor of type "gpu_ray" (GPU-accelerated LiDAR sensor) -->
+        <sensor type="gpu_ray" name="3d_lidar_sensor">
+            <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
+            <pose>0 0 0 0 0 0</pose>
+
+            <!-- Enable or disable visualization of the sensor in Gazebo -->
+            <visualize>true</visualize>
+
+            <update_rate>10</update_rate>
+
+            <ray>
+                <scan>
+                    <horizontal>
+                        <!-- Number of horizontal rays per scan -->
+                        <samples>720</samples>
+
+                        <!-- Resolution of the scan (1 means 1 ray per angle unit) -->
+                        <resolution>1</resolution>
+
+                        <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
+                        <min_angle>-1.5708</min_angle>
+
+                        <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
+                        <max_angle>1.5708</max_angle>
+                    </horizontal>
+                    <vertical>
+                        <!-- Number of vertical layers per scan -->
+                        <samples>16</samples>
+
+                        <!-- Resolution of the vertical scan (1 means 1 layer per angle unit) -->
+                        <resolution>1</resolution>
+
+                        <!-- Minimum angle of the vertical scan (in radians, -π/6 for a 30-degree scan) -->
+                        <min_angle>-0.5236</min_angle>
+
+                        <!-- Maximum angle of the vertical scan (in radians, π/6 for a 30-degree scan) -->
+                        <max_angle>0.5236</max_angle>
+                    </vertical>
+                </scan>
+                <range>
+                    <!-- Minimum distance the sensor can detect -->
+                    <min>0.1</min>
+
+                    <!-- Maximum distance the sensor can detect -->
+                    <max>90.0</max>
+
+                    <!-- Resolution of the distance measurements (smallest detectable distance change) -->
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <!-- Type of noise added to the sensor data -->
+                    <type>gaussian</type>
+
+                    <!-- Mean value of the noise -->
+                    <mean>0.0</mean>
+
+                    <!-- Standard deviation of the noise (indicates the amount of variation) -->
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+
+            <!-- Attach a Gazebo plugin to interface with the LiDAR sensor and ROS -->
+            <plugin name="gazebo_ros_laser" filename="libgazebo_ros_block_laser.so">
+                <!-- Define the ROS topic name where the sensor data will be published -->
+                <topicName>/point_cloud</topicName>
+
+                <!-- Specify the frame name associated with the sensor link (used for transformations) -->
+                <frameName>3d_lidar_link</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+    ```
+
+      <p align="center">
+      <img src="image/plugins/1724192325174.png">
 
 ---
 
-#### The RealSense ROS Package
+## The RealSense ROS Package
 
-**First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`**
+- #### First, clone the `realsense-ros` repository from GitHub. Ensure that you're working with the `ros1-legacy`
 
-```bash
-git clone https://github.com/IntelRealSense/realsense-ros.git
-```
+  ```bash
+  git clone https://github.com/IntelRealSense/realsense-ros.git
+  ```
 
-This package contains everything you need to set up and use the RealSense camera in ROS, including URDF
+  > this for ROS2
 
-**Install the RealSense Gazebo plugin from PAL Robotics**
+  For ROS1
 
-```basg
-git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git
-```
+  ```bash
+  git clone -b ros1-legacy https://github.com/IntelRealSense/realsense-ros.git
+  ```
 
-Add the D435 URDF
+  This package contains everything you need to set up and use the RealSense camera in ROS, including URDF
 
-```xml
-<?xml version="1.0"?>
+  **Install the RealSense Gazebo plugin from PAL Robotics**
 
-<!--
-License: Apache 2.0. See LICENSE file in root directory.
-Copyright(c) 2017 Intel Corporation. All Rights Reserved
+  ```basg
+  git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git
+  ```
 
-This is the URDF model for the Intel RealSense 430 camera, in its
-aluminum peripherial evaluation case.
--->
+- Then Add the D435 URDF
 
-<robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
+  ```xml
+  <?xml version="1.0"?>
+
+  <!--
+  License: Apache 2.0. See LICENSE file in root directory.
+  Copyright(c) 2017 Intel Corporation. All Rights Reserved
+
+  This is the URDF model for the Intel RealSense 430 camera, in its
+  aluminum peripherial evaluation case.
+  -->
+
+  <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Includes -->
   <xacro:include filename="$(find skid_steer_robot)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find skid_steer_robot)/urdf/_usb_plug.urdf.xacro" />
 
 
   <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true">
-    <xacro:property name="M_PI" value="3.1415926535897931" />
+      <xacro:property name="M_PI" value="3.1415926535897931" />
 
-    <!-- The following values are approximate, and the camera node
-     publishing TF values with actual calibrated camera extrinsic values -->
-    <xacro:property name="d435_cam_depth_to_infra1_offset" value="0.0"/>
-    <xacro:property name="d435_cam_depth_to_infra2_offset" value="-0.050"/>
-    <xacro:property name="d435_cam_depth_to_color_offset" value="0.015"/>
+      <!-- The following values are approximate, and the camera node
+      publishing TF values with actual calibrated camera extrinsic values -->
+      <xacro:property name="d435_cam_depth_to_infra1_offset" value="0.0"/>
+      <xacro:property name="d435_cam_depth_to_infra2_offset" value="-0.050"/>
+      <xacro:property name="d435_cam_depth_to_color_offset" value="0.015"/>
 
-    <!-- The following values model the aluminum peripherial case for the
-  	D435 camera, with the camera joint represented by the actual
-  	peripherial camera tripod mount -->
-    <xacro:property name="d435_cam_width" value="0.090"/>
-    <xacro:property name="d435_cam_height" value="0.025"/>
-    <xacro:property name="d435_cam_depth" value="0.02505"/>
-    <xacro:property name="d435_cam_mount_from_center_offset" value="0.0149"/>
-    <!-- glass cover is 0.1 mm inwards from front aluminium plate -->
-    <xacro:property name="d435_glass_to_front" value="0.1e-3"/>
-    <!-- see datasheet Revision 007, Fig. 4-4 page 65 -->
-    <xacro:property name="d435_zero_depth_to_glass" value="4.2e-3"/>
-    <!-- convenience precomputation to avoid clutter-->
-    <xacro:property name="d435_mesh_x_offset" value="${d435_cam_mount_from_center_offset-d435_glass_to_front-d435_zero_depth_to_glass}"/>
+      <!-- The following values model the aluminum peripherial case for the
+      D435 camera, with the camera joint represented by the actual
+      peripherial camera tripod mount -->
+      <xacro:property name="d435_cam_width" value="0.090"/>
+      <xacro:property name="d435_cam_height" value="0.025"/>
+      <xacro:property name="d435_cam_depth" value="0.02505"/>
+      <xacro:property name="d435_cam_mount_from_center_offset" value="0.0149"/>
+      <!-- glass cover is 0.1 mm inwards from front aluminium plate -->
+      <xacro:property name="d435_glass_to_front" value="0.1e-3"/>
+      <!-- see datasheet Revision 007, Fig. 4-4 page 65 -->
+      <xacro:property name="d435_zero_depth_to_glass" value="4.2e-3"/>
+      <!-- convenience precomputation to avoid clutter-->
+      <xacro:property name="d435_mesh_x_offset" value="${d435_cam_mount_from_center_offset-d435_glass_to_front-d435_zero_depth_to_glass}"/>
 
-    <!-- The following offset is relative the the physical D435 camera peripherial
-  	camera tripod mount -->
-    <xacro:property name="d435_cam_depth_px" value="${d435_cam_mount_from_center_offset}"/>
-    <xacro:property name="d435_cam_depth_py" value="0.0175"/>
-    <xacro:property name="d435_cam_depth_pz" value="${d435_cam_height/2}"/>
+      <!-- The following offset is relative the the physical D435 camera peripherial
+      camera tripod mount -->
+      <xacro:property name="d435_cam_depth_px" value="${d435_cam_mount_from_center_offset}"/>
+      <xacro:property name="d435_cam_depth_py" value="0.0175"/>
+      <xacro:property name="d435_cam_depth_pz" value="${d435_cam_height/2}"/>
 
-    <!-- camera body, with origin at bottom screw mount -->
-    <joint name="${name}_joint" type="fixed">
+      <!-- camera body, with origin at bottom screw mount -->
+      <joint name="${name}_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_bottom_screw_frame" />
-    </joint>
-    <link name="${name}_bottom_screw_frame"/>
+      </joint>
+      <link name="${name}_bottom_screw_frame"/>
 
-    <joint name="${name}_link_joint" type="fixed">
+      <joint name="${name}_link_joint" type="fixed">
       <origin xyz="${d435_mesh_x_offset} ${d435_cam_depth_py} ${d435_cam_depth_pz}" rpy="0 0 0"/>
       <parent link="${name}_bottom_screw_frame"/>
       <child link="${name}_link" />
-    </joint>
+      </joint>
 
-    <link name="${name}_link">
+      <link name="${name}_link">
       <visual>
-        <xacro:if value="${use_mesh}">
+          <xacro:if value="${use_mesh}">
           <!-- the mesh origin is at front plate in between the two infrared camera axes -->
           <origin xyz="${d435_zero_depth_to_glass + d435_glass_to_front} ${-d435_cam_depth_py} 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
           <geometry>
-            <mesh filename="package://skid_steer_robot/meshes/realsenseD435.dae" />
+              <mesh filename="package://skid_steer_robot/meshes/realsenseD435.dae" />
           </geometry>
-        </xacro:if>
-        <xacro:unless value="${use_mesh}">
+          </xacro:if>
+          <xacro:unless value="${use_mesh}">
           <origin xyz="0 ${-d435_cam_depth_py} 0" rpy="0 0 0"/>
           <geometry>
-            <box size="${d435_cam_depth} ${d435_cam_width} ${d435_cam_height}"/>
+              <box size="${d435_cam_depth} ${d435_cam_width} ${d435_cam_height}"/>
           </geometry>
           <material name="aluminum"/>
-        </xacro:unless>   
+          </xacro:unless>
       </visual>
       <collision>
-        <origin xyz="0 ${-d435_cam_depth_py} 0" rpy="0 0 0"/>
-        <geometry>
+          <origin xyz="0 ${-d435_cam_depth_py} 0" rpy="0 0 0"/>
+          <geometry>
           <box size="${d435_cam_depth} ${d435_cam_width} ${d435_cam_height}"/>
-        </geometry>
+          </geometry>
       </collision>
       <inertial>
-        <!-- The following are not reliable values, and should not be used for modeling -->
-        <mass value="0.072" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.003881243" ixy="0.0" ixz="0.0" iyy="0.000498940" iyz="0.0" izz="0.003879257" />
+          <!-- The following are not reliable values, and should not be used for modeling -->
+          <mass value="0.072" />
+          <origin xyz="0 0 0" />
+          <inertia ixx="0.003881243" ixy="0.0" ixz="0.0" iyy="0.000498940" iyz="0.0" izz="0.003879257" />
       </inertial>
-    </link>
+      </link>
 
-    <!-- Use the nominal extrinsics between camera frames if the calibrated extrinsics aren't being published. e.g. running the device in simulation  -->
-    <xacro:if value="${use_nominal_extrinsics}">
+      <!-- Use the nominal extrinsics between camera frames if the calibrated extrinsics aren't being published. e.g. running the device in simulation  -->
+      <xacro:if value="${use_nominal_extrinsics}">
       <!-- camera depth joints and links -->
       <joint name="${name}_depth_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="${name}_link"/>
-        <child link="${name}_depth_frame" />
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <parent link="${name}_link"/>
+          <child link="${name}_depth_frame" />
       </joint>
       <link name="${name}_depth_frame"/>
 
       <joint name="${name}_depth_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-        <parent link="${name}_depth_frame" />
-        <child link="${name}_depth_optical_frame" />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+          <parent link="${name}_depth_frame" />
+          <child link="${name}_depth_optical_frame" />
       </joint>
       <link name="${name}_depth_optical_frame"/>
 
       <!-- camera left IR joints and links -->
       <joint name="${name}_infra1_joint" type="fixed">
-        <origin xyz="0 ${d435_cam_depth_to_infra1_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
-        <child link="${name}_infra1_frame" />
+          <origin xyz="0 ${d435_cam_depth_to_infra1_offset} 0" rpy="0 0 0" />
+          <parent link="${name}_link" />
+          <child link="${name}_infra1_frame" />
       </joint>
       <link name="${name}_infra1_frame"/>
 
       <joint name="${name}_infra1_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-        <parent link="${name}_infra1_frame" />
-        <child link="${name}_infra1_optical_frame" />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+          <parent link="${name}_infra1_frame" />
+          <child link="${name}_infra1_optical_frame" />
       </joint>
       <link name="${name}_infra1_optical_frame"/>
 
       <!-- camera right IR joints and links -->
       <joint name="${name}_infra2_joint" type="fixed">
-        <origin xyz="0 ${d435_cam_depth_to_infra2_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
-        <child link="${name}_infra2_frame" />
+          <origin xyz="0 ${d435_cam_depth_to_infra2_offset} 0" rpy="0 0 0" />
+          <parent link="${name}_link" />
+          <child link="${name}_infra2_frame" />
       </joint>
       <link name="${name}_infra2_frame"/>
 
       <joint name="${name}_infra2_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-        <parent link="${name}_infra2_frame" />
-        <child link="${name}_infra2_optical_frame" />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+          <parent link="${name}_infra2_frame" />
+          <child link="${name}_infra2_optical_frame" />
       </joint>
       <link name="${name}_infra2_optical_frame"/>
 
       <!-- camera color joints and links -->
       <joint name="${name}_color_joint" type="fixed">
-        <origin xyz="0 ${d435_cam_depth_to_color_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
-        <child link="${name}_color_frame" />
+          <origin xyz="0 ${d435_cam_depth_to_color_offset} 0" rpy="0 0 0" />
+          <parent link="${name}_link" />
+          <child link="${name}_color_frame" />
       </joint>
       <link name="${name}_color_frame"/>
 
       <joint name="${name}_color_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-        <parent link="${name}_color_frame" />
-        <child link="${name}_color_optical_frame" />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+          <parent link="${name}_color_frame" />
+          <child link="${name}_color_optical_frame" />
       </joint>
       <link name="${name}_color_optical_frame"/>
-    </xacro:if>
+      </xacro:if>
 
-  
-    <!-- <xacro:if value="${add_plug}"> -->
+
+      <!-- <xacro:if value="${add_plug}"> -->
       <xacro:usb_plug parent="${name}_link" name="${name}_usb_plug">
-        <origin xyz="${d435_cam_mount_from_center_offset - 0.02095} ${-d435_cam_depth_py - 0.0353} 0" rpy="0 0 0"/>
+          <origin xyz="${d435_cam_mount_from_center_offset - 0.02095} ${-d435_cam_depth_py - 0.0353} 0" rpy="0 0 0"/>
       </xacro:usb_plug>
-    <!-- </xacro:if> -->
-    <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="camera" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" infrared1_optical_frame="${name}_left_ir_optical_frame" infrared2_optical_frame="${name}_right_ir_optical_frame" publish_pointcloud="true"/>
+      <!-- </xacro:if> -->
+      <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="camera" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" infrared1_optical_frame="${name}_left_ir_optical_frame" infrared2_optical_frame="${name}_right_ir_optical_frame" publish_pointcloud="true"/>
   </xacro:macro>
 
-</robot>
+  </robot>
 
-```
+  ```
 
-Then  Include the `d435.urdf.xacro` file in your robot’s URDF configuration. This file provides the necessary configuration for the D435 camera.
+  Then Include the `d435.urdf.xacro` file in your robot’s URDF configuration. This file provides the necessary configuration for the D435 camera.
 
-```xml
-<xacro:include filename="$(find skid_steer_robot)/urdf/_d435.urdf.xacro"/>
-```
+  ```xml
+  <xacro:include filename="$(find skid_steer_robot)/urdf/_d435.urdf.xacro"/>
+  ```
 
-#### Add Gazebo Plugin
+- ### Add Gazebo Plugin
 
-To integrate the RealSense D435 with Gazebo.
+  To integrate the RealSense D435 with Gazebo.
 
-```xml
-<?xml version="1.0"?>
+  ```xml
+  <?xml version="1.0"?>
 
-<!--
-License: Apache 2.0. See LICENSE file in root directory.
-Copyright(c) 2017 PAL Robotics, S.L. All Rights Reserved
+  <!--
+  License: Apache 2.0. See LICENSE file in root directory.
+  Copyright(c) 2017 PAL Robotics, S.L. All Rights Reserved
 
-This is the Gazebo URDF model for the Intel RealSense D435 camera
--->
-  
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
-  
+  This is the Gazebo URDF model for the Intel RealSense D435 camera
+  -->
+
+  <robot xmlns:xacro="http://ros.org/wiki/xacro">
+
   <xacro:macro name="gazebo_d435" params="camera_name reference_link topics_ns depth_optical_frame color_optical_frame infrared1_optical_frame infrared2_optical_frame publish_pointcloud:=true" >
 
-    <!-- Load parameters to model's main link-->
-    <xacro:property name="deg_to_rad" value="0.01745329251994329577" />
-    <gazebo reference="${reference_link}">
+      <!-- Load parameters to model's main link-->
+      <xacro:property name="deg_to_rad" value="0.01745329251994329577" />
+      <gazebo reference="${reference_link}">
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
@@ -494,185 +503,190 @@ This is the Gazebo URDF model for the Intel RealSense D435 camera
       <!--<max_vel>0.01</max_vel>
       <min_depth>0</min_depth>-->
       <sensor name="${camera_name}color" type="camera">
-        <camera name="${camera_name}">
+          <camera name="${camera_name}">
           <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>RGB_INT8</format>
+              <width>1280</width>
+              <height>720</height>
+              <format>RGB_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+              <near>0.1</near>
+              <far>100</far>
           </clip>
           <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
           </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>100</update_rate>
-        <visualize>1</visualize>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>100</update_rate>
+          <visualize>1</visualize>
       </sensor>
       <sensor name="${camera_name}ired1" type="camera">
-        <camera name="${camera_name}">
+          <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>L_INT8</format>
+              <width>1280</width>
+              <height>720</height>
+              <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+              <near>0.1</near>
+              <far>100</far>
           </clip>
           <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.05</stddev>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.05</stddev>
           </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>100</update_rate>
-        <visualize>0</visualize>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>100</update_rate>
+          <visualize>0</visualize>
       </sensor>
       <sensor name="${camera_name}ired2" type="camera">
-        <camera name="${camera_name}">
+          <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>L_INT8</format>
+              <width>1280</width>
+              <height>720</height>
+              <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+              <near>0.1</near>
+              <far>100</far>
           </clip>
           <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.05</stddev>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.05</stddev>
           </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>100</update_rate>
-        <visualize>0</visualize>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>100</update_rate>
+          <visualize>0</visualize>
       </sensor>
       <sensor name="${camera_name}depth" type="depth">
-        <camera name="${camera_name}">
+          <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+              <width>1280</width>
+              <height>720</height>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+              <near>0.1</near>
+              <far>100</far>
           </clip>
           <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.100</stddev>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.100</stddev>
           </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>100</update_rate>
-        <visualize>0</visualize>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>100</update_rate>
+          <visualize>0</visualize>
       </sensor>
-    </gazebo>
+      </gazebo>
 
-    <gazebo>
+      <gazebo>
       <plugin name="${topics_ns}" filename="librealsense_gazebo_plugin.so">
-        <prefix>${camera_name}</prefix>
-        <depthUpdateRate>100.0</depthUpdateRate>
-        <colorUpdateRate>100.0</colorUpdateRate>
-        <infraredUpdateRate>100.0</infraredUpdateRate>
-        <depthTopicName>depth/image_raw</depthTopicName>
-        <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
-        <colorTopicName>color/image_raw</colorTopicName>
-        <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
-        <infrared1TopicName>infra1/image_raw</infrared1TopicName>
-        <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
-        <infrared2TopicName>infra2/image_raw</infrared2TopicName>
-        <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
-        <colorOpticalframeName>${color_optical_frame}</colorOpticalframeName>
-        <depthOpticalframeName>${depth_optical_frame}</depthOpticalframeName>
-        <infrared1OpticalframeName>${infrared1_optical_frame}</infrared1OpticalframeName>
-        <infrared2OpticalframeName>${infrared2_optical_frame}</infrared2OpticalframeName>
-        <rangeMinDepth>0.2</rangeMinDepth>
-        <rangeMaxDepth>10.0</rangeMaxDepth>
-        <pointCloud>${publish_pointcloud}</pointCloud>
-        <pointCloudTopicName>depth/color/points</pointCloudTopicName>
-        <pointCloudCutoff>0.25</pointCloudCutoff>
-        <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
+          <prefix>${camera_name}</prefix>
+          <depthUpdateRate>100.0</depthUpdateRate>
+          <colorUpdateRate>100.0</colorUpdateRate>
+          <infraredUpdateRate>100.0</infraredUpdateRate>
+          <depthTopicName>depth/image_raw</depthTopicName>
+          <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
+          <colorTopicName>color/image_raw</colorTopicName>
+          <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
+          <infrared1TopicName>infra1/image_raw</infrared1TopicName>
+          <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
+          <infrared2TopicName>infra2/image_raw</infrared2TopicName>
+          <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
+          <colorOpticalframeName>${color_optical_frame}</colorOpticalframeName>
+          <depthOpticalframeName>${depth_optical_frame}</depthOpticalframeName>
+          <infrared1OpticalframeName>${infrared1_optical_frame}</infrared1OpticalframeName>
+          <infrared2OpticalframeName>${infrared2_optical_frame}</infrared2OpticalframeName>
+          <rangeMinDepth>0.2</rangeMinDepth>
+          <rangeMaxDepth>10.0</rangeMaxDepth>
+          <pointCloud>${publish_pointcloud}</pointCloud>
+          <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+          <pointCloudCutoff>0.25</pointCloudCutoff>
+          <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
       </plugin>
-    </gazebo>
+      </gazebo>
 
   </xacro:macro>
-</robot>
-```
+  </robot>
+  ```
 
-Include the `d435.gazebo.xacro` file. This file contains the Gazebo plugin configuration for the D435 camera.
+  Include the `d435.gazebo.xacro` file. This file contains the Gazebo plugin configuration for the D435 camera.
 
-```xml
+  ```xml
   <xacro:include filename="$(find skid_steer_robot)/urdf/_d435.gazebo.xacro" />
-```
+  ```
 
-#### Instantiate the RealSense D435 Macro
+  #### Instantiate the RealSense D435 Macro
 
-Next, instantiate the `sensor_d435` macro to add the camera to your robot model. You'll need to specify the parent link (to which the camera will be attached).
+  Next, instantiate the `sensor_d435` macro to add the camera to your robot model. You'll need to specify the parent link (to which the camera will be attached).
 
-```xml
-<xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="true">
+  ```xml
+  <xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="true">
   <origin xyz="0 0 0.09" rpy="0 0 0"/>
-</xacro:sensor_d435>
-```
+  </xacro:sensor_d435>
+  ```
 
-After integrating the D435 camera into your URDF, you can test it in the Gazebo simulation environment to ensure it’s working as expected.
+  After integrating the D435 camera into your URDF, you can test it in the Gazebo simulation environment to ensure it’s working as expected.
 
-![1724197191041](image/plugins/1724197191041.png)
+    <p align="center">
+    <img src="image/plugins/1724197191041.png">
 
-![1724197225957](image/plugins/1724197225957.png)
+    <p align="center">
+    <img src="image/plugins/1724197225957.png">
 
----
+  ***
 
-### Adding Mono Camera Link
+## Mono Camera
 
-```xml
-<link name="mono_camera_link">
-    <visual>
+- ### In your URDF file, add the following link for your robot:
+
+  ```xml
+  <link name="mono_camera_link">
+      <visual>
       <geometry>
-        <box size="0.03 0.03 0.03"/>
+          <box size="0.03 0.03 0.03"/>
       </geometry>
       <material name=""/>
-    </visual>
-    <collision>
+      </visual>
+      <collision>
       <geometry>
-        <box size="0.03 0.03 0.03"/>
+          <box size="0.03 0.03 0.03"/>
       </geometry>
-    </collision>
+      </collision>
   </link>
 
   <joint name="mono_camera_joint" type="fixed">
-    <origin xyz="0.2 0.0 0.06" rpy="1.57 0 0"/>
-    <parent link="base_link"/>
-    <child link="mono_camera_link"/>
-    <axis xyz="0.0 0.0 0.0"/>
+      <origin xyz="0.2 0.0 0.06" rpy="1.57 0 0"/>
+      <parent link="base_link"/>
+      <child link="mono_camera_link"/>
+      <axis xyz="0.0 0.0 0.0"/>
   </joint>
-```
+  ```
 
-![1724193735475](image/plugins/1724193735475.png)
+    <p align="center">
+    <img src="image/plugins/1724193735475.png">
 
-### Gazebo Plugin for Mono Camera
+- ### Gazebo Plugin for Mono Camera
 
-```xml
-<gazebo reference="mono_camera_link">
-    <!-- Defines the sensor type and name. The sensor is attached to the camera_link_optical reference -->
-    <sensor type="camera" name="camera">
-  
+  ```xml
+  <gazebo reference="mono_camera_link">
+      <!-- Defines the sensor type and name. The sensor is attached to the camera_link_optical reference -->
+      <sensor type="camera" name="camera">
+
       <!-- The pose of the camera relative to the reference frame. It includes position (x, y, z) and orientation (roll, pitch, yaw) -->
-      <pose>0 0 0 -1.57 0 0</pose> 
+      <pose>0 0 0 -1.57 0 0</pose>
 
       <!-- The update rate in Hz for how often the camera captures images -->
       <update_rate>30.0</update_rate>
@@ -683,11 +697,11 @@ After integrating the D435 camera into your URDF, you can test it in the Gazebo 
       <!-- Camera-specific parameters -->
       <camera name="head">
 
-        <!-- The horizontal field of view (in radians) of the camera -->
-        <horizontal_fov>1.3962634</horizontal_fov>
+          <!-- The horizontal field of view (in radians) of the camera -->
+          <horizontal_fov>1.3962634</horizontal_fov>
 
-        <!-- Image properties -->
-        <image>
+          <!-- Image properties -->
+          <image>
           <!-- Width of the captured image in pixels -->
           <width>800</width>
 
@@ -696,19 +710,19 @@ After integrating the D435 camera into your URDF, you can test it in the Gazebo 
 
           <!-- Format of the image. 'L8' means an 8-bit grayscale image (mono format) -->
           <format>L8</format>
-        </image>
+          </image>
 
-        <!-- Clipping planes define the near and far boundaries for rendering objects in the camera's view -->
-        <clip>
+          <!-- Clipping planes define the near and far boundaries for rendering objects in the camera's view -->
+          <clip>
           <!-- Minimum distance at which objects are rendered -->
           <near>0.02</near>
 
           <!-- Maximum distance at which objects are rendered -->
           <far>300</far>
-        </clip>
+          </clip>
 
-        <!-- Noise settings for simulating realistic sensor noise -->
-        <noise>
+          <!-- Noise settings for simulating realistic sensor noise -->
+          <noise>
           <!-- Type of noise to apply, in this case, Gaussian noise -->
           <type>gaussian</type>
 
@@ -717,228 +731,236 @@ After integrating the D435 camera into your URDF, you can test it in the Gazebo 
 
           <!-- The standard deviation of the noise (spread of the Gaussian distribution) -->
           <stddev>0.007</stddev>
-        </noise>
+          </noise>
       </camera>
 
       <!-- Plugin to interface the camera with ROS -->
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <!-- Whether the camera is always on -->
-        <alwaysOn>true</alwaysOn>
+          <!-- Whether the camera is always on -->
+          <alwaysOn>true</alwaysOn>
 
-        <!-- The update rate for the plugin. '0.0' means it updates as fast as possible -->
-        <updateRate>0.0</updateRate>
+          <!-- The update rate for the plugin. '0.0' means it updates as fast as possible -->
+          <updateRate>0.0</updateRate>
 
-        <!-- The ROS topic name for the camera images -->
-        <cameraName>/mybot/camera</cameraName>
+          <!-- The ROS topic name for the camera images -->
+          <cameraName>/mybot/camera</cameraName>
 
-        <!-- The ROS topic name for the image data (mono format) -->
-        <imageTopicName>image_mono</imageTopicName>
+          <!-- The ROS topic name for the image data (mono format) -->
+          <imageTopicName>image_mono</imageTopicName>
 
-        <!-- The ROS topic name for the camera info (camera parameters) -->
-        <cameraInfoTopicName>camera_info_mono</cameraInfoTopicName>
+          <!-- The ROS topic name for the camera info (camera parameters) -->
+          <cameraInfoTopicName>camera_info_mono</cameraInfoTopicName>
 
-        <!-- The name of the reference frame associated with the camera -->
-        <frameName>mono_camera_link</frameName>
+          <!-- The name of the reference frame associated with the camera -->
+          <frameName>mono_camera_link</frameName>
 
-        <!-- The baseline distance for stereo cameras, irrelevant for mono but sometimes required for plugin configuration -->
-        <hackBaseline>0.07</hackBaseline>
-        <!-- Distortion parameters for camera lens distortion correction (all set to 0.0, indicating no distortion) -->
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
+          <!-- The baseline distance for stereo cameras, irrelevant for mono but sometimes required for plugin configuration -->
+          <hackBaseline>0.07</hackBaseline>
+          <!-- Distortion parameters for camera lens distortion correction (all set to 0.0, indicating no distortion) -->
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
       </plugin>
-    </sensor>
-</gazebo>
+      </sensor>
+  </gazebo>
 
-```
+  ```
 
-![1724193806367](image/plugins/1724193806367.png)
+    <p align="center">
+    <img src="image/plugins/1724193806367.png">
 
 ---
 
-### Adding an Ultrasonic link
+## Ultrasonic Sensor
 
-```xml
-<link name="ultrasonic_link">
-    <visual>
+- In your URDF file, add the following link for your robot:
+
+  ```xml
+  <link name="ultrasonic_link">
+      <visual>
       <geometry>
-        <box size="0.01 0.01 0.01"/> 
+          <box size="0.01 0.01 0.01"/>
       </geometry>
       <material name=""/>
-    </visual>
-    <collision>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      </visual>
+      <collision>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+          <box size="0.01 0.01 0.01"/>
 
-        </geometry>
-    </collision>
+          </geometry>
+      </collision>
   </link>
 
   <joint name="ultrasonic_joint" type="fixed">
-    <parent link="base_link"/> 
-    <child link="ultrasonic_link"/>
-    <origin xyz="0.2 0 0.03"/> 
+      <parent link="base_link"/>
+      <child link="ultrasonic_link"/>
+      <origin xyz="0.2 0 0.03"/>
   </joint>
-```
+  ```
 
-![1724195090285](image/plugins/1724195090285.png)
+    <p align="center">
+    <img src="image/plugins/1724195090285.png">
 
-#### Gazebo Plugin for Ultrasonic sensor
+- ### Gazebo Plugin for Ultrasonic sensor
 
-```xml
-<gazebo reference="ultrasonic_link">
-    <!-- Define a sensor of type "ray" with the name "sonar" -->
-    <sensor type="ray" name="sonar">
-  
-        <!-- Set the position and orientation of the sensor relative to the reference link (x, y, z, roll, pitch, yaw) -->
-        <pose>0 0 0 0 0 0</pose>
-  
-        <!-- Enable or disable visualization of the sensor in the Gazebo simulation -->
-        <visualize>true</visualize>
-  
-        <!-- Set the update rate for the sensor in Hz (how often it updates) -->
-        <update_rate>5</update_rate>
-  
-        <!-- Define the ray properties of the sensor -->
-        <ray>
-            <!-- Define the scan parameters for the sensor -->
-            <scan>
-                <horizontal>
-                    <!-- Number of horizontal samples (rays) per scan -->
-                    <samples>5</samples>
-  
-                    <!-- Resolution of the scan (how fine the angular increments are) -->
-                    <resolution>1.0</resolution>
-  
-                    <!-- Minimum angle for the horizontal scan in radians -->
-                    <min_angle>-0.18</min_angle>
-  
-                    <!-- Maximum angle for the horizontal scan in radians -->
-                    <max_angle>0.18</max_angle>
-                </horizontal>
-  
-                <vertical>
-                    <!-- Number of vertical samples (rays) per scan -->
-                    <samples>5</samples>
-  
-                    <!-- Resolution of the vertical scan -->
-                    <resolution>1</resolution>
-  
-                    <!-- Minimum angle for the vertical scan in radians -->
-                    <min_angle>-0.035</min_angle>
-  
-                    <!-- Maximum angle for the vertical scan in radians -->
-                    <max_angle>0.035</max_angle>
-                </vertical>
-            </scan>
-  
-            <!-- Define the range properties of the sensor -->
-            <range>
-                <!-- Minimum distance the sensor can measure -->
-                <min>0.01</min>
-  
-                <!-- Maximum distance the sensor can measure -->
-                <max>4</max>
-  
-                <!-- Resolution of the distance measurements -->
-                <resolution>0.01</resolution>
-            </range>
-        </ray>
-  
-        <!-- Attach a Gazebo plugin for interfacing with ROS -->
-        <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
-            <!-- Gaussian noise added to the sensor readings -->
-            <gaussianNoise>0.005</gaussianNoise>
-  
-            <!-- Always keep the sensor active -->
-            <alwaysOn>true</alwaysOn>
-  
-            <!-- Update rate for the sensor in Hz -->
-            <updateRate>5</updateRate>
-  
-            <!-- ROS topic name where the sensor data will be published -->
-            <topicName>/genius/sonar</topicName>
-  
-            <!-- Frame name for the sensor, used for transformations -->
-            <frameName>ultrasonic_link</frameName>
-  
-            <!-- Field of view of the sensor in radians -->
-            <fov>0.5</fov>
-  
-            <!-- Type of radiation emitted by the sensor (here, 'ultrasound' for an ultrasonic sensor) -->
-            <radiation>ultrasound</radiation>
-        </plugin>
-    </sensor>
-</gazebo>
-```
+  ```xml
+  <gazebo reference="ultrasonic_link">
+      <!-- Define a sensor of type "ray" with the name "sonar" -->
+      <sensor type="ray" name="sonar">
 
-![1724195133372](image/plugins/1724195133372.png)
+          <!-- Set the position and orientation of the sensor relative to the reference link (x, y, z, roll, pitch, yaw) -->
+          <pose>0 0 0 0 0 0</pose>
+
+          <!-- Enable or disable visualization of the sensor in the Gazebo simulation -->
+          <visualize>true</visualize>
+
+          <!-- Set the update rate for the sensor in Hz (how often it updates) -->
+          <update_rate>5</update_rate>
+
+          <!-- Define the ray properties of the sensor -->
+          <ray>
+              <!-- Define the scan parameters for the sensor -->
+              <scan>
+                  <horizontal>
+                      <!-- Number of horizontal samples (rays) per scan -->
+                      <samples>5</samples>
+
+                      <!-- Resolution of the scan (how fine the angular increments are) -->
+                      <resolution>1.0</resolution>
+
+                      <!-- Minimum angle for the horizontal scan in radians -->
+                      <min_angle>-0.18</min_angle>
+
+                      <!-- Maximum angle for the horizontal scan in radians -->
+                      <max_angle>0.18</max_angle>
+                  </horizontal>
+
+                  <vertical>
+                      <!-- Number of vertical samples (rays) per scan -->
+                      <samples>5</samples>
+
+                      <!-- Resolution of the vertical scan -->
+                      <resolution>1</resolution>
+
+                      <!-- Minimum angle for the vertical scan in radians -->
+                      <min_angle>-0.035</min_angle>
+
+                      <!-- Maximum angle for the vertical scan in radians -->
+                      <max_angle>0.035</max_angle>
+                  </vertical>
+              </scan>
+
+              <!-- Define the range properties of the sensor -->
+              <range>
+                  <!-- Minimum distance the sensor can measure -->
+                  <min>0.01</min>
+
+                  <!-- Maximum distance the sensor can measure -->
+                  <max>4</max>
+
+                  <!-- Resolution of the distance measurements -->
+                  <resolution>0.01</resolution>
+              </range>
+          </ray>
+
+          <!-- Attach a Gazebo plugin for interfacing with ROS -->
+          <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+              <!-- Gaussian noise added to the sensor readings -->
+              <gaussianNoise>0.005</gaussianNoise>
+
+              <!-- Always keep the sensor active -->
+              <alwaysOn>true</alwaysOn>
+
+              <!-- Update rate for the sensor in Hz -->
+              <updateRate>5</updateRate>
+
+              <!-- ROS topic name where the sensor data will be published -->
+              <topicName>/genius/sonar</topicName>
+
+              <!-- Frame name for the sensor, used for transformations -->
+              <frameName>ultrasonic_link</frameName>
+
+              <!-- Field of view of the sensor in radians -->
+              <fov>0.5</fov>
+
+              <!-- Type of radiation emitted by the sensor (here, 'ultrasound' for an ultrasonic sensor) -->
+              <radiation>ultrasound</radiation>
+          </plugin>
+      </sensor>
+  </gazebo>
+  ```
+
+    <p align="center">
+    <img src="image/plugins/1724195133372.png">
 
 ---
 
-### Adding an IMU Sensor
+## IMU Sensor
 
-```xml
- <link name="imu_link">
-    <inertial>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <mass value="0.0"/>
-        <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
-    </inertial>
-    <visual name="">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <geometry>
-            <box size="0.01 0.01 0.01"/>
+- ### In your URDF file, add the following link for your robot:
 
-        </geometry>
-        <material name="">
-            <color rgba="1.0 0.0 0.0 1.0"/>
-            <texture filename=""/>
-        </material>
-    </visual>
-    <collision>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  ```xml
+  <link name="imu_link">
+      <inertial>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <mass value="0.0"/>
+          <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+      </inertial>
+      <visual name="">
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+          <geometry>
+              <box size="0.01 0.01 0.01"/>
+
+          </geometry>
+          <material name="">
+              <color rgba="1.0 0.0 0.0 1.0"/>
+              <texture filename=""/>
+          </material>
+      </visual>
+      <collision>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+          <box size="0.01 0.01 0.01"/>
 
-        </geometry>
-    </collision>
-</link>
-<joint name="imu_joint" type="fixed">
-    <origin xyz="0.0 0.0 0.02" rpy="0.0 0.0 0.0"/>
-    <parent link="base_link"/>
-    <child link="imu_link"/>
-</joint
-```
+          </geometry>
+      </collision>
+  </link>
+  <joint name="imu_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 0.0 0.0"/>
+      <parent link="base_link"/>
+      <child link="imu_link"/>
+  </joint>
+  ```
 
-### Gazebo Plugin
+- ### Gazebo Plugin
 
-```xml
+  ```xml
   <gazebo reference="imu_link">  <!--the name of the link-->
-    <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
-        <bodyName>imu_link</bodyName>
-        <updateRateHZ>100.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
+          <topicName>imu</topicName>
+          <bodyName>imu_link</bodyName>
+          <updateRateHZ>100.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu_link</frameName>
       </plugin>
       <pose>0 0 0 0 0 0</pose>
-    </sensor>
+      </sensor>
   </gazebo>
-```
+  ```
 
-![1724195376623](image/plugins/1724195376623.png)
+    <p align="center">
+    <img src="image/plugins/1724195376623.png">
 
 ## **robot drive systems**
 
@@ -1010,31 +1032,31 @@ Uses two independently driven wheels on either side of the robot.
   <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
     <!-- Update rate of the plugin in Hz -->
     <updateRate>100.0</updateRate>
-  
+
     <!-- Namespace for the robot in ROS -->
     <robotNamespace>/</robotNamespace>
-  
+
     <!-- Names of the joints controlling each wheel -->
     <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
     <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
     <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
     <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
-  
+
     <!-- Distance between the front and rear wheels -->
     <wheelSeparation>0.34</wheelSeparation>
-  
+
     <!-- Diameter of the wheels -->
     <wheelDiameter>0.12</wheelDiameter>
-  
+
     <!-- Frame of reference for the robot's base -->
     <robotBaseFrame>base_footprint</robotBaseFrame>
-  
+
     <!-- Maximum torque applied to the wheels -->
     <torque>20</torque>
-  
+
     <!-- ROS topic for receiving velocity commands -->
     <topicName>cmd_vel</topicName>
-  
+
     <!-- Whether to broadcast the transform from the base frame to the wheels -->
     <broadcastTF>false</broadcastTF>
 
@@ -1047,15 +1069,22 @@ Uses two independently driven wheels on either side of the robot.
     <covariance_yaw>0.010000</covariance_yaw>
   </plugin>
 </gazebo>
-
 ```
 
-# [Step-by-Step Tutorial for Building a Skid-Steer Robot --&gt;;](../example/skid_steer_robot_example.md)
+-----
 
-![1725373080764](image/plugins/1724199913058.png)
+<!-- | [Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) |   [Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)|
+|---|----|
+| <img src="image/plugins/1724199913058.png" width="1000"> | <img src="image/plugins/example1.gif" width="1000" >|
+ -->
 
-# [Step-by-Step Tutorial for Building a Differential drive Robot --&gt;;](../example/differential_drive_robot_example.md)
+| <h2>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) </h2> | <h2>[Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)</h2> |
+|---|----|
+| <img src="image/plugins/1724199913058.png" width="1000"> | <img src="image/plugins/example1.gif" width="1000"> |
 
-<img src="image/plugins/example1.gif" width="1000">
 
-# [&lt;-- Back to main](../urdf.md)
+
+## [Next Topic →](../sw2urdf/export_solid_as_urdf.md)
+
+## [↩Back to main](../README.md)
+

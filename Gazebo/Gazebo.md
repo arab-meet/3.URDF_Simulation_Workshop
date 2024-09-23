@@ -10,10 +10,10 @@ Robotic simulators are software applications that create models of robots and re
 
 ## But why Gazebo
 
- Here are some simulators along with their features:
+Here are some simulators along with their features:
 
-| Feature/Software               | Gazebo                         | Unity                                | Isaac Sim                       | CoppeliaSim                   | CARLA                        | LGSVL                     | Webots                         | Stage                        |
-| ------------------------------ | ------------------------------ | ------------------------------------ | ------------------------------- | ----------------------------- | ---------------------------- | ------------------------- | ------------------------------ | ---------------------------- |
+| Feature/Software         | Gazebo                         | Unity                                | Isaac Sim                       | CoppeliaSim                   | CARLA                        | LGSVL                     | Webots                         | Stage                        |
+| ------------------------ | ------------------------------ | ------------------------------------ | ------------------------------- | ----------------------------- | ---------------------------- | ------------------------- | ------------------------------ | ---------------------------- |
 | **Community**            | Large, active (robotics focus) | Large (general, growing in robotics) | Growing (strong NVIDIA focus)   | Moderate (academia, research) | Growing (autonomous driving) | Growing (Apollo platform) | Moderate (education, research) | Small (ROS, simple robotics) |
 | **ROS Integration**      | Excellent                      | Improving (Unity Robotics Hub)       | Excellent                       | Limited                       | Moderate                     | Moderate                  | Moderate                       | Limited                      |
 | **Open Source**          | Yes                            | No                                   | No                              | Yes                           | Yes                          | Yes                       | Yes                            | Yes                          |
@@ -97,7 +97,7 @@ sudo apt-get install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control
   ```
 
   > This will start the physics engine with an empty world.
-  >
+
 - To run gazebo GUI client type in anther terminal:
 
   ```bash
@@ -126,6 +126,7 @@ To get started with testing Gazebo using the ROS interface, follow these steps:
    ```sh
    roscore
    ```
+
 2. In another terminal, run Gazebo with the ROS plugin:
 
    ```bash
@@ -189,9 +190,6 @@ rostopic list
 
 ## Robot models in Gazebo
 
-
-
-
 Before we dive into robot models , it's essential to clarify that there are two distinct scenarios
 
 1. **Building a robot model**
@@ -212,6 +210,7 @@ click on Edit and select model editor
 
   <p align="center">
   <img src="images/4.png">
+
 - Create robot wheels:
 
   - Select from simple shapes “cylinder”.
@@ -225,6 +224,7 @@ click on Edit and select model editor
 
   <p align="center">
   <img src="images/5.png">
+
 - Connect wheels to the chassis via joints:
 
   - Select Joint from the toolbar.
@@ -234,6 +234,7 @@ click on Edit and select model editor
 
   <p align="center">
   <img src="images/6.png">
+
 - Adding Camera:
 
   - Select from simple shapes “Box”.
@@ -245,6 +246,7 @@ click on Edit and select model editor
 
   <p align="center">
   <img src="images/7.png">
+
 - Connect Camera to the chassis via joints:
 
   - Select Joint from the toolbar.
@@ -254,6 +256,7 @@ click on Edit and select model editor
 
   <p align="center">
   <img src="images/8.png">
+
 - Save the model file
 
   - Model: Save it as a robot in <your_pkg_ws/model>
@@ -298,11 +301,13 @@ you can control the movement this robot follow this steps
   ```sh
   roscore
   ```
+
 - In another terminal, run your model in Gazebo:
 
   ```sh
   rosrun gazebo_ros gazebo
   ```
+
 - Choose the model from your device
 
 ## 1. Constant velocity
@@ -314,7 +319,6 @@ you can control the movement this robot follow this steps
   ```
 
   > The preceding command line prints the following information
-  >
 
   ```sh
   /clock
@@ -331,6 +335,7 @@ you can control the movement this robot follow this steps
   /rosout_agg
   /tf
   ```
+
 - Now, you can publish to the /cmd_vel topic:
 
   ```sh
@@ -354,11 +359,13 @@ you can control the movement this robot follow this steps
   ```sh
   sudo apt-get install ros-noetic-teleop-twist-keyboard
   ```
+
 - Running
 
   ```sh
   rosrun teleop_twist_keyboard teleop_twist_keyboard.py
   ```
+
 - Controls
 
   ```sh
@@ -440,7 +447,7 @@ gazebo models saved in **~/.gazebo/models**
 so we need to get a model and saved it in this directory
 
 1. get the robot model you want online , you could find many in this repository :
-   * [robot models repository ](https://github.com/osrf/gazebo_models) or you could download the full repository
+   - [robot models repository ](https://github.com/osrf/gazebo_models) or you could download the full repository
 2. download and locate the model directory in the gazebo model path **~/.gazebo/model** or download it in any other path
 
 ```
@@ -457,24 +464,25 @@ asphalt_plane
 
 each directory have :
 
-* materials :Contains textures and scripts for defining material properties.
-* meshes folder: Stores 3D models in formats like COLLADA (.dae) or STL.
-* model.sdf or model.urdf:Describes the model's physical and visual properties.
-* model.config:Provides metadata about the model.
+- materials :Contains textures and scripts for defining material properties.
+- meshes folder: Stores 3D models in formats like COLLADA (.dae) or STL.
+- model.sdf or model.urdf:Describes the model's physical and visual properties.
+- model.config:Provides metadata about the model.
 
 3. run it locally
-   * in gazebo Click on the toolbar, select `Insert`
-   * if installed in ./gazebo/models you will find the name of the directory
-   * if downloaded in another path click on add path and select the folder name
 
-<p align= "center" >
-<img src="images/17.png">
+   - in gazebo Click on the toolbar, select `Insert`
+   - if installed in ./gazebo/models you will find the name of the directory
+   - if downloaded in another path click on add path and select the folder name
 
-<p align= "center" >
-<img src="images/16_.png">
+    <p align= "center" >
+    <img src="images/17.png">
+
+    <p align= "center" >
+    <img src="images/16_.png">
 
 ---
 
-# [Next Topic Link]( )
+## [Next Topic →](../URDF/README.md)
 
-### [&lt;-Back to main](../README.md)
+## [↩Back to main](../README.md)
