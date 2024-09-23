@@ -1,3 +1,7 @@
+Author: Sherif Fathey, Toqa Essam
+
+Review: KG
+
 # **Guide: Exporting SolidWorks Design as URDF for ROS**
 
 ### **"Meet Our Arabian Robotics and ROS Meetup Robot!"**
