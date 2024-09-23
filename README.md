@@ -48,8 +48,8 @@
 - Include translation and rotation information
 - Listeners retrieve transform data between frames
 - TF tree represents frame hierarchy in robot system
-[Static TF](Transformation_Basics_and_Stactic_Transforms/Static.md)
-[Dynamic TF](Transformation_Basics_and_Stactic_Transforms/Static.md)
+[Static TF](B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
+[Dynamic TF](B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
 
 ## [E - Robot and Joint State publisher](C.%20robot%20and%20joint%20state%20publisher/robot_joint_state_publisher.md)
 
