@@ -1,0 +1,13 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ahmedmoataz/arab_workshop_Ws/devel/lib/python3/dist-packages",
+        "/home/ahmedmoataz/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ahmedmoataz/arab_workshop_Ws/devel/lib/python3/dist-packages",
+        "/home/ahmedmoataz/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "ros.distro": "noetic"
+}
