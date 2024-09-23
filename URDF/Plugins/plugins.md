@@ -1078,7 +1078,7 @@ Uses two independently driven wheels on either side of the robot.
 | <img src="image/plugins/1724199913058.png" width="1000"> | <img src="image/plugins/example1.gif" width="1000" >|
  -->
 
-| <h2>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) </h2> | <h2>[Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)</h2> |
+| <h3>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) </h3> | <h3>[Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)</h3> |
 |---|----|
 | <img src="image/plugins/1724199913058.png" > | <img src="image/plugins/example1.gif" > |
 
