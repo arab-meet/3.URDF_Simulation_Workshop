@@ -1,5 +1,7 @@
 # Dynamic Transformations:
 
+author: Mo3taz & Rawda
+
 To understand dynamic transformations we need to understand dynamic frames like `map` and `odom`
 
 this TF structure for most autonomous robots:
