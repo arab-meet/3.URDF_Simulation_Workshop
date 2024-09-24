@@ -1,7 +1,8 @@
 
+author: Mo3taz
+
 # Robot State Publisher
 
-author: Mo3taz
 
 ROS gives you a Node called robot state publisher. In essence, it takes a file describing URDF file as input, and it automatically publishes the TF for you. Sounds pretty nice, right?
 
