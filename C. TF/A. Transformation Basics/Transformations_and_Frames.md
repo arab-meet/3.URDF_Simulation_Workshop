@@ -1,9 +1,8 @@
 # Transformation_And_Frames(TF)
-author: ENG. Wafaa
 
 **Author: Wafaa Mohamed**
 
-**Review :**
+**Review : KG**
 
 ## 1. Coordinate frame and transformation
 
@@ -26,17 +25,25 @@ author: ENG. Wafaa
 
 <img src="images/tf_example.jpg" />
 
+<img src="images/tf77.png" style="width:75%" />
+
 ## 2. Why do needed frame transformation in AMR
 
 <img src="images/tf1.png"/>
 
+<img src="images/tf.gif" />
+
 There are multiple reasons for example :
 
+- compact representation of points and orientations
 - To etermine the robot's position within a global map
 - To assign the relations between static robot components in terms of translation and rotation
 - To transform objects' poses from camera to the world
 - To transform enviroment points from lidar prespective into the world
-- ..
+
+<img src="images/tf66.png" style="width:60%" />
+
+    Measurement in map frame
 
 ### Multiple Frames in robot
 
@@ -51,9 +58,7 @@ as mentioned  there are multiple frames in the robot and the environment and the
 **1. Map:**
 it's  fixed frame representing the global map of the environment.
 
-**2. World :**
-
-Similar to the map frame but may include more global context.
+**2. World :**Similar to the map frame but may include more global context.
 
 #### **Other Common Frames in the robot**
 
@@ -89,7 +94,15 @@ Just shifting with the same orientation , if the robot origin was in posion A an
 
 so the robot new position with respect to the world will be it's tf from position A WRT World plus the shift between old and new position
 
+or object wih respect to a camera
+
 <img src="images/tf15.png" />
+
+### pA = [3,6]
+
+BTA = [6,-3]
+
+PB = [9,3]
 
 ### 3.2. Rotation:
 
@@ -108,9 +121,18 @@ Let's Calculate this step by step :
 
 <img src="images/tf6.png" />
 
-3. so by comensation in (1) we will get the tf of the point in the frame B
+
+[Reference for the proof ](images/tf18.png)
+[For more about the proof watch this](https://www.youtube.com/watch?v=-HcDl_gyeMs)
+
+
+4. so by comensation in (1) we will get the tf of the point in the frame B
 
 <img src="images/tf7.png" />
+
+rotation from B to A
+
+<img src="images/tf88.png" />
 
 ### 3.3. Transformation ( Rotation and Translation ):
 
@@ -136,6 +158,10 @@ Let's Calculate this step by step :
 
 <img src="images/tf16.png" />
 
+so the finaal transformation from frame B to A is as The following
+
+<img src="images/tf17.png" />
+
 ### 3.4. Practical Example:
 
 <img src="images/tf12.png" />
@@ -145,6 +171,8 @@ Let’s look at the the reference frames 1 and 0 shown in the above figure, wher
 And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
 
 To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
+
+<img src="images/tf16.png" />
 
 <img src="images/tf13.png" />
 
@@ -220,7 +248,12 @@ rosrun tf tf_monitor /base_link /odom
 rosrun tf static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
 rosrun tf static_transform_publisher 1 0 0 0 0 0 /base_link /laser 100
 ```
+
 <img src="images/static_tf.png" />
+
+# 5. Practical Example
+
+## [April Tag](../static_dynamic_pkg/README.md)
 
 # Acnolegment
 
