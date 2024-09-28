@@ -1,18 +1,20 @@
-# Transformation Matrix Computation For Tf AprilTag Example 
+# Transformation Matrix Computation For Tf AprilTag Example
 
-## Description 
+## Description
 
 April tag can be used in Improving Mobile robots Localization , so the robot after reaching certain pose system can start listen to tag tf with respect to camera tha to the map
-then send the roobot command to move until aligning the baselink for example with the tag frame 
+then send the roobot command to move until aligning the baselink for example with the tag frame
 
 so the first step is to find the tf from the tag frame to the map frame
 
-we will practice this in both code and calculations 
+we will practice this in both code and calculations
 
 
-![Example Result](images/tf.gif)
+**Result**
 
-
+<video width="600" controls>
+  <source src="images/tf.mp4" type="video/mp4">
+</video>
 
 ## Given:
 
