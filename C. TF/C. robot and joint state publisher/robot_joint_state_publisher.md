@@ -146,6 +146,6 @@ Here we publish fake joint state with `joint_state_publisher_gui` to make non fi
 * Simulation and Testing: Useful for simulating robot behavior or testing controllers without actual hardware.
 * Multiple Publishers: When you have multiple publishers of JointState messages, the joint_state_publisher ensures a coherent view across all joint state topics 12.
 
-# Acnolegment 
+# Acknowledgment 
 1. http://wiki.ros.org/tf/Overview/Transformations
 2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
