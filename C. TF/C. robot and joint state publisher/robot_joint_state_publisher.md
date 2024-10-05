@@ -119,6 +119,7 @@ Here we publish fake joint state with `joint_state_publisher_gui` to make non fi
 
 ![tf tree](<images/fake_send_joint_State.gif>)
 
+![tf tree rahal](<images/rahal_fake_send_joint_State.gif>)
 ### As you can see we make change in joint state by our hand, the question is How this done in Real world or in simulation?
 
 
