@@ -28,13 +28,23 @@ let's load urdf in **robot_description** and run **robot state publisher**
 </launch>
 ```
 To run this
+
 ```bash
-roslaunch robot_description_pkg arabian_robot_states.launch 
+roslaunch robot_description_pkg arabian_gazebo.launch 
+
+```
+
+```bash
+roslaunch robot_description_pkg arabian_robot_state.launch 
 
 ```
 Open `rqt_tf_tree`
 
 ![robot state publisher](<images/only_robot_state.png>)
+```bash
+roslaunch robot_description_pkg arabian_gazebo.launch 
+
+```
 
 
 As you can see in the tf_tree, there are some links not here `front_right_wheel`, `front_left_wheel`! Why does this happen?
@@ -85,6 +95,18 @@ Massage consist of:
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_description_pkg)/rviz/rviz_fake.rviz"/>
 
 </launch>
+```
+
+TO RUN:
+
+```bash
+roslaunch robot_description_pkg arabian_gazebo.launch 
+
+```
+
+```bash
+roslaunch robot_description_pkg arabiadn_robot_joint.launch 
+
 ```
 Here we publish fake joint state with `joint_state_publisher_gui` to make non fixed joint movable 
 
