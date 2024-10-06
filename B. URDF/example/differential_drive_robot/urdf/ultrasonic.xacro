@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+
+
+<link name="ultrasonic_link">
+    <visual>
+      <geometry>
+        <box size="0.01 0.01 0.01"/> 
+      </geometry>
+      <material name="">
+        <color rgba="0.0 0.0 0.0 1.0"/> 
+      </material>
+    </visual>
+    <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+
+        </geometry>
+    </collision>
+  </link>
+
+  <joint name="ultrasonic_joint" type="fixed">
+    <parent link="base_link"/> 
+    <child link="ultrasonic_link"/>
+    <origin xyz="0.2 0 0.03"/> 
+  </joint>
+
+  <gazebo reference="ultrasonic_link">
+    <!-- Define a sensor of type "ray" with the name "sonar" -->
+    <sensor type="ray" name="sonar">
+  
+        <!-- Set the position and orientation of the sensor relative to the reference link (x, y, z, roll, pitch, yaw) -->
+        <pose>0 0 0 0 0 0</pose>
+  
+        <!-- Enable or disable visualization of the sensor in the Gazebo simulation -->
+        <visualize>false</visualize>
+  
+        <!-- Set the update rate for the sensor in Hz (how often it updates) -->
+        <update_rate>5</update_rate>
+  
+        <!-- Define the ray properties of the sensor -->
+        <ray>
+            <!-- Define the scan parameters for the sensor -->
+            <scan>
+                <horizontal>
+                    <!-- Number of horizontal samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the scan (how fine the angular increments are) -->
+                    <resolution>1.0</resolution>
+      
+                    <!-- Minimum angle for the horizontal scan in radians -->
+                    <min_angle>-0.18</min_angle>
+      
+                    <!-- Maximum angle for the horizontal scan in radians -->
+                    <max_angle>0.18</max_angle>
+                </horizontal>
+  
+                <vertical>
+                    <!-- Number of vertical samples (rays) per scan -->
+                    <samples>5</samples>
+      
+                    <!-- Resolution of the vertical scan -->
+                    <resolution>1</resolution>
+      
+                    <!-- Minimum angle for the vertical scan in radians -->
+                    <min_angle>-0.035</min_angle>
+      
+                    <!-- Maximum angle for the vertical scan in radians -->
+                    <max_angle>0.035</max_angle>
+                </vertical>
+            </scan>
+  
+            <!-- Define the range properties of the sensor -->
+            <range>
+                <!-- Minimum distance the sensor can measure -->
+                <min>0.01</min>
+  
+                <!-- Maximum distance the sensor can measure -->
+                <max>4</max>
+  
+                <!-- Resolution of the distance measurements -->
+                <resolution>0.01</resolution>
+            </range>
+        </ray>
+  
+        <!-- Attach a Gazebo plugin for interfacing with ROS -->
+        <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+            <!-- Gaussian noise added to the sensor readings -->
+            <gaussianNoise>0.005</gaussianNoise>
+  
+            <!-- Always keep the sensor active -->
+            <alwaysOn>true</alwaysOn>
+  
+            <!-- Update rate for the sensor in Hz -->
+            <updateRate>5</updateRate>
+  
+            <!-- ROS topic name where the sensor data will be published -->
+            <topicName>/genius/sonar</topicName>
+  
+            <!-- Frame name for the sensor, used for transformations -->
+            <frameName>ultrasonic_link</frameName>
+  
+            <!-- Field of view of the sensor in radians -->
+            <fov>0.5</fov>
+  
+            <!-- Type of radiation emitted by the sensor (here, 'ultrasound' for an ultrasonic sensor) -->
+            <radiation>ultrasound</radiation>
+        </plugin>
+    </sensor>
+</gazebo>
+
+<gazebo reference="ultrasonic_link">
+  <material>Gazebo/Black</material>  
+</gazebo>
+
+
+
+
+
+
+
+</robot>

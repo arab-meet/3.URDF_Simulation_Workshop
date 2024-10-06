@@ -1,0 +1,240 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find arabian_robot)/urdf/plugins.gazebo" />
+<!-- Lidar Link  -->
+
+  <link
+    name="lidar_link">
+    <inertial>
+      <origin
+        xyz="-0.000938702652654277 -0.000239703194626961 -0.000814834207306436"
+        rpy="0 0 0" />
+      <mass
+        value="0.00163065240500782" />
+      <inertia
+        ixx="6.07303446187387E-05"
+        ixy="1.04568260543715E-07"
+        ixz="-2.33377901688314E-07"
+        iyy="6.04332848813523E-05"
+        iyz="-6.12731959701511E-08"
+        izz="0.000107588752845482" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arabian_robot/meshes/lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0.23529 0 0.085747"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+
+  
+  
+<!-- front ultrasonic Link  -->
+
+
+  <link
+  name="ultrasonic_link">
+  <inertial>
+    <origin
+      xyz="-0.0101727181914676 0.0176989993379462 -0.00508194462791584"
+      rpy="0 0 0" />
+    <mass
+      value="0.000274110604608183" />
+    <inertia
+      ixx="3.18466406057757E-07"
+      ixy="2.09205876298732E-13"
+      ixz="-9.67949932112404E-11"
+      iyy="8.0026454324058E-08"
+      iyz="-1.65537314586743E-12"
+      izz="2.65189998600934E-07" />
+  </inertial>
+  <visual>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh
+        filename="package://arabian_robot/meshes/ultrasonic_link.STL" />
+    </geometry>
+    <material
+      name="">
+      <color
+        rgba="0.792156862745098 0.819607843137255 0.929411764705882 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh
+        filename="package://arabian_robot/meshes/ultrasonic_link.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint
+  name="ultrasonic_joint"
+  type="fixed">
+  <origin
+    xyz="0.31244 -0.017646 -0.0092183"
+    rpy="0 0 0" />
+  <parent
+    link="base_link" />
+  <child
+    link="ultrasonic_link" />
+  <axis
+    xyz="0 0 0" />
+</joint>
+
+
+
+
+<!-- raer ultrasonic Link  -->
+
+<link
+name="rear_ultrasonic">
+<inertial>
+  <origin
+    xyz="-0.0101727181914678 -0.0136817679672643 0.000418701602310612"
+    rpy="0 0 0" />
+  <mass
+    value="0.00274110604608185" />
+  <inertia
+    ixx="3.18466406057758E-07"
+    ixy="-7.01667563098566E-14"
+    ixz="-9.6795193860442E-11"
+    iyy="8.00279872313828E-08"
+    iyz="5.32765374036117E-10"
+    izz="2.65188465693609E-07" />
+</inertial>
+<visual>
+  <origin
+    xyz="0 0 0"
+    rpy="0 0 0" />
+  <geometry>
+    <mesh
+      filename="package://arabian_robot/meshes/rear_ultrasonic.STL" />
+  </geometry>
+  <material
+    name="">
+    <color
+      rgba="0.792156862745098 0.819607843137255 0.929411764705882 1" />
+  </material>
+</visual>
+<collision>
+  <origin
+    xyz="0 0 0"
+    rpy="0 0 0" />
+  <geometry>
+    <mesh
+      filename="package://arabian_robot/meshes/rear_ultrasonic.STL" />
+  </geometry>
+</collision>
+</link>
+<joint
+name="rear_ultrasonic_joint"
+type="fixed">
+<origin
+  xyz="-0.30689 -0.013629 -0.0047365"
+  rpy="0 0 3.1416" />
+<parent
+  link="base_link" />
+<child
+  link="rear_ultrasonic" />
+<axis
+  xyz="0 0 0" />
+</joint>
+
+
+
+
+<!-- IMU Link  -->
+
+<link
+name="imu_Link">
+<inertial>
+  <origin
+    xyz="0.00432859840899162 -0.000850622897420716 -0.00181065138755215"
+    rpy="0 0 0" />
+  <mass
+    value="0.00067387693895371" />
+  <inertia
+    ixx="2.19297264797499E-08"
+    ixy="-2.82977769044677E-14"
+    ixz="-2.6953030967492E-14"
+    iyy="9.33459184266922E-09"
+    iyz="-1.16326529226981E-14"
+    izz="2.98834978397073E-08" />
+</inertial>
+<visual>
+  <origin
+    xyz="0 0 0"
+    rpy="0 0 0" />
+  <geometry>
+    <mesh
+      filename="package://arabian_robot/meshes/imu_Link.STL" />
+  </geometry>
+  <material
+    name="">
+    <color
+      rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+  </material>
+</visual>
+<collision>
+  <origin
+    xyz="0 0 0"
+    rpy="0 0 0" />
+  <geometry>
+    <mesh
+      filename="package://arabian_robot/meshes/imu_Link.STL" />
+  </geometry>
+</collision>
+</link>
+<joint
+name="imu_joint"
+type="fixed">
+<origin
+  xyz="-0.1231 0.031496 0.060982"
+  rpy="0 0 0" />
+<parent
+  link="base_link" />
+<child
+  link="imu_Link" />
+<axis
+  xyz="0 0 0" />
+</joint>
+
+  
+</robot>

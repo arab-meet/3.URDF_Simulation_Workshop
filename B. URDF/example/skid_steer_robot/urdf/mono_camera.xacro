@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="mono_camera_link">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name=""/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="mono_camera_joint" type="fixed">
+    <origin xyz="0.2 0.0 0.08" rpy="1.57 0 0"/>
+    <parent link="base_link"/>
+    <child link="mono_camera_link"/>
+    <axis xyz="0.0 0.0 0.0"/>
+  </joint>
+  <link name="camera_link_optical">
+    
+  </link>
+    <joint name="camera_optical_joint" type="fixed">
+          <parent link="mono_camera_link"/>
+          <child link="camera_link_optical"/>
+          <origin xyz="0 0 0" rpy="-1.57 0 0.0"/>
+      </joint>  
+
+  <gazebo reference="camera_link_optical">
+    <sensor type="camera" name="camera">
+      <pose>0 0 0 -1.57 0 0</pose> 
+      <update_rate>30.0</update_rate>
+      <visualize>true</visualize>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>L8</format> <!-- Changed to mono format -->
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>/mybot/camera</cameraName>
+        <imageTopicName>image_mono</imageTopicName>
+        <cameraInfoTopicName>camera_info_mono</cameraInfoTopicName>
+        <frameName>camera_link_optical</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <gazebo reference="mono_camera_link">
+    <material>Gazebo/Black</material>  
+  </gazebo>
+
+</robot>
