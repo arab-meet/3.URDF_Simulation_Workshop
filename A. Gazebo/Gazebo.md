@@ -484,7 +484,18 @@ each directory have :
 
 ---
 
-## [Next Topic →](<../B. URDF/README.md>)
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/QYNXL8GcQMU?si=zgMJ0pTTwllLcuXe" target="_blank">Link "Part1"</a> ,
+      <a href="https://www.youtube.com/live/MMFMuSxuZ8U?si=sfU1WxxtPeea_1Ig" target="_blank">Link "Part2"</a>
+    </h3>
+  </p>
+</div>
 
+## [Next Topic →](<../B. URDF/README.md>)
 
 ## [↩Back to main](../README.md)

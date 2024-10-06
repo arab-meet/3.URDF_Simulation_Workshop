@@ -154,6 +154,18 @@ Dynamic and static listener [1.](/3.URDF_Simulation_Workshop/B.%20Static%20and%2
 <p align="center">
 <img src="images/dynamic_listener.gif" />
 
+---
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/gucEHX585rQ?si=QGZ3A9rwSATW5i7g" target="_blank">Link (Starts at 13:00)</a> 
+    </h3>
+  </p>
+</div>
+
 ## [Next Topic →](<../C. robot and joint state publisher/robot_joint_state_publisher.md>)
 
 ## [↩Back to main](../README.md)

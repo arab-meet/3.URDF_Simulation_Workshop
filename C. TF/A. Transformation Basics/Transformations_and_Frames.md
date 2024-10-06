@@ -293,6 +293,18 @@ Let's Calculate this step by step :
 3. [robotacademy 2d-geometry](https://robotacademy.net.au/masterclass/2d-geometry/)
 4. [studywolf Transformations](https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/)
 
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/WahwjiVIpcg?si=-4BRSJhyh-rJX5Gn" target="_blank">Link </a> 
+    </h3>
+  </p>
+</div>
+
+
 ## [Next Topic →](<../B. Static and Dynamic  transformations/Static.md>)
 
 ## [↩Back to main](../README.md)

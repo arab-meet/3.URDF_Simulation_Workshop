@@ -1081,6 +1081,18 @@ Uses two independently driven wheels on either side of the robot.
 | <h3>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](<../E. example/differential_drive_robot_example.md>) </h3> | <h3>[Step-by-Step Tutorial for Building a Differential drive Robot →](<../E. example/skid_steer_robot_example.md>)</h3> |
 | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | <img src="image/plugins/1724199913058.png" >                                                                | <img src="image/plugins/example1.gif" >                                                                                    |
+------
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/MMFMuSxuZ8U?si=sfU1WxxtPeea_1Ig" target="_blank">"Part 1" Link (Starts at 1:05:00)</a> ,
+      <a href="https://www.youtube.com/live/euiqZBUEY1U?si=TkKL5vQawJ7lCYUO" target="_blank">"Part2" Link</a>
+    </h3>
+  </p>
+</div>
 
 
 

@@ -178,6 +178,18 @@ if __name__ == '__main__':
 <p align="center">
 <img src="images/static_listener.gif" />
 
+---
+
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/gucEHX585rQ?si=QGZ3A9rwSATW5i7g" target="_blank">Link </a> 
+    </h3>
+  </p>
+</div>
 
 ## [Next Topic →](Dynamic.md)
 

@@ -162,4 +162,16 @@ The joint_state_publisher can obtain joint state values from various sources:
 1. [Ros Wiki Transformations](http://wiki.ros.org/tf/Overview/Transformations)
 2. [The ROS Transform System (TF)](https://www.youtube.com/watch?v=QyvHhY4Y_Y8)
 
+----
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/gucEHX585rQ?si=QGZ3A9rwSATW5i7g" target="_blank">Link (Starts at 39:00)</a> 
+    </h3>
+  </p>
+</div>
+
 ## [↩Back to main](../README.md)

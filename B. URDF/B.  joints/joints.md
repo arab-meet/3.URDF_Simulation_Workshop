@@ -450,6 +450,19 @@ To create a joint in a URDF file:
       <p align="center">
       <img src="image/prismatic_joint.gif">
 
+    ----
+
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/euiqZBUEY1U?si=fXli3wQAhTSiExv9" target="_blank">Link (Starts at 28:00)</a> ,
+    </h3>
+  </p>
+</div>
+
 ## [Next Topic →](<../C. Plugins/plugins.md>)
 
 ## [↩Back to main](../README.md)
