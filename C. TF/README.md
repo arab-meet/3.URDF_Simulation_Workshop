@@ -2,8 +2,6 @@
 
 ## [A. Transformation Basics](A.%20Transformation%20Basics/Transformations_and_Frames.md)
 
-# Coordinate Frames and Transformations in AMR
-
 - **Purpose**: Coordinate transformations are essential in Autonomous Mobile Robots (AMR) to relate different sensor data and robot positions across various reference frames.
 - **Key Frames**: Include Map, World, Odometry (global); Base Link, Laser, Camera (robot-specific).
 - **ROS TF**: Provides tools for managing and applying transformations between frames, crucial for integrating sensor data and robot control.
