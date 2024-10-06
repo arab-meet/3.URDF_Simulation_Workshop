@@ -255,9 +255,14 @@ rosrun tf static_transform_publisher 1 0 0 0 0 0 /base_link /laser 100
 
 ## [April Tag](../static_dynamic_pkg/README.md)
 
-# Acnolegment
+# Acknowledgment
 
 1. http://wiki.ros.org/tf/Overview/Transformations
 2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
 3. https://robotacademy.net.au/masterclass/2d-geometry/
 4. https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/
+
+
+## [Next Topic →](../B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
+
+## [↩Back to main](../README.md)
