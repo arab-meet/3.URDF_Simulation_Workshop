@@ -4,265 +4,308 @@
 
 **Review : KG**
 
-## 1. Coordinate frame and transformation
+- # 1. Coordinate frame and transformation
 
-#### 1.1. coordinate frame
+  #### 1.1. coordinate frame
 
-- A coordinate frame is a reference system that defines how spatial locations are measured. It consists of a set of axes (e.g., x, y, z) that intersect at an origin point.
-- Each frame has its own origin and orientation.
-- In the robot ,its different parts, sensors, and environments can have their own coordinate frames.
+  - A coordinate frame is a reference system that defines how spatial locations are measured. It consists of a set of axes (e.g., x, y, z) that intersect at an origin point.
+  - Each frame has its own origin and orientation.
+  - In the robot ,its different parts, sensors, and environments can have their own coordinate frames.
+  <p align="center">
+  <img src="images/coordinate_frame.png" width="1000"/>
 
-<img src="images/coordinate_frame.png" />
+  #### 1.2. Transoformation
 
-#### 1.2. Transoformation
+  - A transformation is a mathematical operation that converts coordinates from one frame to another. Transformations include translations (moving along axes), rotations (rotating around axes), and sometimes scaling. In robotics, transformations are used to relate the positions and orientations of different frames to one another.
 
-- A transformation is a mathematical operation that converts coordinates from one frame to another. Transformations include translations (moving along axes), rotations (rotating around axes), and sometimes scaling. In robotics, transformations are used to relate the positions and orientations of different frames to one another.
+    <p align="center">
+    <img src="images/frames_and_transforms.png" />
 
-<img src="images/frames_and_transforms.png" />
+  - Example :
+    To Transform object's location from camera frame to the world frame
 
-- Example :
-  - To Transform object's location from camera frame to the world frame
+       <p align="center">
+       <img src="images/tf_example.jpg" width="1000"/>
 
-<img src="images/tf_example.jpg" />
+       <p align="center">
+       <img src="images/tf77.png" width="1000" />
 
-<img src="images/tf77.png" style="width:75%" />
+- # 2 - Why do needed frame transformation in AMR
 
-## 2. Why do needed frame transformation in AMR
+    <p align="center">
+    <img src="images/tf1.png"/>
 
-<img src="images/tf1.png"/>
+    <p align="center">
+    <img src="images/tf.gif" />
 
-<img src="images/tf.gif" />
+  There are multiple reasons for example :
 
-There are multiple reasons for example :
+  - compact representation of points and orientations
+  - To etermine the robot's position within a global map
+  - To assign the relations between static robot components in terms of translation and rotation
+  - To transform objects' poses from camera to the world
+  - To transform enviroment points from lidar prespective into the world
 
-- compact representation of points and orientations
-- To etermine the robot's position within a global map
-- To assign the relations between static robot components in terms of translation and rotation
-- To transform objects' poses from camera to the world
-- To transform enviroment points from lidar prespective into the world
-
-<img src="images/tf66.png" style="width:60%" />
+      <p align="center">
+      <img src="images/tf66.png" width="1000" />
 
     Measurement in map frame
 
-### Multiple Frames in robot
+  ### Multiple Frames in robot
 
-as mentioned  there are multiple frames in the robot and the environment and they are common and important :
+  as mentioned there are multiple frames in the robot and the environment and they are common and important :
 
-<img src="images/common_frames.png" />
+    <p align="center">
+    <img src="images/3.png" />
 
-<img src="images/frames.png" />
+    <p align="center">
+    <img src="images/frames.png" width="1200"/>
 
-#### **Reference Frames**
+  - ### **Reference Frames**
 
-**1. Map:**
-it's  fixed frame representing the global map of the environment.
+    **1. Map:** it's fixed frame representing the global map of the environment.
 
-**2. World :**Similar to the map frame but may include more global context.
+    **2. World :**
+    Similar to the map frame but may include more global context.
 
-#### **Other Common Frames in the robot**
+  - ### **Other Common Frames in the robot**
 
-**1. Base Link**
+    **1. Base Link**
 
-- The frame attached to the robot's base. It serves as the primary reference for the robot's body
-- it moves with the robot sure
+    - The frame attached to the robot's base. It serves as the primary reference for the robot's body
+    - it moves with the robot sure
 
-**2. Laser(Lidar)**
+    **2. Laser(Lidar)**
 
-- it's attached to the laser sensor, used to convert laser readings is taken into it relevant frames
+    - it's attached to the laser sensor, used to convert laser readings is taken into it relevant frames
 
-**3. camer frame**
+    **3. camer frame**
 
-- Attached to the camera sensor, used to convert image data to the robot's base frame or other relevant frames.
+    - Attached to the camera sensor, used to convert image data to the robot's base frame or other relevant frames.
 
-**4. Odom**
+    **4. Odom**
 
-- frame that represents the robot's position based on its wheel encoders or other motion sensors.
-- Fixed relative to the map, origin is wherethe robot starte
+    - frame that represents the robot's position based on its wheel encoders or other motion sensors.
+    - Fixed relative to the map, origin is wherethe robot starte
 
-## 3. Rigid Body Transformation in 2D
+- # 3. Rigid Body Transformation in 2D
 
-- Rigid body transformation in 2D involves changing the position and orientation of a shape or object while preserving its size and shape. This typically includes translation (shifting position) and rotation (changing orientation).
+  - Rigid body transformation in 2D involves changing the position and orientation of a shape or object while preserving its size and shape. This typically includes translation (shifting position) and rotation (changing orientation).
 
-<img src="images/tf3.png" />
+      <p align="center">
+      <img src="images/tf3.png" />
 
-### 3.1. Translation
+  ### 3.1. Translation
 
-Just shifting with the same orientation , if the robot origin was in posion A and move to position B
+  Just shifting with the same orientation , if the robot origin was in posion A and move to position B
 
-<img src="images/tf14.png" style="width:60%" />
+    <p align="center">
+    <img src="images/tf14.png" width="1000" />
 
-so the robot new position with respect to the world will be it's tf from position A WRT World plus the shift between old and new position
+  so the robot new position with respect to the world will be it's tf from position A WRT World plus the shift between old and new position
 
-or object wih respect to a camera
+  or object wih respect to a camera
 
-<img src="images/tf15.png" />
+    <p align="center">
+    <img src="images/tf15.png" width="800"/>
 
-### pA = [3,6]
+    <p style="text-align:left;  font-size:30px;">
+        pA  = [3, 6] <br>
+        BTA = [6, -3] <br>
+        PB  = [9, 3]
+    </p>
 
-BTA = [6,-3]
+  ***
 
-PB = [9,3]
+  ### 3.2. Rotation:
 
-### 3.2. Rotation:
+  if we have a point in a frame A so it's position WRT frame A will be as following
 
-if we have a point in a frame A so it's position WRT frame A will be as following
+  <p align="center">
+  <img src="images/tf4.png" width="800" />
 
-<img src="images/tf4.png" />
+  ### What if frame A rotated with angle theta ?
 
-**What if frame A rotated with angle theta ?**
-Let's Calculate this step by step :
+  Let's Calculate this step by step :
 
-1. We agreed that tf of the point in B will equal it's projection in B frame in x and y --> (1)
+  1. We agreed that tf of the point in B will equal it's projection in B frame in x and y --> (1)
 
-<img src="images/tf5.png" />
+        <p align="center">
+        <img src="images/tf5.png" />
 
-2. let's expand the vector(projection ) X^B and Y^B
+  2. let's expand the vector(projection ) X^B and Y^B
 
-<img src="images/tf6.png" />
+     <p align="center">
+     <img src="images/tf6.png" />
 
+     - [Reference for the proof ](images/tf18.png)
+     - [For more about the proof watch this](https://www.youtube.com/watch?v=-HcDl_gyeMs)
 
-[Reference for the proof ](images/tf18.png)
-[For more about the proof watch this](https://www.youtube.com/watch?v=-HcDl_gyeMs)
+  3. so by comensation in (1) we will get the tf of the point in the frame B
 
+      <p align="center">
+      <img src="images/tf7.png" />
 
-4. so by comensation in (1) we will get the tf of the point in the frame B
+      rotation from B to A
 
-<img src="images/tf7.png" />
+      <p align="center">
+      <img src="images/tf88.png" />
 
-rotation from B to A
+  ***
 
-<img src="images/tf88.png" />
+  ### 3.3. Transformation ( Rotation and Translation ):
 
-### 3.3. Transformation ( Rotation and Translation ):
+  - the frame B is both translated and oriented
 
-- the frame B is both translated and oriented
-
-<img src="images/tf8.png" />
+  <p align="center">
+  <img src="images/tf8.png" width="800" />
 
 Let's Calculate this step by step :
 
 1. Make the rotation calculation at first , let's say we have a frame V that represents the orientation of B to be parallel to A
 
-<img src="images/tf9.png" />
+    <p align="center">
+    <img src="images/tf9.png" />
 
 2. So the tf of the point p in the frame A will be represented by the vector Ap which is the summition of Atv + Vp
 
-<img src="images/tf10.png" />
+    <p align="center">
+    <img src="images/tf10.png" />
 
 3. Let's Expand and compenste
 
-<img src="images/tf11.png" />
+     <p align="center">
+     <img src="images/tf11.png" />
 
- So this is the final Transformation matrix to transform a point from a frame into another
+   So this is the final Transformation matrix to transform a point from a frame into another
 
-<img src="images/tf16.png" />
+     <p align="center">
+     <img src="images/tf16.png" width="800" />
 
-so the finaal transformation from frame B to A is as The following
+   so the finaal transformation from frame B to A is as The following
 
-<img src="images/tf17.png" />
+     <p align="center">
+     <img src="images/tf17.png" />
 
-### 3.4. Practical Example:
+   ***
 
-<img src="images/tf12.png" />
+   ### 3.4. Practical Example:
 
-Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
+    <p align="center">
+    <img src="images/tf12.png" width="800" />
 
-And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
+   Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
 
-To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
+   And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
 
-<img src="images/tf16.png" />
+   To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
 
-<img src="images/tf13.png" />
+    <p align="center">
+    <img src="images/tf16.png" width="800" />
 
-This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
+    <p align="center">
+    <img src="images/tf13.png" />
 
-## 4. TF in ROS
+   This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
 
-### 4.1. Concept
+- # 4. TF in ROS
 
-- In ROS TF is a package that provides a way to keep track of multiple coordinate frames in the robot over time. It allows the user to transform data between these frames and maintain the relationships between them.
-- **TF tree** is a conceptual representation of all the coordinate frames in a system and the transformations (transforms) between them. It's organized as a directed graph, where each node represents a coordinate frame, and each edge represents a transform between two frames.
-- **tf2** : This is the newer version of `tf` and is used in ROS 2 and the later versions of ROS 1. `tf2` provides better performance, thread safety, and new features while maintaining backward compatibility with `tf`.
+  ### 4.1. Concept
 
-<img src="images/pr2_tf.png" />
+  - In ROS TF is a package that provides a way to keep track of multiple coordinate frames in the robot over time. It allows the user to transform data between these frames and maintain the relationships between them.
+  - **TF tree** is a conceptual representation of all the coordinate frames in a system and the transformations (transforms) between them. It's organized as a directed graph, where each node represents a coordinate frame, and each edge represents a transform between two frames.
+  - **tf2** : This is the newer version of `tf` and is used in ROS 2 and the later versions of ROS 1. `tf2` provides better performance, thread safety, and new features while maintaining backward compatibility with `tf`.
 
-### 4.1. Package nodes
+    <p align="center">
+    <img src="images/pr2_tf.png" />
 
- **Broadcasters and Listeners**:
+  ### 4.2. Package nodes
 
-1. **Broadcasters**: Nodes that publish the transforms between frames. For example, a robot's base link to its odom frame. "on topic /tf"
-2. **Listeners**: Nodes that subscribe to transforms and use them to compute the relative position and orientation of different frames.
+  **Broadcasters and Listeners**:
 
-### 4.1. TF tools in ROS
+  1. **Broadcasters**: Nodes that publish the transforms between frames. For example, a robot's base link to its odom frame. "on topic /tf"
+  2. **Listeners**: Nodes that subscribe to transforms and use them to compute the relative position and orientation of different frames.
 
-### **`tf_echo`**
+  ### 4.3. TF tools in ROS
 
-* **Purpose** : Displays the transform between two frames in real-time.
-* **`tf2_echo`** : Similar to `tf_echo`
-* **Usage :**
+  ### **`tf_echo`**
 
-```
-  rosrun tf tf_echo [source_frame] [target_frame]
-  rosrun tf tf_echo /base_link /map
-```
+  - **Purpose** : Displays the transform between two frames in real-time.
+  - **`tf2_echo`** : Similar to `tf_echo`
+  - **Usage :**
 
-### **`rqt_tf_tree`**
+    ```
+    rosrun tf tf_echo [source_frame] [target_frame]
+    rosrun tf tf_echo /base_link /map
+    ```
 
-* **Purpose** : Provides a graphical visualization of the `tf` tree.
-* **Usage :**
+  ### **`rqt_tf_tree`**
 
-```
-rosrun rqt_tf_tree rqt_tf_tree
-```
+  - **Purpose** : Provides a graphical visualization of the `tf` tree.
+  - **Usage :**
 
-<img src="images/tree.png" />
+    ```
+    rosrun rqt_tf_tree rqt_tf_tree
+    ```
 
-### **`view_frames`**
+    <p align="center">
+    <img src="images/tree.png" />
 
-* **Purpose** : Generates a graphical representation of the `tf` tree as a PDF.
-* **Usage** :
+  ### **`view_frames`**
 
-```
-rosrun tf view_frames
-```
+  - **Purpose** : Generates a graphical representation of the `tf` tree as a PDF.
+  - **Usage** :
 
-### **`tf_monitor`**
+    ```
+    rosrun tf view_frames
+    ```
 
-* **Purpose** : Monitors the status of transforms between frames and checks if they are being published regularly.
-* tf2_monitor: Monitors transforms in tf2.
-* **Usage** :
+  ### **`tf_monitor`**
 
-```
-rosrun tf tf_monitor [frame1] [frame2]
-rosrun tf tf_monitor /base_link /odom
-```
+  - **Purpose** : Monitors the status of transforms between frames and checks if they are being published regularly.
+  - tf2_monitor: Monitors transforms in tf2.
+  - **Usage** :
 
-### **`static_transform_publisher`**
+    ```
+    rosrun tf tf_monitor [frame1] [frame2]
+    rosrun tf tf_monitor /base_link /odom
+    ```
 
-* **Purpose** : Publishes a static transform between two frames.
-* **Usage** :
+  ### **`static_transform_publisher`**
 
-```
-rosrun tf static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
-rosrun tf static_transform_publisher 1 0 0 0 0 0 /base_link /laser 100
-```
+  - **Purpose** : Publishes a static transform between two frames.
+  - **Usage** :
 
-<img src="images/static_tf.png" />
+    ```
+    rosrun tf static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
+    rosrun tf static_transform_publisher 1 0 0 0 0 0 /base_link /laser 100
+    ```
 
-# 5. Practical Example
+    <p align="center">
+    <img src="images/static_tf.png" />
 
-## [April Tag](../static_dynamic_pkg/README.md)
+# 5. Practical Example: [April Tag](<../B. Static and Dynamic  transformations/static_dynamic_pkg/README.md>)
 
-# Acknowledgment
+# Acnolegment
 
-1. http://wiki.ros.org/tf/Overview/Transformations
-2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
-3. https://robotacademy.net.au/masterclass/2d-geometry/
-4. https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/
+1. [Ros Wiki Transformations](http://wiki.ros.org/tf/Overview/Transformations)
+2. [The ROS Transform System (TF)](https://www.youtube.com/watch?v=QyvHhY4Y_Y8)
+3. [robotacademy 2d-geometry](https://robotacademy.net.au/masterclass/2d-geometry/)
+4. [studywolf Transformations](https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/)
+
+<div align="center">
+  <a href="https://www.youtube.com/@ArabianROSMeetup/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="72" height="60" alt="YouTube logo" />
+  </a>
+  <p>
+    <h3>You can watch our session on YouTube by clicking the 
+      <a href="https://www.youtube.com/live/WahwjiVIpcg?si=-4BRSJhyh-rJX5Gn" target="_blank">Link </a> 
+    </h3>
+  </p>
+</div>
 
 
-## [Next Topic →](../B.%20Static%20and%20Dynamic%20%20transformations/Static.md)
+## [Next Topic →](<../B. Static and Dynamic  transformations/Static.md>)
 
 ## [↩Back to main](../README.md)
+

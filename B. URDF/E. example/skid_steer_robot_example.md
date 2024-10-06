@@ -1,6 +1,3 @@
-
-
-
 # Skid-Steering Robot Tutorial
 
 Welcome to the comprehensive tutorial on building a skid-steering robot! In this guide, we will take you through the entire process of constructing a robot with a skid-steer drive system, a popular choice for many autonomous robots due to its simplicity and effectiveness in navigating various terrains.This tutorial is designed for those who are new to robotics as well as those who want to refine their skills in building and configuring skid-steer robots.
@@ -13,7 +10,6 @@ This URDF is then used by the `robot_state_publisher` node to publish the robot 
 
 For robots with movable joints, `robot_state_publisher` Computes and publishes the transforms between robot links based on joint states and the robot's URDF. It uses data from /joint_states to broadcast the position of all links. The `joint_state_publisher` Publishes the current state (position, velocity) of each joint on the `/joint_states` topic.
 
-
 <p align="center">
 <img src="image/skid_steer_robot_example/1724529387422.png">
 
@@ -25,12 +21,12 @@ Navigate to the `src` directory and create a new Catkin package
 
 ```bash
 cd ~/catkin_ws/src
-catkin_create_pkg skid_steer_robot 
+catkin_create_pkg skid_steer_robot
 ```
 
 **Create URDF Directory**
 
- Navigate into your package and create a directory for URDF files
+Navigate into your package and create a directory for URDF files
 
 ```bash
 cd ~/catkin_ws/src/skid_steer_robot
@@ -39,7 +35,7 @@ mkdir urdf
 
 **Add URDF File**
 
- Create a new URDF file inside the `urdf` directory
+Create a new URDF file inside the `urdf` directory
 
 ```bash
 touch urdf/skid_robot.urdf.xacro
@@ -68,7 +64,7 @@ touch urdf/skid_robot.urdf.xacro
           </geometry>
           <origin xyz="0 0 0.05"/>
           <material name="base_link_material">
-              <color rgba="0.0 0.0 1.0 1.0"/> 
+              <color rgba="0.0 0.0 1.0 1.0"/>
           </material>
       </visual>
       <collision>
@@ -79,7 +75,6 @@ touch urdf/skid_robot.urdf.xacro
       </collision>
   </link>
   ```
-
 
   <p align="center">
   <img src="image/skid_steer_robot_example/1724529069836.png">
@@ -96,7 +91,7 @@ touch urdf/skid_robot.urdf.xacro
         </geometry>
         <origin rpy="1.5708 0 0"/>
         <material name="">
-          <color rgba="0.0 0.0 0.0 1.0"/> 
+          <color rgba="0.0 0.0 0.0 1.0"/>
         </material>
     </visual>
     <collision>
@@ -119,8 +114,8 @@ touch urdf/skid_robot.urdf.xacro
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="0.16 -0.16 0.05" rpy="0 0 0"/> 
-    <axis xyz="0 1 0"/> 
+    <origin xyz="0.16 -0.16 0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
   </joint>
   ```
 
@@ -139,7 +134,7 @@ touch urdf/skid_robot.urdf.xacro
           </geometry>
           <origin rpy="1.5708 0 0"/>
           <material name="">
-            <color rgba="0.0 0.0 0.0 1.0"/> 
+            <color rgba="0.0 0.0 0.0 1.0"/>
           </material>
       </visual>
       <collision>
@@ -161,11 +156,10 @@ touch urdf/skid_robot.urdf.xacro
   <joint name="front_left_wheel_joint" type="continuous">
       <parent link="base_link"/>
       <child link="front_left_wheel"/>
-      <origin xyz="0.16 0.16 0.05" rpy="0 0 0"/> 
-      <axis xyz="0 1 0"/> 
+      <origin xyz="0.16 0.16 0.05" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
     </joint>
   ```
-
 
   <p align="center">
     <img src="image/skid_steer_robot_example/1724528716663.png">
@@ -180,7 +174,7 @@ touch urdf/skid_robot.urdf.xacro
           </geometry>
           <origin rpy="1.5708 0 0"/>
           <material name="">
-            <color rgba="0.0 0.0 0.0 1.0"/> 
+            <color rgba="0.0 0.0 0.0 1.0"/>
           </material>
       </visual>
       <collision>
@@ -202,11 +196,10 @@ touch urdf/skid_robot.urdf.xacro
   <joint name="rear_right_wheel_joint" type="continuous">
       <parent link="base_link"/>
       <child link="rear_right_wheel"/>
-      <origin xyz="-0.16 -0.16 0.05" rpy="0 0 0"/> 
-      <axis xyz="0 1 0"/> 
+      <origin xyz="-0.16 -0.16 0.05" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
     </joint>
   ```
-
 
   <p align="center">
     <img src="image/skid_steer_robot_example/1724528732800.png">
@@ -221,7 +214,7 @@ touch urdf/skid_robot.urdf.xacro
           </geometry>
           <origin rpy="1.5708 0 0"/>
           <material name="">
-            <color rgba="0.0 0.0 0.0 1.0"/> 
+            <color rgba="0.0 0.0 0.0 1.0"/>
           </material>
       </visual>
       <collision>
@@ -243,11 +236,10 @@ touch urdf/skid_robot.urdf.xacro
   <joint name="rear_left_wheel_joint" type="continuous">
       <parent link="base_link"/>
       <child link="rear_left_wheel"/>
-      <origin xyz="-0.16 0.16 0.05" rpy="0 0 0"/> 
-      <axis xyz="0 1 0"/> 
+      <origin xyz="-0.16 0.16 0.05" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
     </joint>
   ```
-
 
   <p align="center">
     <img src="image/skid_steer_robot_example/1724528750995.png">
@@ -257,7 +249,7 @@ touch urdf/skid_robot.urdf.xacro
   I will add a dummy link named `base_footprint` to the XACRO file. This link will act as a reference frame for the robot's base and provide a clear point of origin for the robot's coordinate system.By introducing a `base_footprint` link, you can create a more organized hierarchy of transforms. This makes it easier to manage and visualize the robot's pose and movement within the simulation environment.
 
   ```xml
-  <link name="base_footprint">  
+  <link name="base_footprint">
   </link>
 
   <joint name="base_footprint_joint" type="fixed">
@@ -265,7 +257,7 @@ touch urdf/skid_robot.urdf.xacro
           xyz="0.0 0.0 0.0"
           rpy="0 0 0" />
       <parent link ="base_footprint"/>
-      <child link ="base_link"/>   
+      <child link ="base_link"/>
   </joint>
   ```
 
@@ -278,31 +270,31 @@ touch urdf/skid_robot.urdf.xacro
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <!-- Update rate of the plugin in Hz -->
       <updateRate>100.0</updateRate>
-    
+
       <!-- Namespace for the robot in ROS -->
       <robotNamespace>/</robotNamespace>
-    
+
       <!-- Names of the joints controlling each wheel -->
       <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
       <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
       <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
       <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
-    
+
       <!-- Distance between the front and rear wheels -->
       <wheelSeparation>0.34</wheelSeparation>
-    
+
       <!-- Diameter of the wheels -->
       <wheelDiameter>0.12</wheelDiameter>
-    
+
       <!-- Frame of reference for the robot's base -->
       <robotBaseFrame>base_footprint</robotBaseFrame>
-    
+
       <!-- Maximum torque applied to the wheels -->
       <torque>20</torque>
-    
+
       <!-- ROS topic for receiving velocity commands -->
       <topicName>cmd_vel</topicName>
-    
+
       <!-- Whether to broadcast the transform from the base frame to the wheels -->
       <broadcastTF>false</broadcastTF>
 
@@ -317,7 +309,7 @@ touch urdf/skid_robot.urdf.xacro
   </gazebo>
   ```
 
-  ---
+  ***
 
 - ### 8- Launching the Robot in Gazebo
 
@@ -345,7 +337,7 @@ touch urdf/skid_robot.urdf.xacro
 
         <!-- Load the URDF model into Gazebo -->
         <param name="robot_description" textfile="$(find skid_steer_robot)/urdf/skid_robot.urdf.xacro"/>
-      
+
       <!-- Send robot states to tf -->
       <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
 
@@ -353,11 +345,11 @@ touch urdf/skid_robot.urdf.xacro
       <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="use_gui" value="true"/>
       </node>
-      
+
 
       <!-- Spawn My Robot -->
-      <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
-            args="-urdf -param robot_description -model skid_robot "/>  
+      <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+            args="-urdf -param robot_description -model skid_robot "/>
 
     </launch>
     ```
@@ -372,11 +364,10 @@ touch urdf/skid_robot.urdf.xacro
     roslaunch skid_steer_robot robot_description.launch
     ```
 
-
     <p align="center">
       <img src="image/skid_steer_robot_example/1723991025291.png">
 
-    ---
+    ***
 
 - ### 9- Adding Sensors and Plugins
 
@@ -391,16 +382,16 @@ touch urdf/skid_robot.urdf.xacro
       </inertial>
       <visual>
         <geometry>
-          <box size="0.1 0.2 0.07"/> 
+          <box size="0.1 0.2 0.07"/>
         </geometry>
-        <origin xyz="0 0 0.0"/> 
+        <origin xyz="0 0 0.0"/>
         <material name="">
-          <color rgba="0.0 0.0 1.0 1.0"/> 
+          <color rgba="0.0 0.0 1.0 1.0"/>
         </material>
       </visual>
       <collision>
         <geometry>
-          <box size="0.2 0.2 0.07"/> 
+          <box size="0.2 0.2 0.07"/>
         </geometry>
         <origin xyz="0 0 0.3"/> <!-- Adjust position as needed -->
       </collision>
@@ -417,7 +408,7 @@ touch urdf/skid_robot.urdf.xacro
   <p align="center">
     <img src="image/skid_steer_robot_example/1724198141983.png">
 
-  **For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../Plugins/plugins.md).**
+  **For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](<../C. Plugins/plugins.md>).**
 
   ### After adding sensors, your robot is now ready!
 
@@ -434,17 +425,13 @@ touch urdf/skid_robot.urdf.xacro
 
   ##### Check out the GIF below to see the full robot in action with the sensors integrated.
 
-
   <p align="center">
     <img src="image/skid_steer_robot_example/1724199913058.png">
 
-## [Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)
+## [Step-by-Step Tutorial for Building a Differential drive Robot →](differential_drive_robot_example.md)
 
 <img src="image/differential_drive_robot_example/example1.gif" width="1000">
 
-
-
-## [↩Back to Plugin](../Plugins/plugins.md)
+## [↩Back to Plugin](<../C. Plugins/plugins.md>)
 
 ## [↩Back to main](../README.md)
-
