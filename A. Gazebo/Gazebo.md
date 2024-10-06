@@ -269,7 +269,7 @@ click on Edit and select model editor
 
 you can control the movement this robot follow this steps
 
-1. open your [robot model.sdf](/gazebo_pkg/model/robot/model.sdf)
+1. open your [robot model.sdf](gazebo_pkg/model/robot/model.sdf)
 2. before close `<model>` you can add this plugin to control the robot
    ```bash
    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
@@ -421,7 +421,7 @@ To access the Building Editor, go to the Edit menu and select Building Editor.
 ### include custom models for the world
 
 Click on the toolbar, select `Insert` and then choose `Robot` and `World` to create them as per your requirements.
-then save this world such as [`my_world.world`](/gazebo_pkg/world/my_world.world)
+then save this world such as [`my_world.world`](gazebo_pkg/world/my_world.world)
 
 you can open this file using this line
 
