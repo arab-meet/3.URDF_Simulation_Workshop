@@ -41,10 +41,6 @@ roslaunch robot_description_pkg arabian_robot_state.launch
 Open `rqt_tf_tree`
 
 ![robot state publisher](<images/only_robot_state.png>)
-```bash
-roslaunch robot_description_pkg arabian_gazebo.launch 
-
-```
 
 
 As you can see in the tf_tree, there are some links not here `front_right_wheel`, `front_left_wheel`! Why does this happen?
@@ -149,3 +145,5 @@ Here we publish fake joint state with `joint_state_publisher_gui` to make non fi
 # Acknowledgment 
 1. http://wiki.ros.org/tf/Overview/Transformations
 2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
+
+## [↩Back to main](../README.md)
