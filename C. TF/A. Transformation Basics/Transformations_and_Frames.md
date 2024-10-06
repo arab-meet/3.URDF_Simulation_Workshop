@@ -115,16 +115,16 @@
         PB  = [9, 3]
     </p>
 
-    ----
+  ***
 
   ### 3.2. Rotation:
 
   if we have a point in a frame A so it's position WRT frame A will be as following
 
-    <p align="center">
-    <img src="images/tf4.png" width="800" />
+  <p align="center">
+  <img src="images/tf4.png" width="800" />
 
-  #### What if frame A rotated with angle theta ?
+  ### What if frame A rotated with angle theta ?
 
   Let's Calculate this step by step :
 
@@ -143,22 +143,22 @@
 
   3. so by comensation in (1) we will get the tf of the point in the frame B
 
-     <p align="center">
-     <img src="images/tf7.png" />
+      <p align="center">
+      <img src="images/tf7.png" />
 
-     rotation from B to A
+      rotation from B to A
 
-     <p align="center">
-     <img src="images/tf88.png" />
+      <p align="center">
+      <img src="images/tf88.png" />
 
-    ---- 
+  ***
 
   ### 3.3. Transformation ( Rotation and Translation ):
 
   - the frame B is both translated and oriented
 
-    <p align="center">
-    <img src="images/tf8.png" width="800" />
+  <p align="center">
+  <img src="images/tf8.png" width="800" />
 
 Let's Calculate this step by step :
 
@@ -187,19 +187,18 @@ Let's Calculate this step by step :
      <p align="center">
      <img src="images/tf17.png" />
 
-     ---
+   ***
 
-
-    ### 3.4. Practical Example:
+   ### 3.4. Practical Example:
 
     <p align="center">
     <img src="images/tf12.png" width="800" />
 
-    Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
+   Let’s look at the the reference frames 1 and 0 shown in the above figure, where point {p} = (2,2) in reference frame 1.
 
-    And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
+   And reference frame 1 is rotated 45 degrees from and located at (3, 2) in reference frame 0.
 
-    To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
+   To Calculate for this translation and rotation a new matrix will be created that includes both rotation and translation
 
     <p align="center">
     <img src="images/tf16.png" width="800" />
@@ -207,8 +206,7 @@ Let's Calculate this step by step :
     <p align="center">
     <img src="images/tf13.png" />
 
-    This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
-
+   This solusion says he coordinates of {p} in reference frame 0 is represented by the first two elements of the resulting vector {p} = (3, 4.8285).
 
 - # 4. TF in ROS
 
@@ -286,13 +284,16 @@ Let's Calculate this step by step :
     <p align="center">
     <img src="images/static_tf.png" />
 
-# 5. Practical Example
-
-## [April Tag](../static_dynamic_pkg/README.md)
+# 5. Practical Example: [April Tag](<../B. Static and Dynamic  transformations/static_dynamic_pkg/README.md>)
 
 # Acnolegment
 
-1. http://wiki.ros.org/tf/Overview/Transformations
-2. The ROS Transform System (TF): https://www.youtube.com/watch?v=QyvHhY4Y_Y8
-3. https://robotacademy.net.au/masterclass/2d-geometry/
-4. https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/
+1. [Ros Wiki Transformations](http://wiki.ros.org/tf/Overview/Transformations)
+2. [The ROS Transform System (TF)](https://www.youtube.com/watch?v=QyvHhY4Y_Y8)
+3. [robotacademy 2d-geometry](https://robotacademy.net.au/masterclass/2d-geometry/)
+4. [studywolf Transformations](https://studywolf.wordpress.com/2013/08/21/robot-control-forward-transformation-matrices/)
+
+## [Next Topic →](<../B. Static and Dynamic  transformations/Static.md>)
+
+## [↩Back to main](../README.md)
+

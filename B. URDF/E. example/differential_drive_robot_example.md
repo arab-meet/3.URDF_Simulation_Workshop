@@ -24,7 +24,7 @@ mkdir urdf
 
 **Add URDF File**
 
-Create a new URDF file inside the [URDF](../example/differential_drive_robot/urdf) directory
+Create a new URDF file inside the [URDF](differential_drive_robot/urdf) directory
 
 ```bash
 touch urdf/differential_drive_robot.urdf
@@ -315,7 +315,7 @@ touch urdf/differential_drive_robot.urdf
 
   - A. Create a Launch File:
 
-    Create a [robot_description.launch](../example/differential_drive_robot/launch/robot_description.launch) file in your [launch_directory](../example/differential_drive_robot/launch/)
+    Create a [robot_description.launch](differential_drive_robot/launch/robot_description.launch) file in your [launch_directory](differential_drive_robot/launch)
 
     ```bash
     mkdir launch
@@ -364,7 +364,7 @@ touch urdf/differential_drive_robot.urdf
 
   - B. Launch the Model:
 
-    Run the [launch](../example/differential_drive_robot/launch/robot_description.launch) file to start Gazebo and spawn your robot model. Use the following command:
+    Run the [launch](differential_drive_robot/launch/robot_description.launch) file to start Gazebo and spawn your robot model. Use the following command:
 
     ```bash
     cd ~/catkin_ws
@@ -380,170 +380,170 @@ touch urdf/differential_drive_robot.urdf
 
 - ### 11. Adding Lidar sensor
 
-The lidar link and its plugin can be placed in the robot frame in the main urdf file ([differential_robot.urdf.xacro](../example/differential_drive_robot/urdf/differential_robot.urdf.xacro)) file. But, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands.
+  The lidar link and its plugin can be placed in the robot frame in the main urdf file ([differential_robot.urdf.xacro](differential_drive_robot/urdf/differential_robot.urdf.xacro)) file. But, to be more orgnized we can create a new file for each sensor with its plugins and links and joints. then include this file in the main robot urdf file robot frame. So, first create a new file in the urdf folder as shown in the following commands. 
 
-```bash
-cd ~/catkin_ws/src/differential_drive_robot/urdf
-touch lidar_2d.xacro
-```
+  ```bash
+  cd ~/catkin_ws/src/differential_drive_robot/urdf
+  touch lidar_2d.xacro
+  ```
 
-Then in inside the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file create the base link and a add the lidar link and its plugin.
+  Then in inside the [lidar_2d.xacro](differential_drive_robot/urdf/lidar_2d.xacro) file create the base link and a add the lidar link and its plugin.
 
-```xml
-<?xml version="1.0" ?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  ```xml
+  <?xml version="1.0" ?>
+  <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- LIDAR BASE Link -->
+    <!-- LIDAR BASE Link -->
 
-  <link name="lidar_base_link">
-    <inertial>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <mass value="0.5"/>
-        <inertia ixx="0.0008667" ixy="0.0" ixz="0.0" iyy="0.0016000" iyz="0.0" izz="0.0017333"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <box size="0.1 0.2 0.07"/>
-      </geometry>
-      <origin xyz="0 0 0.0"/>
-      <material name="">
-        <color rgba="1.0 1.0 0.0 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.2 0.07"/>
-      </geometry>
-      <origin xyz="0 0 0.0"/> </collision>
-  </link>
-
-  <joint name="lidar_base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="lidar_base_link"/>
-    <origin xyz="-0.1 0 0.06" rpy="0 0 0"/> <!-- Adjust height as needed -->
-  </joint>
-
-  <!-- LIDAR Link -->
-
-    <link name="lidar_link">
+    <link name="lidar_base_link">
       <inertial>
           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-          <mass value="0.0"/>
-          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+          <mass value="0.5"/>
+          <inertia ixx="0.0008667" ixy="0.0" ixz="0.0" iyy="0.0016000" iyz="0.0" izz="0.0017333"/>
       </inertial>
-      <visual name="lidar_link_visual">
-          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0"/>
-          <geometry>
-         <mesh filename="package://differential_drive_robot/meshes/2d_lidar.STL"/>
-            </geometry>
-          <material name="">
-              <color rgba="0.0 0.0 0.0 1.0"/>
-              <texture filename=""/>
-          </material>
+      <visual>
+        <geometry>
+          <box size="0.1 0.2 0.07"/>
+        </geometry>
+        <origin xyz="0 0 0.0"/>
+        <material name="">
+          <color rgba="1.0 1.0 0.0 1.0"/>
+        </material>
       </visual>
       <collision>
-          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-          <geometry>
-         <mesh filename="package://differential_drive_robot/meshes/2d_lidar.STL"/>
-          </geometry>
-      </collision>
-  </link>
+        <geometry>
+          <box size="0.2 0.2 0.07"/>
+        </geometry>
+        <origin xyz="0 0 0.0"/> </collision>
+    </link>
+
+    <joint name="lidar_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="lidar_base_link"/>
+      <origin xyz="-0.1 0 0.06" rpy="0 0 0"/> <!-- Adjust height as needed -->
+    </joint>
+
+    <!-- LIDAR Link -->
+
+      <link name="lidar_link">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.0"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <visual name="lidar_link_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0"/>
+            <geometry>
+          <mesh filename="package://differential_drive_robot/meshes/2d_lidar.STL"/>
+              </geometry>
+            <material name="">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+          <mesh filename="package://differential_drive_robot/meshes/2d_lidar.STL"/>
+            </geometry>
+        </collision>
+    </link>
 
 
-  <joint name="lidar_joint" type="fixed">
-    <origin xyz="0 0 0.065" rpy="0 0 0"/>
-    <parent link="lidar_base_link"/>
-    <child link="lidar_link"/>
-  </joint>
+    <joint name="lidar_joint" type="fixed">
+      <origin xyz="0 0 0.065" rpy="0 0 0"/>
+      <parent link="lidar_base_link"/>
+      <child link="lidar_link"/>
+    </joint>
 
 
-  <!-- LIDAR Sensor -->
-  <gazebo reference="lidar_link">
-    <!-- Define a sensor of type "ray" (commonly used for LiDAR sensors) -->
-    <sensor type="ray" name="lidar_sensor">
-        <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
-        <pose>0 0 0 0 0 0</pose>
+    <!-- LIDAR Sensor -->
+    <gazebo reference="lidar_link">
+      <!-- Define a sensor of type "ray" (commonly used for LiDAR sensors) -->
+      <sensor type="ray" name="lidar_sensor">
+          <!-- Set the pose of the sensor relative to the link it's attached to (x, y, z, roll, pitch, yaw) -->
+          <pose>0 0 0 0 0 0</pose>
 
-        <!-- Enable or disable visualization of the sensor in Gazebo -->
-        <visualize>true</visualize>
+          <!-- Enable or disable visualization of the sensor in Gazebo -->
+          <visualize>true</visualize>
 
-        <!-- Set the update rate for the sensor in Hz (how often it produces data) -->
-        <update_rate>40</update_rate>
+          <!-- Set the update rate for the sensor in Hz (how often it produces data) -->
+          <update_rate>40</update_rate>
 
-        <!-- Define the ray properties of the sensor (LiDAR emits rays to measure distances) -->
-        <ray>
-            <scan>
-                <horizontal>
-                    <!-- Number of samples (rays) per scan -->
-                    <samples>720</samples>
+          <!-- Define the ray properties of the sensor (LiDAR emits rays to measure distances) -->
+          <ray>
+              <scan>
+                  <horizontal>
+                      <!-- Number of samples (rays) per scan -->
+                      <samples>720</samples>
 
-                    <!-- Resolution of the scan (typically 1 means 1 ray per angle unit) -->
-                    <resolution>1</resolution>
+                      <!-- Resolution of the scan (typically 1 means 1 ray per angle unit) -->
+                      <resolution>1</resolution>
 
-                    <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
-                    <min_angle>-1.570796</min_angle>
+                      <!-- Minimum angle of the scan (in radians, -π/2 for a 180-degree scan) -->
+                      <min_angle>-1.570796</min_angle>
 
-                    <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
-                    <max_angle>1.570796</max_angle>
-                </horizontal>
-            </scan>
+                      <!-- Maximum angle of the scan (in radians, π/2 for a 180-degree scan) -->
+                      <max_angle>1.570796</max_angle>
+                  </horizontal>
+              </scan>
 
-            <range>
-                <!-- Minimum range (distance) the sensor can detect -->
-                <min>0.10</min>
+              <range>
+                  <!-- Minimum range (distance) the sensor can detect -->
+                  <min>0.10</min>
 
-                <!-- Maximum range (distance) the sensor can detect -->
-                <max>30.0</max>
+                  <!-- Maximum range (distance) the sensor can detect -->
+                  <max>30.0</max>
 
-                <!-- Resolution of the distance measurements (smallest measurable distance change) -->
-                <resolution>0.01</resolution>
-            </range>
+                  <!-- Resolution of the distance measurements (smallest measurable distance change) -->
+                  <resolution>0.01</resolution>
+              </range>
 
-            <!-- Define noise characteristics for the sensor -->
-            <noise>
-                <!-- Type of noise (Gaussian noise is commonly used for sensors) -->
-                <type>gaussian</type>
+              <!-- Define noise characteristics for the sensor -->
+              <noise>
+                  <!-- Type of noise (Gaussian noise is commonly used for sensors) -->
+                  <type>gaussian</type>
 
-                <!-- Mean value of the noise (0.0 means no bias) -->
-                <mean>0.0</mean>
+                  <!-- Mean value of the noise (0.0 means no bias) -->
+                  <mean>0.0</mean>
 
-                <!-- Standard deviation of the noise (how much variation there is) -->
-                <stddev>0.01</stddev>
-            </noise>
-        </ray>
+                  <!-- Standard deviation of the noise (how much variation there is) -->
+                  <stddev>0.01</stddev>
+              </noise>
+          </ray>
 
-        <!-- Attach a Gazebo plugin to simulate the LiDAR sensor in ROS -->
-        <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-            <!-- Define the ROS topic name where the LiDAR data will be published -->
-            <topicName>/scan</topicName>
+          <!-- Attach a Gazebo plugin to simulate the LiDAR sensor in ROS -->
+          <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+              <!-- Define the ROS topic name where the LiDAR data will be published -->
+              <topicName>/scan</topicName>
 
-            <!-- Specify the frame name associated with the LiDAR link (used for transformations) -->
-            <frameName>lidar_link</frameName>
-        </plugin>
-    </sensor>
-  </gazebo>
-  <gazebo reference="lidar_base_link">
-    <material>Gazebo/Yellow</material>
-  </gazebo>
-  <gazebo reference="lidar_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
+              <!-- Specify the frame name associated with the LiDAR link (used for transformations) -->
+              <frameName>lidar_link</frameName>
+          </plugin>
+      </sensor>
+    </gazebo>
+    <gazebo reference="lidar_base_link">
+      <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="lidar_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
 
-</robot>
-```
+  </robot>
+  ```
 
-Then Link the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file in the main robot urdf file ([differential_robot.urdf.xacro](../example/differential_drive_robot/urdf/differential_robot.urdf.xacro)) by adding the following command inside your robot frame
+  Then Link the [lidar_2d.xacro](../example/differential_drive_robot/urdf/lidar_2d.xacro) file in the main robot urdf file ([differential_robot.urdf.xacro](../example/differential_drive_robot/urdf/differential_robot.urdf.xacro)) by adding the following command inside your robot frame
 
-```xml
-  <xacro:include filename="$(find differential_drive_robot)/urdf/lidar_2d.xacro"/>
-```
+  ```xml
+    <xacro:include filename="$(find differential_drive_robot)/urdf/lidar_2d.xacro"/>
+  ```
 
-**For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../Plugins/plugins.md).**
+  **For detailed instructions on adding and configuring sensors, including URDF and plugin setup, [click here](../Plugins/plugins.md).**
 
-### After adding sensors, your robot is now ready!
+  ### After adding sensors, your robot is now ready!
 
-<p align="center">
-<img src="image/differential_drive_robot_example/gazebo3.png">
+  <p align="center">
+  <img src="image/differential_drive_robot_example/gazebo3.png">
 
 ## To control the robot, use the following command
 
@@ -557,6 +557,6 @@ This will allow you to move the robot using your keyboard in the Gazebo simulati
 
 <img src="image/differential_drive_robot_example/example1.gif" width="1000">
 
-## [↩Back to Plugin](../Plugins/plugins.md)
+## [↩Back to Plugin](<../C. Plugins/plugins.md>)
 
 ## [↩Back to main](../README.md)

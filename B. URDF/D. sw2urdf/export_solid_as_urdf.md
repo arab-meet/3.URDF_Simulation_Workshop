@@ -314,7 +314,7 @@ Note: This structure provides everything you need to bring your robot to life—
    - **Create `sensor.xacro`**: Define the sensors on your robot in this file. It should describe the placement and properties of each sensor.
    - **Create `plugin.gazebo`**: Add this file to specify any Gazebo plugins required for your robot. This could include plugins for simulation purposes like camera sensors or controllers.
 
-     > For more details, you can refer to our explanation in the plugin section [arab meet/plugins.md ](https://github.com/arab-meet/3.URDF_Simulation_Workshop/blob/main/B.%20URDF/Plugins/plugins.md).
+     > For more details, you can refer to our explanation in the plugin section [arab meet/plugins.md ](<../C. Plugins/plugins.md>).
      >
 
      **Add the GPS Plugin**
@@ -516,8 +516,7 @@ By following these steps, you can add custom materials and textures, including l
 <p align="center">
 <img src="image/solidworks/1726917503357.gif">
 
-
-
 ---
 ## [Next Topic →](<../../C. TF/README.md>)
+
 ## [↩Back to main](../README.md)

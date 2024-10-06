@@ -1071,20 +1071,19 @@ Uses two independently driven wheels on either side of the robot.
 </gazebo>
 ```
 
------
+---
 
 <!-- | [Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) |   [Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)|
 |---|----|
 | <img src="image/plugins/1724199913058.png" width="1000"> | <img src="image/plugins/example1.gif" width="1000" >|
  -->
 
-| <h3>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](../example/skid_steer_robot_example.md) </h3> | <h3>[Step-by-Step Tutorial for Building a Differential drive Robot →](../example/differential_drive_robot_example.md)</h3> |
-|---|----|
-| <img src="image/plugins/1724199913058.png" > | <img src="image/plugins/example1.gif" > |
+| <h3>[Step-by-Step Tutorial for Building a Skid-Steer Robot →](<../E. example/differential_drive_robot_example.md>) </h3> | <h3>[Step-by-Step Tutorial for Building a Differential drive Robot →](<../E. example/skid_steer_robot_example.md>)</h3> |
+| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| <img src="image/plugins/1724199913058.png" >                                                                | <img src="image/plugins/example1.gif" >                                                                                    |
 
 
 
-## [Next Topic →](../sw2urdf/export_solid_as_urdf.md)
+## [Next Topic →](<../D. sw2urdf/export_solid_as_urdf.md>)
 
 ## [↩Back to main](../README.md)
-

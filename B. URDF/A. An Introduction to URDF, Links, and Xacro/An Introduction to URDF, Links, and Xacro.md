@@ -519,6 +519,6 @@ now we are ready to use `Xacro` in our file
 
 Now it's time to put these links in there desired place and we will use **joints** to achieve this.
 
-## [Next Topic →](../joints/joints.md)
+## [Next Topic →](<../B.  joints/joints.md>)
 
 ## [↩Back to main](../README.md)
