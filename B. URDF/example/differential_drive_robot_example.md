@@ -291,7 +291,6 @@ touch urdf/differential_drive_robot.urdf
       </gazebo>
   ```
 
----
 
 - ### 9. Add links color in gazebo
 
@@ -314,7 +313,7 @@ touch urdf/differential_drive_robot.urdf
 
 - ### 10. Launching the Robot in Gazebo
 
-  - 1- Create a Launch File:
+  - A. Create a Launch File:
 
     Create a [robot_description.launch](../example/differential_drive_robot/launch/robot_description.launch) file in your [launch_directory](../example/differential_drive_robot/launch/)
 
@@ -360,15 +359,10 @@ touch urdf/differential_drive_robot.urdf
             args="-urdf -param robot_description -model differential_robot
                     -x $(arg x) -y $(arg y) -z $(arg z)
                     -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) "/>
-
-
-
-
-
     </launch>
     ```
 
-  - 2-Launch the Model:
+  - B. Launch the Model:
 
     Run the [launch](../example/differential_drive_robot/launch/robot_description.launch) file to start Gazebo and spawn your robot model. Use the following command:
 
@@ -382,7 +376,7 @@ touch urdf/differential_drive_robot.urdf
     <p align="center">
     <img src="image/differential_drive_robot_example/gazebo1.png">
 
----
+
 
 - ### 11. Adding Lidar sensor
 

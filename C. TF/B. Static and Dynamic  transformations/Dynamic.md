@@ -134,6 +134,3 @@ Dynamic and static listener [1.](/3.URDF_Simulation_Workshop/B.%20Static%20and%2
 ## Output is :
 ![dynamic transform output](images/dynamic_listener.gif)
 
-## [Next Topic →](../C.%20robot%20and%20joint%20state%20publisher/robot_joint_state_publisher.md)
-
-## [↩Back to main](../README.md)
