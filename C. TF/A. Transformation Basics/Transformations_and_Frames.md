@@ -160,34 +160,34 @@
   <p align="center">
   <img src="images/tf8.png" width="800" />
 
-Let's Calculate this step by step :
-
-1. Make the rotation calculation at first , let's say we have a frame V that represents the orientation of B to be parallel to A
-
-    <p align="center">
-    <img src="images/tf9.png" />
-
-2. So the tf of the point p in the frame A will be represented by the vector Ap which is the summition of Atv + Vp
-
-    <p align="center">
-    <img src="images/tf10.png" />
-
-3. Let's Expand and compenste
-
-     <p align="center">
-     <img src="images/tf11.png" />
-
-   So this is the final Transformation matrix to transform a point from a frame into another
-
-     <p align="center">
-     <img src="images/tf16.png" width="800" />
-
-   so the finaal transformation from frame B to A is as The following
-
-     <p align="center">
-     <img src="images/tf17.png" />
-
-   ***
+  Let's Calculate this step by step :
+  
+  1. Make the rotation calculation at first , let's say we have a frame V that represents the orientation of B to be parallel to A
+  
+      <p align="center">
+      <img src="images/tf9.png" />
+  
+  2. So the tf of the point p in the frame A will be represented by the vector Ap which is the summition of Atv + Vp
+  
+      <p align="center">
+      <img src="images/tf10.png" />
+  
+  3. Let's Expand and compenste
+  
+       <p align="center">
+       <img src="images/tf11.png" />
+  
+     So this is the final Transformation matrix to transform a point from a frame into another
+  
+       <p align="center">
+       <img src="images/tf16.png" width="800" />
+  
+     so the finaal transformation from frame B to A is as The following
+  
+       <p align="center">
+       <img src="images/tf17.png" />
+  
+     ***
 
    ### 3.4. Practical Example:
 
